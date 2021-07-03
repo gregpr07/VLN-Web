@@ -1,3 +1,8 @@
+import { Fragment } from "react";
+import { Menu, Popover, Transition } from "@headlessui/react";
+import { SearchIcon } from "@heroicons/react/solid";
+import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+
 import { useState } from "react";
 
 import { connect } from "react-redux";
@@ -6,327 +11,268 @@ import { removeToken } from "../services/storage/actions";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+const user = {
+  name: "Chelsea Hagon",
+  email: "chelseahagon@example.com",
+  imageUrl:
+    "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+};
+const navigation = [
+  { name: "Dashboard", href: "#", current: true },
+  { name: "Calendar", href: "#", current: false },
+  { name: "Teams", href: "#", current: false },
+  { name: "Directory", href: "#", current: false },
+];
+const userNavigation = [
+  { name: "Your Profile", href: "#" },
+  { name: "Settings", href: "#" },
+];
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 const Navbar = ({ token, rmToken }) => {
-  const router = useRouter();
-
-  const [burgerOpen, setBurgerOpen] = useState(false);
-  const [accMenu, setAccMenu] = useState(false);
-  const [notificationsMenu, setNotificationsMenu] = useState(false);
-
   const handleLogout = (e: any) => {
     e.preventDefault();
     rmToken();
   };
-
-  const links = [
-    {
-      name: "About",
-      link: "/",
-    },
-  ];
-
   return (
-    <div>
-      <nav className="bg-gray-800 dark:bg-gray-800  shadow ">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className=" flex items-center">
-              <Link href="/">
-                <a className="flex-shrink-0">
-                  <img
-                    className="h-16 w-auto py-4"
-                    src="/images/logo-wide.png"
-                    alt="Workflow"
-                  />
-                </a>
-              </Link>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                {links.map((link) => (
-                  <Link href={link.link}>
-                    <a
-                      className={
-                        "hover:text-gray-400 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium " +
-                        (link.link === router.pathname
-                          ? "text-gray-500"
-                          : "text-gray-300")
-                      }
-                      href="/#"
-                    >
-                      {link.name}
+    <>
+      {/* When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars */}
+      <Popover
+        as="header"
+        className={({ open }) =>
+          classNames(
+            open ? "fixed inset-0 z-40 overflow-y-auto" : "",
+            "bg-white shadow-sm lg:static lg:overflow-y-visible"
+          )
+        }
+      >
+        {({ open }) => (
+          <>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
+                <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
+                  <div className="flex-shrink-0 flex items-center">
+                    <a href="#">
+                      <img
+                        className="block h-8 w-auto"
+                        src="/images/logo-wide-dark.png"
+                        alt="Workflow"
+                      />
                     </a>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {token ? (
-              <div className="block">
-                <div className="ml-4 flex items-center md:ml-6">
-                  <div className="ml-3 relative">
-                    <button
-                      onClick={() => setNotificationsMenu(!notificationsMenu)}
-                      className="rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      {/* Heroicon name: outline/bell */}
-                      <svg
-                        className="h-6 w-6"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                  </div>
+                </div>
+                <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
+                  <div className="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
+                    <div className="w-full">
+                      <label htmlFor="search" className="sr-only">
+                        Search
+                      </label>
+                      <div className="relative">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                          <SearchIcon
+                            className="h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        </div>
+                        <input
+                          id="search"
+                          name="search"
+                          className="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                          placeholder="Search"
+                          type="search"
                         />
-                      </svg>
-                    </button>
-
-                    {notificationsMenu && (
-                      <div className="origin-top-right absolute right-10 mt-2 w-60 md:w-80 p-4 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
-                        <div className="w-full flex items-center justify-between mb-8">
-                          <p className="text-gray-800 dark:text-white text-xl font-normal">
-                            Activity
-                          </p>
-                          <a
-                            href="#"
-                            className="flex items-center text-sm hover:text-gray-600 dark:text-gray-50 dark:hover:text-white text-gray-300 border-0 focus:outline-none"
-                          >
-                            VIEW ALL
-                          </a>
-                        </div>
-                        <div className="flex items-start mb-6 rounded justify-between">
-                          <span className="rounded-full text-white dark:text-gray-800 p-2 bg-yellow-300">
-                            <svg
-                              width={20}
-                              height={20}
-                              fill="currentColor"
-                              viewBox="0 0 1792 1792"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M1596 380q28 28 48 76t20 88v1152q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h896q40 0 88 20t76 48zm-444-244v376h376q-10-29-22-41l-313-313q-12-12-41-22zm384 1528v-1024h-416q-40 0-68-28t-28-68v-416h-768v1536h1280zm-128-448v320h-1024v-192l192-192 128 128 384-384zm-832-192q-80 0-136-56t-56-136 56-136 136-56 136 56 56 136-56 136-136 56z"></path>
-                            </svg>
-                          </span>
-                          <div className="flex items-center w-full justify-between">
-                            <div className="flex text-sm flex-col w-full ml-2 items-start justify-between">
-                              <p className="text-gray-700 dark:text-white">
-                                <span className="font-bold mr-1">Andrea</span>
-                                uploaded 3 documents on concept deisgn home page
-                              </p>
-                              <p className="text-gray-300">Aug 10</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-start mb-6 rounded justify-between">
-                          <span className="rounded-full text-white dark:text-gray-800 p-2 bg-green-400">
-                            <svg
-                              width={20}
-                              height={20}
-                              fill="currentColor"
-                              viewBox="0 0 1792 1792"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"></path>
-                            </svg>
-                          </span>
-                          <div className="flex items-center w-full justify-between">
-                            <div className="flex text-sm flex-col w-full ml-2 items-start justify-between">
-                              <p className="text-gray-700 dark:text-white">
-                                <span className="font-bold mr-1">Karen</span>
-                                leave some comments on concept deisgn support
-                                page
-                              </p>
-                              <p className="text-gray-300">Aug 10</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-start mb-6 rounded justify-between">
-                          <span className="rounded-full text-white dark:text-gray-800 p-2 bg-indigo-400">
-                            <svg
-                              width={20}
-                              height={20}
-                              fill="currentColor"
-                              viewBox="0 0 1792 1792"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"></path>
-                            </svg>
-                          </span>
-                          <div className="flex items-center w-full justify-between">
-                            <div className="flex text-sm flex-col w-full ml-2 items-start justify-between">
-                              <p className="text-gray-700 dark:text-white">
-                                <span className="font-bold mr-1">Karen</span>
-                                change project description to "SubMarine
-                                protection project"
-                              </p>
-                              <p className="text-gray-300">Aug 09</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-start rounded justify-between">
-                          <span className="rounded-full text-white dark:text-gray-800 p-2 bg-yellow-300">
-                            <svg
-                              width={20}
-                              height={20}
-                              fill="currentColor"
-                              viewBox="0 0 1792 1792"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M1596 380q28 28 48 76t20 88v1152q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h896q40 0 88 20t76 48zm-444-244v376h376q-10-29-22-41l-313-313q-12-12-41-22zm384 1528v-1024h-416q-40 0-68-28t-28-68v-416h-768v1536h1280zm-128-448v320h-1024v-192l192-192 128 128 384-384zm-832-192q-80 0-136-56t-56-136 56-136 136-56 136 56 56 136-56 136-136 56z"></path>
-                            </svg>
-                          </span>
-                          <div className="flex items-center w-full justify-between">
-                            <div className="flex text-sm flex-col w-full ml-2 items-start justify-between">
-                              <p className="text-gray-700 dark:text-white">
-                                <span className="font-bold mr-1">John</span>
-                                uploaded 17 pictures on concept deisgn galery
-                                page
-                              </p>
-                              <p className="text-gray-300">Aug 1</p>
-                            </div>
-                          </div>
-                        </div>
                       </div>
-                    )}
-
-                    <div className="relative inline-block text-left">
-                      <div>
-                        <button
-                          type="button"
-                          className="  flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
-                          id="options-menu"
-                          onClick={() => setAccMenu(!accMenu)}
-                        >
-                          <svg
-                            width={20}
-                            fill="currentColor"
-                            height={20}
-                            className="text-gray-800"
-                            viewBox="0 0 1792 1792"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M1523 1339q-22-155-87.5-257.5t-184.5-118.5q-67 74-159.5 115.5t-195.5 41.5-195.5-41.5-159.5-115.5q-119 16-184.5 118.5t-87.5 257.5q106 150 271 237.5t356 87.5 356-87.5 271-237.5zm-243-699q0-159-112.5-271.5t-271.5-112.5-271.5 112.5-112.5 271.5 112.5 271.5 271.5 112.5 271.5-112.5 112.5-271.5zm512 256q0 182-71 347.5t-190.5 286-285.5 191.5-349 71q-182 0-348-71t-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z"></path>
-                          </svg>
-                        </button>
-                      </div>
-                      {accMenu && (
-                        <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
-                          <div
-                            className="py-1 "
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="options-menu"
-                          >
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-                              role="menuitem"
-                            >
-                              <span className="flex flex-col">
-                                <span>Settings</span>
-                              </span>
-                            </a>
-
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-                              role="menuitem"
-                            >
-                              <span className="flex flex-col">
-                                <span>Account</span>
-                              </span>
-                            </a>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-                              role="menuitem"
-                              onClick={handleLogout}
-                            >
-                              <span className="flex flex-col">
-                                <span>Logout</span>
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div className="hidden md:block">
-                <div className="ml-10 flex items-baseline space-x-4">
-                  <Link href="/login">
-                    <a
-                      className="text-black-600 hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                      role="menuitem"
-                    >
-                      <span className="flex flex-col">
-                        <span>Login</span>
-                      </span>
-                    </a>
-                  </Link>
-                  <Link href="/register">
-                    <a
-                      className="text-purple-600 hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                      role="menuitem"
-                    >
-                      <span className="flex flex-col">
-                        <span>Register</span>
-                      </span>
-                    </a>
-                  </Link>
+                <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
+                  {/* Mobile menu button */}
+                  <Popover.Button className="-mx-2 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                    <span className="sr-only">Open menu</span>
+                    {open ? (
+                      <XIcon className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                    )}
+                  </Popover.Button>
                 </div>
+
+                {/* menu */}
+                {token ? (
+                  <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
+                    <a
+                      href="#"
+                      className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      <span className="sr-only">View notifications</span>
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    </a>
+
+                    {/* Profile dropdown */}
+                    <Menu as="div" className="flex-shrink-0 relative ml-5">
+                      {({ open }) => (
+                        <>
+                          <div>
+                            <Menu.Button className="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                              <span className="sr-only">Open user menu</span>
+                              <img
+                                className="h-8 w-8 rounded-full"
+                                src={user.imageUrl}
+                                alt=""
+                              />
+                            </Menu.Button>
+                          </div>
+                          <Transition
+                            show={open}
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                          >
+                            <Menu.Items
+                              static
+                              className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
+                            >
+                              {userNavigation.map((item) => (
+                                <Menu.Item key={item.name}>
+                                  {({ active }) => (
+                                    <a
+                                      href={item.href}
+                                      className={classNames(
+                                        active ? "bg-gray-100" : "",
+                                        "block py-2 px-4 text-sm text-gray-700"
+                                      )}
+                                    >
+                                      {item.name}
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                              ))}
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <a
+                                    onClick={handleLogout}
+                                    className={classNames(
+                                      active ? "bg-gray-100" : "",
+                                      "block py-2 px-4 text-sm text-gray-700 cursor-pointer"
+                                    )}
+                                  >
+                                    Log out
+                                  </a>
+                                )}
+                              </Menu.Item>
+                            </Menu.Items>
+                          </Transition>
+                        </>
+                      )}
+                    </Menu>
+                  </div>
+                ) : (
+                  <div className="hidden lg:flex items-center justify-end md:flex-1 lg:w-0">
+                    <Link href="login">
+                      <a className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                        Sign in
+                      </a>
+                    </Link>
+                    <a
+                      href="#"
+                      className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      Sign up
+                    </a>
+                  </div>
+                )}
               </div>
-            )}
-            <div className="-mr-2 flex md:hidden">
-              <button
-                onClick={() => setBurgerOpen(!burgerOpen)}
-                className="text-gray-800 dark:text-white hover:text-gray-300 inline-flex items-center justify-center p-2 rounded-md focus:outline-none"
-              >
-                <svg
-                  width={20}
-                  height={20}
-                  fill="currentColor"
-                  className="h-8 w-8"
-                  viewBox="0 0 1792 1792"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"></path>
-                </svg>
-              </button>
             </div>
-          </div>
-        </div>
-        {burgerOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {links.map((link) => (
-                <Link href={link.link}>
+
+            <Popover.Panel as="nav" className="lg:hidden" aria-label="Global">
+              <div className="max-w-3xl mx-auto px-2 pt-2 pb-3 space-y-1 sm:px-4">
+                {navigation.map((item) => (
                   <a
-                    className={
-                      "text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium " +
-                      (link.link === router.pathname
-                        ? "text-gray-500"
-                        : "text-gray-300")
-                    }
-                    href="/#"
+                    key={item.name}
+                    href={item.href}
+                    aria-current={item.current ? "page" : undefined}
+                    className={classNames(
+                      item.current
+                        ? "bg-gray-100 text-gray-900"
+                        : "hover:bg-gray-50",
+                      "block rounded-md py-2 px-3 text-base font-medium"
+                    )}
                   >
-                    {link.name}
+                    {item.name}
                   </a>
-                </Link>
-              ))}
-            </div>
-          </div>
+                ))}
+              </div>
+              {token ? (
+                <div className="border-t border-gray-200 pt-4 pb-3">
+                  <div className="max-w-3xl mx-auto px-4 flex items-center sm:px-6">
+                    <div className="flex-shrink-0">
+                      <img
+                        className="h-10 w-10 rounded-full"
+                        src={user.imageUrl}
+                        alt=""
+                      />
+                    </div>
+                    <div className="ml-3">
+                      <div className="text-base font-medium text-gray-800">
+                        {user.name}
+                      </div>
+                      <div className="text-sm font-medium text-gray-500">
+                        {user.email}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      <span className="sr-only">View notifications</span>
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+                  </div>
+                  <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
+                    {userNavigation.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                    <a
+                      onClick={handleLogout}
+                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900 cursor-pointer"
+                    >
+                      Log out
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-left pl-7 md:flex-1 lg:w-0">
+                  <Link href="login">
+                    <a className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                      Sign in
+                    </a>
+                  </Link>
+                  <a
+                    href="#"
+                    className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    Sign up
+                  </a>
+                </div>
+              )}
+            </Popover.Panel>
+          </>
         )}
-      </nav>
-    </div>
+      </Popover>
+    </>
   );
 };
 
