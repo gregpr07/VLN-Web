@@ -11,8 +11,8 @@ const getRequestOptions = (token: string) => {
   };
 };
 
-export const fetcher = (url: string, token: string) =>
-  fetch(API + url, getRequestOptions(token)).then((r) => r.json());
+// export const fetcher = (url: string, token: string) =>
+//   fetch(API + url, getRequestOptions(token)).then((r) => r.json());
 
 export const noHeadFetcher = (url: string) =>
   fetch(API + url).then((r) => r.json());
