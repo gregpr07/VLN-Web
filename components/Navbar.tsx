@@ -27,39 +27,40 @@ const Navbar = ({ token, rmToken }) => {
 
   return (
     <div>
-      <nav className="bg-white dark:bg-gray-800  shadow ">
+      <nav className="bg-gray-800 dark:bg-gray-800  shadow ">
         <div className="max-w-7xl mx-auto px-8">
           <div className="flex items-center justify-between h-16">
             <div className=" flex items-center">
               <Link href="/">
                 <a className="flex-shrink-0">
                   <img
-                    className="h-16 w-16"
-                    src="/images/logo.png"
+                    className="h-16 w-auto py-4"
+                    src="/images/logo-wide.png"
                     alt="Workflow"
                   />
                 </a>
               </Link>
-              <div className="hidden md:block">
-                <div className="ml-10 flex items-baseline space-x-4">
-                  {links.map((link) => (
-                    <Link href={link.link}>
-                      <a
-                        className={
-                          "hover:text-gray-400 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium " +
-                          (link.link === router.pathname
-                            ? "text-gray-500"
-                            : "text-gray-300")
-                        }
-                        href="/#"
-                      >
-                        {link.name}
-                      </a>
-                    </Link>
-                  ))}
-                </div>
+            </div>
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4">
+                {links.map((link) => (
+                  <Link href={link.link}>
+                    <a
+                      className={
+                        "hover:text-gray-400 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium " +
+                        (link.link === router.pathname
+                          ? "text-gray-500"
+                          : "text-gray-300")
+                      }
+                      href="/#"
+                    >
+                      {link.name}
+                    </a>
+                  </Link>
+                ))}
               </div>
             </div>
+
             {token ? (
               <div className="block">
                 <div className="ml-4 flex items-center md:ml-6">
