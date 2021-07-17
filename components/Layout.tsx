@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import Navigation from "./Navbar";
 import Footer from "./Footer";
+import Maxer from "./Maxer";
 
 type Props = {
   children?: ReactNode;
@@ -20,7 +21,7 @@ const Layout = ({ children, title = "Videolectures.net" }: Props) => (
     <header>
       <Navigation />
     </header>
-    {children}
+    <Maxer>{children}</Maxer>
     <footer>
       <Footer />
     </footer>

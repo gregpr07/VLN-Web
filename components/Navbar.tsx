@@ -55,13 +55,15 @@ const Navbar = ({ token, rmToken }) => {
               <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
                 <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
-                    <a href="#">
-                      <img
-                        className="block h-8 w-auto"
-                        src="/images/logo-wide-dark.png"
-                        alt="Workflow"
-                      />
-                    </a>
+                    <Link href="/">
+                      <a>
+                        <img
+                          className="block h-8 w-auto"
+                          src="/images/logo-wide-dark.png"
+                          alt="Workflow"
+                        />
+                      </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
