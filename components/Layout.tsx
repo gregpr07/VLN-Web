@@ -9,9 +9,14 @@ import Maxer from "./Maxer";
 type Props = {
   children?: ReactNode;
   title?: string;
+  useMaxer?: boolean;
 };
 
-const Layout = ({ children, title = "Videolectures.net" }: Props) => (
+const Layout = ({
+  children,
+  title = "Videolectures.net",
+  useMaxer = true,
+}: Props) => (
   <div>
     <Head>
       <title>{title}</title>
@@ -21,7 +26,7 @@ const Layout = ({ children, title = "Videolectures.net" }: Props) => (
     <header>
       <Navigation />
     </header>
-    <Maxer>{children}</Maxer>
+    {useMaxer ? <Maxer>{children}</Maxer> : children}
     <footer>
       <Footer />
     </footer>
