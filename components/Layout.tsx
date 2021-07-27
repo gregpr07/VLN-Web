@@ -10,12 +10,16 @@ type Props = {
   children?: ReactNode;
   title?: string;
   useMaxer?: boolean;
+  useNavigation?: boolean;
+  useFooter?: boolean;
 };
 
 const Layout = ({
   children,
   title = "Videolectures.net",
   useMaxer = true,
+  useNavigation = true,
+  useFooter = true,
 }: Props) => (
   <div>
     <Head>
@@ -23,13 +27,9 @@ const Layout = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <header>
-      <Navigation />
-    </header>
+    {useNavigation && <Navigation />}
     {useMaxer ? <Maxer>{children}</Maxer> : children}
-    <footer>
-      <Footer />
-    </footer>
+    {useFooter && <Footer />}
   </div>
 );
 

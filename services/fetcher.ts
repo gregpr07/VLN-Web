@@ -1,5 +1,5 @@
-export const BASE_URL = "http://145.14.12.120/";
-export const API = BASE_URL + "api/";
+export const BASEURL = "https://backend.videolectures.net/";
+export const API = BASEURL + "api/";
 
 const getRequestOptions = (token: string) => {
   const myHeaders = new Headers();

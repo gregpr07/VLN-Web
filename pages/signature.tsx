@@ -3,6 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Layout from "@components/Layout";
 
+import { useRouter } from "next/router";
+
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 
@@ -10,6 +12,8 @@ import SignaturePad from "react-signature-canvas";
 import styles from "../styles/signature.module.css";
 
 import { Path, useForm, UseFormRegister, SubmitHandler } from "react-hook-form";
+
+import { API } from "@services/fetcher";
 
 // Questions component -> because its only text
 const Questions = () => {
@@ -160,7 +164,11 @@ const Input = ({ label, register, required, wide, type }: InputProps) => (
 let sigPadRef: any;
 
 const Signature = () => {
+  const router = useRouter();
+
   const [signError, setSignError] = useState(null);
+
+  const [complete, setComplete] = useState(false);
 
   const clearPad = () => {
     sigPadRef.clear();
@@ -176,11 +184,64 @@ const Signature = () => {
 
     setSignError(null);
     const signatureImage = sigPadRef.getTrimmedCanvas().toDataURL("image/png");
-    console.log("ready to send to server");
+    console.log("ready to send to server", data);
+
+    var formdata = new FormData();
+    formdata.append("first_name", data.first_name);
+    formdata.append("last_name", data.last_name);
+    formdata.append("title", data.lecture_title);
+    formdata.append("institution", data.institution);
+    formdata.append("email", data.email_address);
+    formdata.append("room_number", data.room_number);
+    formdata.append("date", data.date);
+    formdata.append("cc_license", data.data_process.toString());
+
+    formdata.append("signature", signatureImage);
+
+    var requestOptionsPOST: any = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(`${API}forms/`, requestOptionsPOST)
+      // fetch(`http://127.0.0.1:8000/api/forms/`, requestOptionsPOST)
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+        setComplete(true);
+      })
+      .catch((error) => console.log("error", error));
   };
 
+  if (complete) {
+    return (
+      <div className="min-h-screen flex flex-col bg-white">
+        <main className="flex-grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex-shrink-0 flex justify-center">
+            <a href="/" className="inline-flex">
+              <span className="sr-only">Logo</span>
+              <img className="h-12 w-auto" src="/images/logo.png" alt="logo" />
+            </a>
+          </div>
+          <div className="py-16">
+            <div className="text-center">
+              <p className="text-sm font-semibold text-indigo-600 uppercase tracking-wide">
+                Upload successfull
+              </p>
+              <h1 className="mt-2 text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
+                Thank you for the answers!
+              </h1>
+              <p className="mt-2 text-base text-gray-500">More coming soon!</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
-    <Layout title="Home | Sign">
+    <Layout title="Home | Sign" useNavigation={false} useFooter={false}>
       <form
         className="space-y-8 divide-y divide-gray-200 mb-24"
         onSubmit={handleSubmit(onSubmit)}
