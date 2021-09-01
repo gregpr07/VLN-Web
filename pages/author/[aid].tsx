@@ -8,8 +8,18 @@ import {
   ChatAlt2Icon,
   DotsVerticalIcon,
   PlusIcon,
+  SwitchVerticalIcon,
 } from "@heroicons/react/solid";
 import ButtonBlack from "@components/ButtonBlack";
+
+/* This example requires Tailwind CSS v2.0+ */
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/solid";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 const author = {
   name: "Cameron Williamson",
@@ -18,7 +28,7 @@ const author = {
   title: "Researcher, Research Group for Language Technology, Ljubljana",
   website: "cameronwilliamsonresearcher.org",
   description:
-    "As Gregor Samsa awoke one morning out of restless dreams, he found himself in bed, transformed into a gargantuan pest. He lay on his hard, armored back and saw, as he raised his head a little, his domed, brown belly...",
+    "As Gregor Samsa awoke one morning out of restless dreyarnams, he found himself in bed, transformed into a gargantuan pest. He lay on his hard, armored back and saw, as he raised his head a little, his domed, brown belly...",
   socials: [
     {
       name: "Facebook",
@@ -122,6 +132,9 @@ const comments = [
   },
 ];
 
+const cateogies = ["Lectures", "Events", "Hands On"];
+const sorts = ["Alphabet", "Date", "Views"];
+
 const Lecture = () => {
   const router = useRouter();
   const { pid } = router.query;
@@ -134,16 +147,117 @@ const Lecture = () => {
     <div className="p-4 pt-8 sm:p-6 lg:p-8">{children}</div>
   );
 
+  const Filters = () => (
+    <div className="grid grid-flow-col py-4">
+      <div className="flex-grow">
+        <Menu as="div" className="relative inline-block text-left">
+          <div>
+            <Menu.Button className="inline-flex justify-center w-full rounded-md px-4 py-2 bg-gray-50 text-xs font-medium text-gray-700 hover:bg-gray-50 ring-none">
+              All categories
+              <ChevronDownIcon
+                className="-mr-1 ml-2 h-4 w-4"
+                aria-hidden="true"
+              />
+            </Menu.Button>
+          </div>
+
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="origin-top-left absolute left-0 mt-2 w-36 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="py-1">
+                {cateogies.map((cat) => (
+                  <Menu.Item>
+                    {({ active }) => (
+                      <a
+                        href="#"
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        {cat}
+                      </a>
+                    )}
+                  </Menu.Item>
+                ))}
+              </div>
+            </Menu.Items>
+          </Transition>
+        </Menu>
+      </div>
+      <div className="flex flex-row gap-2 flex-grow justify-end">
+        <div>
+          <Menu as="div" className="relative inline-block text-left">
+            <div>
+              <Menu.Button className="inline-flex justify-center w-full rounded-md px-4 py-2 bg-gray-50 text-xs font-medium text-gray-700 hover:bg-gray-50 ring-none">
+                Sort by
+                <ChevronDownIcon
+                  className="-mr-1 ml-2 h-4 w-4"
+                  aria-hidden="true"
+                />
+              </Menu.Button>
+            </div>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="py-1">
+                  {sorts.map((sort) => (
+                    <Menu.Item>
+                      {({ active }) => (
+                        <a
+                          href="#"
+                          className={classNames(
+                            active
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700",
+                            "block px-4 py-2 text-xs"
+                          )}
+                        >
+                          {sort}
+                        </a>
+                      )}
+                    </Menu.Item>
+                  ))}
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        </div>
+
+        <div className="bg-gray-50 p-1 rounded-md">
+          <SwitchVerticalIcon className="h-6 text-gray-600" />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <Layout title="Lecture | XYZ" useMaxer={false}>
       {/* Header */}
-      <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-red-800">
+      <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-red-800 text-xs">
         <div className="pb-4 sm:pb-8">
           <Maxer>
-            <div className="md:grid md:grid-cols-3 md:gap-6 md:space-y-0 gap-4 grid grid-flow-col">
+            <div className="md:gap-6 md:space-y-0 gap-4 grid grid-flow-col">
               <div className="">
                 <img
-                  className="object-cover shadow-lg rounded-lg h-32 w-32"
+                  className="object-cover shadow-lg rounded-lg h-24 w-24"
                   src={author.profileImage}
                   alt=""
                 />
@@ -169,15 +283,19 @@ const Lecture = () => {
       <Maxer>
         {/* About */}
         <div className="p-4 sm:p-6 lg:p-8">
-          <h3 className="font-extrabold leading-6 pb-2 text-xl">About</h3>
-          <p className="text-gray-600 font-normal">{author.description}</p>
-          <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
+          <h3 className="font-extrabold leading-6 pb-2">About</h3>
+          <p className="text-gray-600 font-normal text-xs">
+            {author.description}
+          </p>
+          <ButtonlessRed className="pt-2">Read More</ButtonlessRed>
 
           <div className="py-8 flex flex-row gap-8 items-center">
             <ButtonRed Icon={PlusIcon} text="Follow" />
             <div>
-              <p className="text-gray-900 font-semibold">Get in touch</p>
-              <div className="flex flex-row gap-4 pt-3">
+              <p className="text-gray-900 font-semibold text-xs">
+                Get in touch
+              </p>
+              <div className="flex flex-row gap-4 pt-2">
                 {author.socials.map((item) => (
                   <a
                     key={item.name}
@@ -201,7 +319,7 @@ const Lecture = () => {
             Uploaded videos
           </h3>
 
-          <p>Filters</p>
+          <Filters />
 
           {lectures.map((lecture, index) => (
             <div
@@ -212,16 +330,16 @@ const Lecture = () => {
             >
               <div>
                 <img
-                  className="object-cover shadow-lg rounded-md h-20"
+                  className="object-cover shadow-lg rounded-md h-16"
                   src={lecture.image}
                   alt=""
                 />
               </div>
-              <div className="text-sm">
-                <h4 className="leading-4 text-gray-900  font-semibold pb-2">
+              <div className="text-xs">
+                <h4 className="leading-4 text-gray-900  font-semibold pb-1">
                   {lecture.title}
                 </h4>
-                <p className="text-gray-500 font-medium leading-4 pb-1">
+                <p className="text-gray-500 font-medium leading-4">
                   {lecture.author}
                 </p>
                 <div className="flex flex-row text-gray-500 font-normal leading-4 gap-2">
@@ -234,7 +352,7 @@ const Lecture = () => {
           ))}
 
           <div className="flex flex-row justify-center pt-6">
-            <button className="py-3 px-6 bg-gray-50 rounded text-base text-gray-700">
+            <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700">
               Load more lectures
             </button>
           </div>
@@ -246,7 +364,7 @@ const Lecture = () => {
             Responses
           </h3>
 
-          <h3 className="font-semibold text-gray-400 leading-5 pb-2 text">
+          <h3 className="font-semibold text-gray-400 leading-5 pb-2 text-sm">
             Add your comment
           </h3>
 
@@ -254,14 +372,14 @@ const Lecture = () => {
           <div className="bg-gray-50 flex flex-row py-2 px-4 rounded-md gap-4">
             <div>
               <img
-                className="object-cover shadow-lg rounded-full h-12 w-12"
+                className="object-cover shadow-lg rounded-full h-10 w-10"
                 src={author.profileImage}
                 alt=""
               />
             </div>
             <div className="flex-grow">
               <input
-                className="h-12 bg-transparent px-2 font-normal leading-5 text w-full"
+                className="h-10 bg-transparent px-2 font-normal leading-5 text w-full text-sm"
                 placeholder="Add a comment"
               />
             </div>
@@ -274,19 +392,19 @@ const Lecture = () => {
           <div>
             <div className="flex flex-row py-2 px-4 rounded-md gap-1 items-center h-5 text-gray-500 pt-8 text-lg font-bold mb-4">
               <ChatAlt2Icon className="h-5" />
-              <p>{comments.length} comments</p>
+              <p className="text-sm">{comments.length} comments</p>
             </div>
 
             {comments.map((comment) => (
               <div className="p-4 bg-gray-50 grid grid-flow-col gap-4 mt-2 rounded">
                 <div className="flex-grow">
                   <img
-                    className="object-cover shadow-lg rounded-full h-12 w-12"
+                    className="object-cover shadow-lg rounded-full h-10 w-10"
                     src={comment.person.profileImage}
                     alt=""
                   />
                 </div>
-                <div className="flex-grow-0">
+                <div className="flex-grow-0 text-xs">
                   <div className="">
                     <h4 className="text-gray-900 leading-5 font-semibold">
                       {comment.person.name}
@@ -295,7 +413,7 @@ const Lecture = () => {
                       {comment.posted}
                     </p>
                   </div>
-                  <div className="pt-2">
+                  <div className="pt-1">
                     <p className="text-gray-600 leading-5 font-normal">
                       {comment.content}
                     </p>
@@ -305,7 +423,7 @@ const Lecture = () => {
             ))}
 
             <div className="flex flex-row justify-center pt-6">
-              <button className="py-3 px-6 bg-gray-50 rounded text-base text-gray-700">
+              <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700">
                 Load more comments
               </button>
             </div>
