@@ -4,9 +4,12 @@ import { useRouter } from "next/router";
 import BigMaxer from "@components/BigMaxer";
 import ButtonlessRed from "@components/ButtonLesRed";
 import ButtonRed from "@components/ButtonRed";
-import { DotsVerticalIcon, PlusIcon } from "@heroicons/react/solid";
-
-let player: HTMLVideoElement;
+import {
+  ChatAlt2Icon,
+  DotsVerticalIcon,
+  PlusIcon,
+} from "@heroicons/react/solid";
+import ButtonBlack from "@components/ButtonBlack";
 
 const author = {
   name: "Cameron Williamson",
@@ -86,44 +89,87 @@ const lectures = [
   },
 ];
 
+const comments = [
+  {
+    person: {
+      profileImage:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg",
+      name: "Jane Cooper",
+    },
+    posted: "13 days ago",
+    content:
+      "Doloremque dolorem maiores assumenda dolorem facilis. Velit vel in a rerum natus facere. Enim reru...",
+  },
+  {
+    person: {
+      profileImage:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg",
+      name: "Jane Cooper",
+    },
+    posted: "13 days ago",
+    content:
+      "Doloremque dolorem maiores assumenda dolorem facilis. Velit vel in a rerum natus facere. Enim reru...",
+  },
+  {
+    person: {
+      profileImage:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg",
+      name: "Jane Cooper",
+    },
+    posted: "13 days ago",
+    content:
+      "Doloremque dolorem maiores assumenda dolorem facilis. Velit vel in a rerum natus facere. Enim reru...",
+  },
+];
+
 const Lecture = () => {
   const router = useRouter();
   const { pid } = router.query;
 
+  const Maxer = ({ children }) => (
+    <div className="mx-auto max-w-md sm:max-w-xl">{children}</div>
+  );
+
+  const SectionDiv = ({ children }) => (
+    <div className="p-4 pt-8 sm:p-6 lg:p-8">{children}</div>
+  );
+
   return (
-    <Layout title="Lecture | XYZ" useMaxer={false} useFooter={false}>
+    <Layout title="Lecture | XYZ" useMaxer={false}>
       {/* Header */}
       <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-red-800">
         <div className="pb-4 sm:pb-8">
-          <div className="md:grid md:grid-cols-3 md:gap-6 md:space-y-0 gap-4 flex flex-row">
-            <div className="">
-              <img
-                className="object-cover shadow-lg rounded-lg h-32 w-32"
-                src={author.profileImage}
-                alt=""
-              />
-            </div>
-            <div className="md:col-span-2">
+          <Maxer>
+            <div className="md:grid md:grid-cols-3 md:gap-6 md:space-y-0 gap-4 grid grid-flow-col">
               <div className="">
-                <div className="text-white font-medium space-y-1">
-                  <h3 className="font-extrabold text-2xl leading-8 ">
-                    {author.name}
-                  </h3>
-                  <p className="text-white font-light">{author.title}</p>
-                </div>
-                <div className="text">
-                  <p className="text-gray-300 font-light">{author.website}</p>
+                <img
+                  className="object-cover shadow-lg rounded-lg h-32 w-32"
+                  src={author.profileImage}
+                  alt=""
+                />
+              </div>
+              <div className="md:col-span-2">
+                <div className="">
+                  <div className="text-white font-medium space-y-1">
+                    <h3 className="font-extrabold text-2xl leading-8 ">
+                      {author.name}
+                    </h3>
+                    <p className="text-white font-light">{author.title}</p>
+                  </div>
+                  <div className="text">
+                    <p className="text-gray-300 font-light">{author.website}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Maxer>
         </div>
       </div>
 
-      <div className="mx-auto max-w-md sm:max-w-xl">
+      <Maxer>
         {/* About */}
         <div className="p-4 sm:p-6 lg:p-8">
-          <h3 className="font-bold leading-6 pb-2">About</h3>
+          <h3 className="font-extrabold leading-6 pb-2 text-xl">About</h3>
           <p className="text-gray-600 font-normal">{author.description}</p>
           <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
 
@@ -147,10 +193,10 @@ const Lecture = () => {
           </div>
         </div>
 
-        <div className="bg-gray-100 pt-2" />
+        <div className="bg-gray-100 pt-2 sm:hidden" />
 
         {/* Uploaded videos */}
-        <div className="p-4 pt-8 sm:p-6 lg:p-8">
+        <SectionDiv>
           <h3 className="font-bold text-gray-800 leading-6 pb-2 text-2xl">
             Uploaded videos
           </h3>
@@ -160,13 +206,13 @@ const Lecture = () => {
           {lectures.map((lecture, index) => (
             <div
               className={
-                "py-4 px-2 rounded-md flex flex-row gap-4 items-center" +
-                (!(index % 2) ? " bg-gray-50" : null)
+                "p-2 rounded-md flex flex-row gap-4 items-center" +
+                (!(index % 2) ? " bg-gray-50" : "")
               }
             >
               <div>
                 <img
-                  className="object-cover shadow-lg rounded-lg h-20"
+                  className="object-cover shadow-lg rounded-md h-20"
                   src={lecture.image}
                   alt=""
                 />
@@ -192,17 +238,80 @@ const Lecture = () => {
               Load more lectures
             </button>
           </div>
-        </div>
+        </SectionDiv>
 
         {/* Responses */}
-        <div className="p-4 pt-8 sm:p-6 lg:p-8">
-          <h3 className="font-bold text-gray-800 leading-6 pb-2 text-2xl">
+        <SectionDiv>
+          <h3 className="font-bold text-gray-800 leading-6 text-2xl pb-4">
             Responses
           </h3>
 
-          <p>Filters</p>
-        </div>
-      </div>
+          <h3 className="font-semibold text-gray-400 leading-5 pb-2 text">
+            Add your comment
+          </h3>
+
+          {/* Comment Box */}
+          <div className="bg-gray-50 flex flex-row py-2 px-4 rounded-md gap-4">
+            <div>
+              <img
+                className="object-cover shadow-lg rounded-full h-12 w-12"
+                src={author.profileImage}
+                alt=""
+              />
+            </div>
+            <div className="flex-grow">
+              <input
+                className="h-12 bg-transparent px-2 font-normal leading-5 text w-full"
+                placeholder="Add a comment"
+              />
+            </div>
+            <div>
+              <ButtonBlack text="Comment" />
+            </div>
+          </div>
+
+          {/* Comments */}
+          <div>
+            <div className="flex flex-row py-2 px-4 rounded-md gap-1 items-center h-5 text-gray-500 pt-8 text-lg font-bold mb-4">
+              <ChatAlt2Icon className="h-5" />
+              <p>{comments.length} comments</p>
+            </div>
+
+            {comments.map((comment) => (
+              <div className="p-4 bg-gray-50 grid grid-flow-col gap-4 mt-2 rounded">
+                <div className="flex-grow">
+                  <img
+                    className="object-cover shadow-lg rounded-full h-12 w-12"
+                    src={comment.person.profileImage}
+                    alt=""
+                  />
+                </div>
+                <div className="flex-grow-0">
+                  <div className="">
+                    <h4 className="text-gray-900 leading-5 font-semibold">
+                      {comment.person.name}
+                    </h4>
+                    <p className="text-gray-500 leading-5 font-normal">
+                      {comment.posted}
+                    </p>
+                  </div>
+                  <div className="pt-2">
+                    <p className="text-gray-600 leading-5 font-normal">
+                      {comment.content}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            <div className="flex flex-row justify-center pt-6">
+              <button className="py-3 px-6 bg-gray-50 rounded text-base text-gray-700">
+                Load more comments
+              </button>
+            </div>
+          </div>
+        </SectionDiv>
+      </Maxer>
     </Layout>
   );
 };
