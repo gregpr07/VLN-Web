@@ -17,7 +17,7 @@ type Props = {
 const Layout = ({
   children,
   title = "Videolectures.net",
-  useMaxer = true,
+  useMaxer = false,
   useNavigation = true,
   useFooter = true,
 }: Props) => (
