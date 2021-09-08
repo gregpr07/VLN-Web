@@ -11,7 +11,7 @@ const ButtonRed = ({ action, text, className, Icon, ...props }: btnProps) => (
     onClick={action}
     {...props}
     className={
-      "bg-red-600 leading-4 text-white h-8 px-10 rounded-md font-normal block text-xs" +
+      "bg-red-600 leading-4 text-white h-10 px-7 rounded-md font-normal block text-sm" +
       " " +
       className
     }
@@ -19,10 +19,7 @@ const ButtonRed = ({ action, text, className, Icon, ...props }: btnProps) => (
     <div className="flex flex-row content-center">
       <p className="font-normal">{text}</p>
       {Icon && (
-        <Icon
-          className="h-4 w-4 ml-1 text-white block animate-pulse"
-          aria-hidden="true"
-        />
+        <Icon className="h-4 w-4 ml-1 text-white block" aria-hidden="true" />
       )}
     </div>
   </button>

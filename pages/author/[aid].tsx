@@ -4,12 +4,20 @@ import { useRouter } from "next/router";
 import BigMaxer from "@components/BigMaxer";
 import ButtonlessRed from "@components/ButtonLesRed";
 import ButtonRed from "@components/ButtonRed";
+// import {
+//   ChatAlt2Icon,
+//   DotsVerticalIcon,
+//   PlusIcon,
+//   SwitchVerticalIcon,
+// } from "@heroicons/react/solid";
+
 import {
   ChatAlt2Icon,
   DotsVerticalIcon,
   PlusIcon,
   SwitchVerticalIcon,
-} from "@heroicons/react/solid";
+} from "@heroicons/react/outline";
+
 import ButtonBlack from "@components/ButtonBlack";
 
 /* This example requires Tailwind CSS v2.0+ */
@@ -70,28 +78,29 @@ const author = {
 
 const lectures = [
   {
-    image: "http://hydro.ijs.si/v00c/10/ca2jffib7m2j4dahi7vpqmyljfct3ujr.jpg",
-    title: "Uvodni nagovor",
+    image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
+    title: "As Gregor Samsa awoke one morning out of restless dreyarnams",
     author: "Darko Darkic",
     date: "Nov 20, 2007",
     views: "100345",
   },
   {
-    image: "http://hydro.ijs.si/v00c/10/ca2jffib7m2j4dahi7vpqmyljfct3ujr.jpg",
-    title: "Uvodni nagovor",
+    image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
+    title: "Lecture 2: C/C++ Data Types - Interpretations",
     author: "Darko Darkic",
     date: "Nov 20, 2007",
     views: "100345",
   },
   {
-    image: "http://hydro.ijs.si/v00c/10/ca2jffib7m2j4dahi7vpqmyljfct3ujr.jpg",
-    title: "Uvodni nagovor",
+    image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
+    title:
+      "MedPath: Augmenting Health Risk Prediction via Medical Knowledge Paths",
     author: "Darko Darkic",
     date: "Nov 20, 2007",
     views: "100345",
   },
   {
-    image: "http://hydro.ijs.si/v00c/10/ca2jffib7m2j4dahi7vpqmyljfct3ujr.jpg",
+    image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
     title: "Uvodni nagovor",
     author: "Darko Darkic",
     date: "Nov 20, 2007",
@@ -140,7 +149,9 @@ const Lecture = () => {
   const { pid } = router.query;
 
   const Maxer = ({ children }) => (
-    <div className="mx-auto max-w-md sm:max-w-xl">{children}</div>
+    <div className="mx-auto max-w-md sm:max-w-xl lg:max-w-5xl xl:max-w-7xl">
+      {children}
+    </div>
   );
 
   const SectionDiv = ({ children }) => (
@@ -152,10 +163,10 @@ const Lecture = () => {
       <div className="flex-grow">
         <Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="inline-flex justify-center w-full rounded-md px-4 py-2 bg-gray-50 text-xs font-medium text-gray-700 hover:bg-gray-50 ring-none">
+            <Menu.Button className="inline-flex h-10 justify-center w-full rounded-md px-4 py-2 bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-50 ring-none">
               All categories
               <ChevronDownIcon
-                className="-mr-1 ml-2 h-4 w-4"
+                className="-mr-1 ml-2 h-6 w-4"
                 aria-hidden="true"
               />
             </Menu.Button>
@@ -198,10 +209,10 @@ const Lecture = () => {
         <div>
           <Menu as="div" className="relative inline-block text-left">
             <div>
-              <Menu.Button className="inline-flex justify-center w-full rounded-md px-4 py-2 bg-gray-50 text-xs font-medium text-gray-700 hover:bg-gray-50 ring-none">
+              <Menu.Button className="inline-flex  h-10justify-center w-full rounded-md px-4 py-2 bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-50 ring-none">
                 Sort by
                 <ChevronDownIcon
-                  className="-mr-1 ml-2 h-4 w-4"
+                  className="-mr-1 ml-2 h-6 w-4"
                   aria-hidden="true"
                 />
               </Menu.Button>
@@ -241,8 +252,8 @@ const Lecture = () => {
           </Menu>
         </div>
 
-        <div className="bg-gray-50 p-1 rounded-md">
-          <SwitchVerticalIcon className="h-6 text-gray-600" />
+        <div className="bg-gray-50 p-1 rounded-md h-10 w-10 flex justify-center items-center">
+          <SwitchVerticalIcon className=" h-6 w-6 text-gray-600" />
         </div>
       </div>
     </div>
@@ -251,13 +262,13 @@ const Lecture = () => {
   return (
     <Layout title="Lecture | XYZ" useMaxer={false}>
       {/* Header */}
-      <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-red-800 text-xs">
+      <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs">
         <div className="pb-4 sm:pb-8">
           <Maxer>
-            <div className="md:gap-6 md:space-y-0 gap-4 grid grid-flow-col">
-              <div className="">
+            <div className="md:gap-6 sm:px-6 md:space-y-0 gap-3 grid grid-flow-col justify-start">
+              <div className="h-20 w-20" style={{ aspectRatio: "1" }}>
                 <img
-                  className="object-cover shadow-lg rounded-lg h-24 w-24"
+                  className="object-cover shadow-lg rounded-lg h-full"
                   src={author.profileImage}
                   alt=""
                 />
@@ -265,10 +276,12 @@ const Lecture = () => {
               <div className="md:col-span-2">
                 <div className="">
                   <div className="text-white font-medium space-y-1">
-                    <h3 className="font-extrabold text-2xl leading-8 ">
+                    <h3 className="font-extrabold text-2xl leading-8">
                       {author.name}
                     </h3>
-                    <p className="text-white font-light">{author.title}</p>
+                    <p className="text-white font-light leading-4">
+                      {author.title}
+                    </p>
                   </div>
                   <div className="text">
                     <p className="text-gray-300 font-light">{author.website}</p>
@@ -283,16 +296,18 @@ const Lecture = () => {
       <Maxer>
         {/* About */}
         <div className="p-4 sm:p-6 lg:p-8">
-          <h3 className="font-extrabold leading-6 pb-2">About</h3>
-          <p className="text-gray-600 font-normal text-xs">
+          <h3 className="font-bold leading-6 pb-2">About</h3>
+          <p className="text-gray-600 font-normal text-sm leading-5">
             {author.description}
           </p>
-          <ButtonlessRed className="pt-2">Read More</ButtonlessRed>
+          <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
 
-          <div className="py-8 flex flex-row gap-8 items-center">
-            <ButtonRed Icon={PlusIcon} text="Follow" />
+          <div className="py-10 flex flex-row gap-6 items-center">
+            <div className="sm:flex-grow">
+              <ButtonRed Icon={PlusIcon} text="Follow" />
+            </div>
             <div>
-              <p className="text-gray-900 font-semibold text-xs">
+              <p className="text-gray-900 font-extrabold text-sm">
                 Get in touch
               </p>
               <div className="flex flex-row gap-4 pt-2">
@@ -315,44 +330,57 @@ const Lecture = () => {
 
         {/* Uploaded videos */}
         <SectionDiv>
-          <h3 className="font-bold text-gray-800 leading-6 pb-2 text-2xl">
+          <h3 className="font-extrabold text-gray-800 leading-6 pb-2 text-xl">
             Uploaded videos
           </h3>
 
           <Filters />
 
-          {lectures.map((lecture, index) => (
-            <div
-              className={
-                "p-2 rounded-md flex flex-row gap-4 items-center" +
-                (!(index % 2) ? " bg-gray-50" : "")
-              }
-            >
-              <div>
-                <img
-                  className="object-cover shadow-lg rounded-md h-16"
-                  src={lecture.image}
-                  alt=""
-                />
-              </div>
-              <div className="text-xs">
-                <h4 className="leading-4 text-gray-900  font-semibold pb-1">
-                  {lecture.title}
-                </h4>
-                <p className="text-gray-500 font-medium leading-4">
-                  {lecture.author}
-                </p>
-                <div className="flex flex-row text-gray-500 font-normal leading-4 gap-2">
-                  <p>{lecture.date}</p>
-                  <p>&middot;</p>
-                  <p>{lecture.views} views</p>
+          <div className="grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+            {lectures.map((lecture, index) => (
+              <div
+                className={
+                  "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
+                  (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
+                  " " +
+                  "md:shadow md:grid-flow-row md:p-0 md:gap-0 md:items-start"
+                }
+              >
+                <div>
+                  <img
+                    className="object-cover shadow-lg rounded md:rounded-b-none md:shadow-none h-14 w-24 md:h-40 md:w-full"
+                    src={lecture.image}
+                    alt=""
+                  />
+                </div>
+                <div className="text-xs md:p-4">
+                  <h4 className="leading-4 text-gray-900 font-semibold pb-1">
+                    {lecture.title}
+                  </h4>
+                  <div className="md:py-4">
+                    <p className="text-gray-500 font-normal leading-4">
+                      {lecture.author}
+                    </p>
+                    <div className="flex flex-row text-gray-500 font-normal leading-4 gap-1 ">
+                      <p>{lecture.date}</p>
+                      <p>&middot;</p>
+                      <p>{lecture.views} views</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:block">
+                    <div className="flex">
+                      <div className="bg-red-100 rounded-full px-4 text-red-700">
+                        Workshop
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
 
           <div className="flex flex-row justify-center pt-6">
-            <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700">
+            <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
               Load more lectures
             </button>
           </div>
@@ -360,72 +388,74 @@ const Lecture = () => {
 
         {/* Responses */}
         <SectionDiv>
-          <h3 className="font-bold text-gray-800 leading-6 text-2xl pb-4">
-            Responses
-          </h3>
+          <div className="md:max-w-2xl">
+            <h3 className="font-extrabold text-gray-800 leading-6 pb-6 text-xl">
+              Responses
+            </h3>
 
-          <h3 className="font-semibold text-gray-400 leading-5 pb-2 text-sm">
-            Add your comment
-          </h3>
+            <h3 className="font-semibold text-gray-400 leading-5 pb-2 text-sm">
+              Write your response
+            </h3>
 
-          {/* Comment Box */}
-          <div className="bg-gray-50 flex flex-row py-2 px-4 rounded-md gap-4">
-            <div>
-              <img
-                className="object-cover shadow-lg rounded-full h-10 w-10"
-                src={author.profileImage}
-                alt=""
-              />
-            </div>
-            <div className="flex-grow">
-              <input
-                className="h-10 bg-transparent px-2 font-normal leading-5 text w-full text-sm"
-                placeholder="Add a comment"
-              />
-            </div>
-            <div>
-              <ButtonBlack text="Comment" />
-            </div>
-          </div>
-
-          {/* Comments */}
-          <div>
-            <div className="flex flex-row py-2 px-4 rounded-md gap-1 items-center h-5 text-gray-500 pt-8 text-lg font-bold mb-4">
-              <ChatAlt2Icon className="h-5" />
-              <p className="text-sm">{comments.length} comments</p>
-            </div>
-
-            {comments.map((comment) => (
-              <div className="p-4 bg-gray-50 grid grid-flow-col gap-4 mt-2 rounded">
-                <div className="flex-grow">
-                  <img
-                    className="object-cover shadow-lg rounded-full h-10 w-10"
-                    src={comment.person.profileImage}
-                    alt=""
-                  />
-                </div>
-                <div className="flex-grow-0 text-xs">
-                  <div className="">
-                    <h4 className="text-gray-900 leading-5 font-semibold">
-                      {comment.person.name}
-                    </h4>
-                    <p className="text-gray-500 leading-5 font-normal">
-                      {comment.posted}
-                    </p>
-                  </div>
-                  <div className="pt-1">
-                    <p className="text-gray-600 leading-5 font-normal">
-                      {comment.content}
-                    </p>
-                  </div>
-                </div>
+            {/* Comment Box */}
+            <div className="bg-gray-50 flex flex-row py-2 px-2 rounded-md gap-1.5">
+              <div>
+                <img
+                  className="object-cover shadow-lg rounded-full h-10 w-10"
+                  src={author.profileImage}
+                  alt=""
+                />
               </div>
-            ))}
+              <div className="flex-grow">
+                <input
+                  className="h-10 bg-transparent px-2 font-normal leading-5 text w-full text-sm"
+                  placeholder="Write comment ..."
+                />
+              </div>
+              <div>
+                <ButtonBlack text="Comment" />
+              </div>
+            </div>
 
-            <div className="flex flex-row justify-center pt-6">
-              <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700">
-                Load more comments
-              </button>
+            {/* Comments */}
+            <div>
+              <div className="flex flex-row py-2 px-4 rounded-md gap-1 items-center h-5 text-gray-500 pt-10 text-lg font-bold mb-4">
+                <ChatAlt2Icon className="h-5" />
+                <p className="text-sm">{comments.length} comments</p>
+              </div>
+
+              {comments.map((comment) => (
+                <div className="p-4 bg-gray-50 grid grid-flow-col gap-4 mt-2 rounded">
+                  <div className="flex-grow">
+                    <img
+                      className="object-cover shadow-lg rounded-full h-10 w-10"
+                      src={comment.person.profileImage}
+                      alt=""
+                    />
+                  </div>
+                  <div className="flex-grow-0 text-xs">
+                    <div className="">
+                      <h4 className="text-gray-900 leading-5 font-semibold">
+                        {comment.person.name}
+                      </h4>
+                      <p className="text-gray-500 leading-5 font-normal">
+                        {comment.posted}
+                      </p>
+                    </div>
+                    <div className="pt-1">
+                      <p className="text-gray-600 leading-5 font-normal">
+                        {comment.content}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <div className="flex flex-row justify-center pt-6">
+                <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
+                  Load more comments
+                </button>
+              </div>
             </div>
           </div>
         </SectionDiv>

@@ -27,7 +27,12 @@ const Layout = ({
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    {useNavigation && <Navigation />}
+    {useNavigation && (
+      <>
+        <Navigation />
+        <div className="pt-10" />
+      </>
+    )}
     {useMaxer ? <Maxer>{children}</Maxer> : children}
     {useFooter && <Footer />}
   </div>

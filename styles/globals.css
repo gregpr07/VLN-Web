@@ -6,3 +6,8 @@
   font-family: ProximaVara;
   src: url("./fonts/font.woff");
 }
+
+/* body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+} */

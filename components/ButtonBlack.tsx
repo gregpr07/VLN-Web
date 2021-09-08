@@ -11,7 +11,7 @@ const ButtonBlack = ({ action, text, className, Icon, ...props }: btnProps) => (
     onClick={action}
     {...props}
     className={
-      "bg-black leading-4 text-white py-2 h-10 px-5 rounded-sm font-normal block text-sm" +
+      "bg-black leading-4 text-white py-2 h-10 px-4 rounded-sm font-medium block text-sm" +
       " " +
       className
     }

@@ -51,7 +51,7 @@ const Navbar = ({ token, rmToken }) => {
       >
         {({ open }) => (
           <>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="fixed max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow w-full z-50">
               <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
                 <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
@@ -67,7 +67,7 @@ const Navbar = ({ token, rmToken }) => {
                   </div>
                 </div>
                 <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
-                  <div className="flex items-center px-6 py-4 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
+                  <div className="flex items-center px-6 py-2 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
                     <div className="w-full">
                       <label htmlFor="search" className="sr-only">
                         Search
@@ -75,14 +75,14 @@ const Navbar = ({ token, rmToken }) => {
                       <div className="relative">
                         <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
                           <SearchIcon
-                            className="h-5 w-5 text-gray-400"
+                            className="h-5 w-5 text-gray-400 text-sm font-medium"
                             aria-hidden="true"
                           />
                         </div>
                         <input
                           id="search"
                           name="search"
-                          className="block w-full border-none bg-gray-50 rounded-md py-3 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
+                          className="block h-10 w-full border-none bg-gray-50 rounded-md py-3 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
                           placeholder="Search"
                           type="search"
                         />
@@ -92,7 +92,7 @@ const Navbar = ({ token, rmToken }) => {
                 </div>
                 <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
                   {/* Mobile menu button */}
-                  <Popover.Button className="-mx-2 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <Popover.Button className="-mx-2 bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                     <span className="sr-only">Open menu</span>
                     {open ? (
                       <XIcon className="block h-6 w-6" aria-hidden="true" />
