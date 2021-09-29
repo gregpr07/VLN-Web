@@ -1,4 +1,4 @@
-import { Player } from "video-react";
+import ReactPlayer from "react-player";
 import { useState, useRef, useEffect } from "react";
 
 import Layout from "@components/Layout";
@@ -6,7 +6,7 @@ import Layout from "@components/Layout";
 import { useRouter } from "next/router";
 import BigMaxer from "@components/BigMaxer";
 
-let player: HTMLVideoElement;
+let player: ReactPlayer;
 
 const Lecture = () => {
   const router = useRouter();
@@ -15,9 +15,9 @@ const Lecture = () => {
   return (
     <Layout title="Lecture | XYZ" useMaxer={false}>
       <BigMaxer>
-        <div className="grid grid-cols-2 gap-0">
+        <div className="md:grid md:grid-cols-2 gap-0">
           <div className="">
-            <Player
+            <ReactPlayer
               ref={(playerRef: HTMLVideoElement) => {
                 player = playerRef;
               }}

@@ -10,6 +10,7 @@ import { removeToken } from "../services/storage/actions";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ButtonRed from "./ButtonRed";
 
 const user = {
   name: "Chelsea Hagon",
@@ -51,22 +52,27 @@ const Navbar = ({ token, rmToken }) => {
       >
         {({ open }) => (
           <>
-            <div className="fixed max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow w-full z-50">
-              <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
-                <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
+            <div className="fixed  mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow w-full z-50">
+              <div className="relative flex justify-between lg:gap-8 h-14">
+                <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static">
                   <div className="flex-shrink-0 flex items-center">
                     <Link href="/">
                       <a>
                         <img
-                          className="block h-8 w-auto"
+                          className="block lg:hidden h-8 w-auto"
                           src="/images/logo.png"
+                          alt="Workflow"
+                        />
+                        <img
+                          className="lg:block hidden h-8 w-auto"
+                          src="/images/logo-wide-dark.png"
                           alt="Workflow"
                         />
                       </a>
                     </Link>
                   </div>
                 </div>
-                <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
+                <div className="min-w-0 flex-1 md:px-8 lg:px-0 flex-grow max-w-2xl">
                   <div className="flex items-center px-6 py-2 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
                     <div className="w-full">
                       <label htmlFor="search" className="sr-only">
@@ -90,7 +96,7 @@ const Navbar = ({ token, rmToken }) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
+                <div className="flex items-center md:right-0 md:inset-y-0 lg:hidden flex-grow-0">
                   {/* Mobile menu button */}
                   <Popover.Button className="-mx-2 bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                     <span className="sr-only">Open menu</span>
@@ -176,18 +182,16 @@ const Navbar = ({ token, rmToken }) => {
                     </Menu>
                   </div>
                 ) : (
-                  <div className="hidden lg:flex items-center justify-end md:flex-1 lg:w-0">
-                    <Link href="login">
-                      <a className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                  <div className="hidden lg:flex lg:flex-row items-center justify-end gap-6">
+                    <Link href="/login">
+                      <a className="whitespace-nowrap text-sm font-normal text-gray-700 hover:text-gray-900">
                         Sign in
                       </a>
                     </Link>
-                    <a
-                      href="#"
-                      className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                    >
-                      Sign up
-                    </a>
+                    <ButtonRed
+                      // href="#"
+                      text="Register"
+                    />
                   </div>
                 )}
               </div>

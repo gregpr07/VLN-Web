@@ -155,7 +155,7 @@ const Lecture = () => {
   );
 
   const SectionDiv = ({ children }) => (
-    <div className="p-4 pt-8 sm:p-6 lg:p-8">{children}</div>
+    <div className="p-4 pt-8 sm:p-6 lg:p-8 lg:pt-0">{children}</div>
   );
 
   const Filters = () => (
@@ -262,11 +262,19 @@ const Lecture = () => {
   return (
     <Layout title="Lecture | XYZ" useMaxer={false}>
       {/* Header */}
-      <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs">
-        <div className="pb-4 sm:pb-8">
+      <div
+        className={
+          "px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs " +
+          "lg:max-h-44 md:text-sm"
+        }
+      >
+        <div className="pb-4 sm:pb-8 md:pb-4">
           <Maxer>
             <div className="md:gap-6 sm:px-6 md:space-y-0 gap-3 grid grid-flow-col justify-start">
-              <div className="h-20 w-20" style={{ aspectRatio: "1" }}>
+              <div
+                className="h-20 w-20 md:h-44 md:w-44"
+                style={{ aspectRatio: "1" }}
+              >
                 <img
                   className="object-cover shadow-lg rounded-lg h-full"
                   src={author.profileImage}
@@ -276,7 +284,7 @@ const Lecture = () => {
               <div className="md:col-span-2">
                 <div className="">
                   <div className="text-white font-medium space-y-1">
-                    <h3 className="font-extrabold text-2xl leading-8">
+                    <h3 className="font-extrabold text-2xl md:text-5xl leading-8 md:leading-none">
                       {author.name}
                     </h3>
                     <p className="text-white font-light leading-4">
@@ -293,173 +301,189 @@ const Lecture = () => {
         </div>
       </div>
 
-      <Maxer>
-        {/* About */}
-        <div className="p-4 sm:p-6 lg:p-8">
-          <h3 className="font-bold leading-6 pb-2">About</h3>
-          <p className="text-gray-600 font-normal text-sm leading-5">
-            {author.description}
-          </p>
-          <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
+      <div className="lg:px-8">
+        <Maxer>
+          {/* About */}
+          <div className="p-4 sm:p-6 lg:p-8 lg:px-6">
+            <div className="lg:grid lg:grid-flow-col gap-12">
+              <div className="order-1">
+                <h3 className="font-bold leading-6 pb-2 md:text-lg">About</h3>
+                <p className="text-gray-600 font-normal text-sm leading-5">
+                  {author.description}
+                </p>
+                <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
+              </div>
 
-          <div className="py-10 flex flex-row gap-6 items-center">
-            <div className="sm:flex-grow">
-              <ButtonRed Icon={PlusIcon} text="Follow" />
-            </div>
-            <div>
-              <p className="text-gray-900 font-extrabold text-sm">
-                Get in touch
-              </p>
-              <div className="flex flex-row gap-4 pt-2">
-                {author.socials.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-gray-400 hover:text-gray-500"
-                  >
-                    <span className="sr-only">{item.name}</span>
-                    <item.icon className="h-6 w-6" aria-hidden="true" />
-                  </a>
-                ))}
+              <div className="py-10 flex flex-row gap-6 lg:gap-4 items-center lg:items-start lg:flex-col lg:w-44">
+                <div className="sm:flex-grow">
+                  <ButtonRed
+                    className="lg:w-44 lg:flex lg:justify-center items-center"
+                    Icon={PlusIcon}
+                    text="Follow"
+                  />
+                </div>
+                <div>
+                  <p className="text-gray-900 font-extrabold text-sm">
+                    Get in touch
+                  </p>
+                  <div className="flex flex-row gap-4 pt-2">
+                    {author.socials.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className="text-gray-400 hover:text-gray-500"
+                      >
+                        <span className="sr-only">{item.name}</span>
+                        <item.icon className="h-6 w-6" aria-hidden="true" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden lg:block order-2 col-span-4">
+                <h3 className="font-bold leading-6 pb-2 md:text-lg">
+                  Related categories
+                </h3>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="bg-gray-100 pt-2 sm:hidden" />
+          <div className="bg-gray-100 pt-2 sm:hidden" />
 
-        {/* Uploaded videos */}
-        <SectionDiv>
-          <h3 className="font-extrabold text-gray-800 leading-6 pb-2 text-xl">
-            Uploaded videos
-          </h3>
+          {/* Uploaded videos */}
+          <SectionDiv>
+            <h3 className="font-extrabold text-gray-800 leading-6 pb-2 text-xl">
+              Uploaded videos
+            </h3>
 
-          <Filters />
+            <Filters />
 
-          <div className="grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-            {lectures.map((lecture, index) => (
-              <div
-                className={
-                  "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
-                  (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
-                  " " +
-                  "md:shadow md:grid-flow-row md:p-0 md:gap-0 md:items-start"
-                }
-              >
-                <div>
-                  <img
-                    className="object-cover shadow-lg rounded md:rounded-b-none md:shadow-none h-14 w-24 md:h-40 md:w-full"
-                    src={lecture.image}
-                    alt=""
-                  />
-                </div>
-                <div className="text-xs md:p-4">
-                  <h4 className="leading-4 text-gray-900 font-semibold pb-1">
-                    {lecture.title}
-                  </h4>
-                  <div className="md:py-4">
-                    <p className="text-gray-500 font-normal leading-4">
-                      {lecture.author}
-                    </p>
-                    <div className="flex flex-row text-gray-500 font-normal leading-4 gap-1 ">
-                      <p>{lecture.date}</p>
-                      <p>&middot;</p>
-                      <p>{lecture.views} views</p>
-                    </div>
+            <div className="grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+              {lectures.map((lecture, index) => (
+                <div
+                  className={
+                    "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
+                    (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
+                    " " +
+                    "md:shadow md:grid-flow-row md:p-0 md:gap-0 md:items-start"
+                  }
+                >
+                  <div>
+                    <img
+                      className="object-cover shadow-lg rounded md:rounded-b-none md:shadow-none h-14 w-24 md:h-40 md:w-full"
+                      src={lecture.image}
+                      alt=""
+                    />
                   </div>
-                  <div className="hidden md:block">
-                    <div className="flex">
-                      <div className="bg-red-100 rounded-full px-4 text-red-700">
-                        Workshop
+                  <div className="text-xs md:p-4">
+                    <h4 className="leading-4 text-gray-900 font-semibold pb-1">
+                      {lecture.title}
+                    </h4>
+                    <div className="md:py-4">
+                      <p className="text-gray-500 font-normal leading-4">
+                        {lecture.author}
+                      </p>
+                      <div className="flex flex-row text-gray-500 font-normal leading-4 gap-1 ">
+                        <p>{lecture.date}</p>
+                        <p>&middot;</p>
+                        <p>{lecture.views} views</p>
+                      </div>
+                    </div>
+                    <div className="hidden md:block">
+                      <div className="flex">
+                        <div className="bg-red-100 rounded-full px-4 text-red-700">
+                          Workshop
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-row justify-center pt-6">
-            <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
-              Load more lectures
-            </button>
-          </div>
-        </SectionDiv>
-
-        {/* Responses */}
-        <SectionDiv>
-          <div className="md:max-w-2xl">
-            <h3 className="font-extrabold text-gray-800 leading-6 pb-6 text-xl">
-              Responses
-            </h3>
-
-            <h3 className="font-semibold text-gray-400 leading-5 pb-2 text-sm">
-              Write your response
-            </h3>
-
-            {/* Comment Box */}
-            <div className="bg-gray-50 flex flex-row py-2 px-2 rounded-md gap-1.5">
-              <div>
-                <img
-                  className="object-cover shadow-lg rounded-full h-10 w-10"
-                  src={author.profileImage}
-                  alt=""
-                />
-              </div>
-              <div className="flex-grow">
-                <input
-                  className="h-10 bg-transparent px-2 font-normal leading-5 text w-full text-sm"
-                  placeholder="Write comment ..."
-                />
-              </div>
-              <div>
-                <ButtonBlack text="Comment" />
-              </div>
-            </div>
-
-            {/* Comments */}
-            <div>
-              <div className="flex flex-row py-2 px-4 rounded-md gap-1 items-center h-5 text-gray-500 pt-10 text-lg font-bold mb-4">
-                <ChatAlt2Icon className="h-5" />
-                <p className="text-sm">{comments.length} comments</p>
-              </div>
-
-              {comments.map((comment) => (
-                <div className="p-4 bg-gray-50 grid grid-flow-col gap-4 mt-2 rounded">
-                  <div className="flex-grow">
-                    <img
-                      className="object-cover shadow-lg rounded-full h-10 w-10"
-                      src={comment.person.profileImage}
-                      alt=""
-                    />
-                  </div>
-                  <div className="flex-grow-0 text-xs">
-                    <div className="">
-                      <h4 className="text-gray-900 leading-5 font-semibold">
-                        {comment.person.name}
-                      </h4>
-                      <p className="text-gray-500 leading-5 font-normal">
-                        {comment.posted}
-                      </p>
-                    </div>
-                    <div className="pt-1">
-                      <p className="text-gray-600 leading-5 font-normal">
-                        {comment.content}
-                      </p>
-                    </div>
-                  </div>
-                </div>
               ))}
+            </div>
 
-              <div className="flex flex-row justify-center pt-6">
-                <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
-                  Load more comments
-                </button>
+            <div className="flex flex-row justify-center pt-6">
+              <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
+                Load more lectures
+              </button>
+            </div>
+          </SectionDiv>
+
+          {/* Responses */}
+          <SectionDiv>
+            <div className="md:max-w-2xl">
+              <h3 className="font-extrabold text-gray-800 leading-6 pb-6 text-xl">
+                Responses
+              </h3>
+
+              <h3 className="font-semibold text-gray-400 leading-5 pb-2 text-sm">
+                Write your response
+              </h3>
+
+              {/* Comment Box */}
+              <div className="bg-gray-50 flex flex-row py-2 px-2 rounded-md gap-1.5">
+                <div>
+                  <img
+                    className="object-cover shadow-lg rounded-full h-10 w-10"
+                    src={author.profileImage}
+                    alt=""
+                  />
+                </div>
+                <div className="flex-grow">
+                  <input
+                    className="h-10 bg-transparent px-2 font-normal leading-5 text w-full text-sm"
+                    placeholder="Write comment ..."
+                  />
+                </div>
+                <div>
+                  <ButtonBlack text="Comment" />
+                </div>
+              </div>
+
+              {/* Comments */}
+              <div>
+                <div className="flex flex-row py-2 px-4 rounded-md gap-1 items-center h-5 text-gray-500 pt-10 text-lg font-bold mb-4">
+                  <ChatAlt2Icon className="h-5" />
+                  <p className="text-sm">{comments.length} comments</p>
+                </div>
+
+                {comments.map((comment) => (
+                  <div className="p-4 bg-gray-50 grid grid-flow-col gap-4 mt-2 rounded">
+                    <div className="flex-grow">
+                      <img
+                        className="object-cover shadow-lg rounded-full h-10 w-10"
+                        src={comment.person.profileImage}
+                        alt=""
+                      />
+                    </div>
+                    <div className="flex-grow-0 text-xs">
+                      <div className="">
+                        <h4 className="text-gray-900 leading-5 font-semibold">
+                          {comment.person.name}
+                        </h4>
+                        <p className="text-gray-500 leading-5 font-normal">
+                          {comment.posted}
+                        </p>
+                      </div>
+                      <div className="pt-1">
+                        <p className="text-gray-600 leading-5 font-normal">
+                          {comment.content}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="flex flex-row justify-center pt-6">
+                  <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
+                    Load more comments
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </SectionDiv>
-      </Maxer>
+          </SectionDiv>
+        </Maxer>
+      </div>
     </Layout>
   );
 };

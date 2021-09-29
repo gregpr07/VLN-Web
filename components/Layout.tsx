@@ -30,7 +30,7 @@ const Layout = ({
     {useNavigation && (
       <>
         <Navigation />
-        <div className="pt-10" />
+        <div className="pt-14" />
       </>
     )}
     {useMaxer ? <Maxer>{children}</Maxer> : children}

@@ -21,8 +21,7 @@
     "redux": "^4.1.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "tailwindcss": "^2.2.4",
-    "video-react": "^0.14.1"
+    "tailwindcss": "^2.2.4"
   },
   "devDependencies": {
     "@types/node": "^15.14.0",
