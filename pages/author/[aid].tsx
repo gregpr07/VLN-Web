@@ -24,6 +24,7 @@ import ButtonBlack from "@components/ButtonBlack";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import Lectures from "@components/Lectures";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -83,6 +84,7 @@ const lectures = [
     author: "Darko Darkic",
     date: "Nov 20, 2007",
     views: "100345",
+    type: "Lecture",
   },
   {
     image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
@@ -90,6 +92,7 @@ const lectures = [
     author: "Darko Darkic",
     date: "Nov 20, 2007",
     views: "100345",
+    type: "Lecture",
   },
   {
     image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
@@ -98,6 +101,7 @@ const lectures = [
     author: "Darko Darkic",
     date: "Nov 20, 2007",
     views: "100345",
+    type: "Lecture",
   },
   {
     image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
@@ -105,6 +109,7 @@ const lectures = [
     author: "Darko Darkic",
     date: "Nov 20, 2007",
     views: "100345",
+    type: "Lecture",
   },
 ];
 
@@ -340,6 +345,10 @@ const Lecture = () => {
                   </div>
                 </div>
               </div>
+
+              <Filters />
+
+              <Lectures lectures={lectures} />
 
               <div className="hidden lg:block order-2 col-span-4">
                 <h3 className="font-bold leading-6 pb-2 md:text-lg">

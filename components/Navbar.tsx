@@ -11,6 +11,7 @@ import { removeToken } from "../services/storage/actions";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ButtonRed from "./ButtonRed";
+import ButtonlessRed from "./ButtonLesRed";
 
 const user = {
   name: "Chelsea Hagon",
@@ -52,9 +53,9 @@ const Navbar = ({ token, rmToken }) => {
       >
         {({ open }) => (
           <>
-            <div className="fixed  mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow w-full z-50">
-              <div className="relative flex justify-between lg:gap-8 h-14">
-                <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static">
+            <div className="fixed max-w-none mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow w-full z-50">
+              <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
+                <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
                     <Link href="/">
                       <a>
@@ -182,16 +183,18 @@ const Navbar = ({ token, rmToken }) => {
                     </Menu>
                   </div>
                 ) : (
-                  <div className="hidden lg:flex lg:flex-row items-center justify-end gap-6">
-                    <Link href="/login">
-                      <a className="whitespace-nowrap text-sm font-normal text-gray-700 hover:text-gray-900">
-                        Sign in
+                  <div className="hidden lg:flex items-center justify-start md:flex-1 lg:w-0">
+                    <Link href="login">
+                      <a className="whitespace-nowrap text-base content-center font-medium text-gray-500 hover:text-gray-900">
+                        <ButtonlessRed>Sign in</ButtonlessRed>
                       </a>
                     </Link>
-                    <ButtonRed
-                      // href="#"
-                      text="Register"
-                    />
+                    <a
+                      href="#"
+                      className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white "
+                    >
+                      <ButtonRed text="Sign up" />
+                    </a>
                   </div>
                 )}
               </div>
