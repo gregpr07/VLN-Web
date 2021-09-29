@@ -10,6 +10,8 @@ import { removeToken } from "../services/storage/actions";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ButtonRed from "./ButtonRed";
+import ButtonlessRed from "./ButtonLesRed";
 
 const user = {
   name: "Chelsea Hagon",
@@ -51,7 +53,7 @@ const Navbar = ({ token, rmToken }) => {
       >
         {({ open }) => (
           <>
-            <div className="fixed max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow w-full z-50">
+            <div className="fixed max-w-none mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow w-full z-50">
               <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
                 <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
                   <div className="flex-shrink-0 flex items-center">
@@ -176,17 +178,17 @@ const Navbar = ({ token, rmToken }) => {
                     </Menu>
                   </div>
                 ) : (
-                  <div className="hidden lg:flex items-center justify-end md:flex-1 lg:w-0">
+                  <div className="hidden lg:flex items-center justify-start md:flex-1 lg:w-0">
                     <Link href="login">
-                      <a className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                        Sign in
+                      <a className="whitespace-nowrap text-base content-center font-medium text-gray-500 hover:text-gray-900">
+                        <ButtonlessRed>Sign in</ButtonlessRed>
                       </a>
                     </Link>
                     <a
                       href="#"
-                      className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                      className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white "
                     >
-                      Sign up
+                      <ButtonRed text="Sign up"/>
                     </a>
                   </div>
                 )}
