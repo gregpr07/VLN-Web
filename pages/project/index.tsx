@@ -4,8 +4,6 @@ import { useRouter } from "next/router";
 import BigMaxer from "@components/BigMaxer";
 import ButtonlessRed from "@components/ButtonLesRed";
 import ButtonRed from "@components/ButtonRed";
-import Maxer from "@components/BigMaxer";
-
 // import {
 //   ChatAlt2Icon,
 //   DotsVerticalIcon,
@@ -145,30 +143,28 @@ const comments = [
   },
 ];
 
-const Lecture = () => {
+const Project = () => {
   const router = useRouter();
   const { pid } = router.query;
 
+  const Maxer = ({ children }) => (
+    <div className="mx-auto max-w-md sm:max-w-xl lg:max-w-5xl xl:max-w-7xl">
+      {children}
+    </div>
+  );
+
   const SectionDiv = ({ children }) => (
-    <div className="p-4 pt-8 sm:p-6 lg:p-8 lg:pt-0">{children}</div>
+    <div className="p-4 pt-8 sm:p-6 lg:p-8">{children}</div>
   );
 
   return (
     <Layout title="Lecture | XYZ" useMaxer={false}>
       {/* Header */}
-      <div
-        className={
-          "px-4 sm:px-0 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs " +
-          "lg:max-h-44 md:text-sm"
-        }
-      >
-        <div className="pb-4 sm:pb-8 md:pb-4">
+      <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs">
+        <div className="pb-4 sm:pb-8">
           <Maxer>
             <div className="md:gap-6 sm:px-6 md:space-y-0 gap-3 grid grid-flow-col justify-start">
-              <div
-                className="h-20 w-20 md:h-44 md:w-44"
-                style={{ aspectRatio: "1" }}
-              >
+              <div className="h-20 w-20" style={{ aspectRatio: "1" }}>
                 <img
                   className="object-cover shadow-lg rounded-lg h-full"
                   src={author.profileImage}
@@ -178,7 +174,7 @@ const Lecture = () => {
               <div className="md:col-span-2">
                 <div className="">
                   <div className="text-white font-medium space-y-1">
-                    <h3 className="font-extrabold text-2xl md:text-5xl leading-8 md:leading-none">
+                    <h3 className="font-extrabold text-2xl leading-8">
                       {author.name}
                     </h3>
                     <p className="text-white font-light leading-4">
@@ -195,150 +191,134 @@ const Lecture = () => {
         </div>
       </div>
 
-      <div className="lg:px-8">
-        <Maxer>
-          {/* About */}
-          <div className="p-4 sm:p-6 lg:p-8 lg:px-6">
-            <div className="lg:grid lg:grid-flow-col gap-12">
-              <div className="order-1">
-                <h3 className="font-bold leading-6 pb-2 md:text-lg">About</h3>
-                <p className="text-gray-600 font-normal text-sm leading-5">
-                  {author.description}
-                </p>
-                <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
-              </div>
+      <Maxer>
+        {/* About */}
+        <div className="p-4 sm:p-6 lg:p-8">
+          <h3 className="font-bold leading-6 pb-2">About</h3>
+          <p className="text-gray-600 font-normal text-sm leading-5">
+            {author.description}
+          </p>
+          <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
 
-              <div className="py-10 flex flex-row gap-6 lg:gap-4 items-center lg:items-start lg:flex-col lg:w-44">
-                <div className="sm:flex-grow">
-                  <ButtonRed
-                    className="lg:w-44 lg:flex lg:justify-center items-center"
-                    Icon={PlusIcon}
-                    text="Follow"
-                  />
-                </div>
-                <div>
-                  <p className="text-gray-900 font-extrabold text-sm">
-                    Get in touch
-                  </p>
-                  <div className="flex flex-row gap-4 pt-2">
-                    {author.socials.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="text-gray-400 hover:text-gray-500"
-                      >
-                        <span className="sr-only">{item.name}</span>
-                        <item.icon className="h-6 w-6" aria-hidden="true" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="hidden lg:block order-2 col-span-4">
-                <h3 className="font-bold leading-6 pb-2 md:text-lg">
-                  Related categories
-                </h3>
+          <div className="py-10 flex flex-row gap-6 items-center">
+            <div className="sm:flex-grow">
+              <ButtonRed Icon={PlusIcon} text="Follow" />
+            </div>
+            <div>
+              <p className="text-gray-900 font-extrabold text-sm">
+                Get in touch
+              </p>
+              <div className="flex flex-row gap-4 pt-2">
+                {author.socials.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-gray-400 hover:text-gray-500"
+                  >
+                    <span className="sr-only">{item.name}</span>
+                    <item.icon className="h-6 w-6" aria-hidden="true" />
+                  </a>
+                ))}
               </div>
             </div>
           </div>
+        </div>
 
-          <div className="bg-gray-100 pt-2 sm:hidden" />
+        <div className="bg-gray-100 pt-2 sm:hidden" />
 
-          {/* Uploaded videos */}
-          <SectionDiv>
-            <h3 className="font-extrabold text-gray-800 leading-6 pb-2 text-xl">
-              Uploaded videos
+        {/* Uploaded videos */}
+        <SectionDiv>
+          <h3 className="font-extrabold text-gray-800 leading-6 pb-2 text-xl">
+            Uploaded videos
+          </h3>
+
+          <Filters />
+
+          <Lectures lectures={lectures} />
+
+          <div className="flex flex-row justify-center pt-6">
+            <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
+              Load more lectures
+            </button>
+          </div>
+        </SectionDiv>
+
+        {/* Responses */}
+        <SectionDiv>
+          <div className="md:max-w-2xl">
+            <h3 className="font-extrabold text-gray-800 leading-6 pb-6 text-xl">
+              Responses
             </h3>
 
-            <Filters />
+            <h3 className="font-semibold text-gray-400 leading-5 pb-2 text-sm">
+              Write your response
+            </h3>
 
-            <Lectures lectures={lectures} />
-
-            <div className="flex flex-row justify-center pt-6">
-              <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
-                Load more lectures
-              </button>
+            {/* Comment Box */}
+            <div className="bg-gray-50 flex flex-row py-2 px-2 rounded-md gap-1.5">
+              <div>
+                <img
+                  className="object-cover shadow-lg rounded-full h-10 w-10"
+                  src={author.profileImage}
+                  alt=""
+                />
+              </div>
+              <div className="flex-grow">
+                <input
+                  className="h-10 bg-transparent px-2 font-normal leading-5 text w-full text-sm"
+                  placeholder="Write comment ..."
+                />
+              </div>
+              <div>
+                <ButtonBlack text="Comment" />
+              </div>
             </div>
-          </SectionDiv>
 
-          {/* Responses */}
-          <SectionDiv>
-            <div className="md:max-w-2xl">
-              <h3 className="font-extrabold text-gray-800 leading-6 pb-6 text-xl">
-                Responses
-              </h3>
-
-              <h3 className="font-semibold text-gray-400 leading-5 pb-2 text-sm">
-                Write your response
-              </h3>
-
-              {/* Comment Box */}
-              <div className="bg-gray-50 flex flex-row py-2 px-2 rounded-md gap-1.5">
-                <div>
-                  <img
-                    className="object-cover shadow-lg rounded-full h-10 w-10"
-                    src={author.profileImage}
-                    alt=""
-                  />
-                </div>
-                <div className="flex-grow">
-                  <input
-                    className="h-10 bg-transparent px-2 font-normal leading-5 text w-full text-sm"
-                    placeholder="Write comment ..."
-                  />
-                </div>
-                <div>
-                  <ButtonBlack text="Comment" />
-                </div>
+            {/* Comments */}
+            <div>
+              <div className="flex flex-row py-2 px-4 rounded-md gap-1 items-center h-5 text-gray-500 pt-10 text-lg font-bold mb-4">
+                <ChatAlt2Icon className="h-5" />
+                <p className="text-sm">{comments.length} comments</p>
               </div>
 
-              {/* Comments */}
-              <div>
-                <div className="flex flex-row py-2 px-4 rounded-md gap-1 items-center h-5 text-gray-500 pt-10 text-lg font-bold mb-4">
-                  <ChatAlt2Icon className="h-5" />
-                  <p className="text-sm">{comments.length} comments</p>
-                </div>
-
-                {comments.map((comment) => (
-                  <div className="p-4 bg-gray-50 grid grid-flow-col gap-4 mt-2 rounded">
-                    <div className="flex-grow">
-                      <img
-                        className="object-cover shadow-lg rounded-full h-10 w-10"
-                        src={comment.person.profileImage}
-                        alt=""
-                      />
+              {comments.map((comment) => (
+                <div className="p-4 bg-gray-50 grid grid-flow-col gap-4 mt-2 rounded">
+                  <div className="flex-grow">
+                    <img
+                      className="object-cover shadow-lg rounded-full h-10 w-10"
+                      src={comment.person.profileImage}
+                      alt=""
+                    />
+                  </div>
+                  <div className="flex-grow-0 text-xs">
+                    <div className="">
+                      <h4 className="text-gray-900 leading-5 font-semibold">
+                        {comment.person.name}
+                      </h4>
+                      <p className="text-gray-500 leading-5 font-normal">
+                        {comment.posted}
+                      </p>
                     </div>
-                    <div className="flex-grow-0 text-xs">
-                      <div className="">
-                        <h4 className="text-gray-900 leading-5 font-semibold">
-                          {comment.person.name}
-                        </h4>
-                        <p className="text-gray-500 leading-5 font-normal">
-                          {comment.posted}
-                        </p>
-                      </div>
-                      <div className="pt-1">
-                        <p className="text-gray-600 leading-5 font-normal">
-                          {comment.content}
-                        </p>
-                      </div>
+                    <div className="pt-1">
+                      <p className="text-gray-600 leading-5 font-normal">
+                        {comment.content}
+                      </p>
                     </div>
                   </div>
-                ))}
-
-                <div className="flex flex-row justify-center pt-6">
-                  <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
-                    Load more comments
-                  </button>
                 </div>
+              ))}
+
+              <div className="flex flex-row justify-center pt-6">
+                <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
+                  Load more comments
+                </button>
               </div>
             </div>
-          </SectionDiv>
-        </Maxer>
-      </div>
+          </div>
+        </SectionDiv>
+      </Maxer>
     </Layout>
   );
 };
 
-export default Lecture;
+export default Project;
