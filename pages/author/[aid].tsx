@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import BigMaxer from "@components/BigMaxer";
 import ButtonlessRed from "@components/ButtonLesRed";
 import ButtonRed from "@components/ButtonRed";
+import Maxer from "@components/BigMaxer";
+
 // import {
 //   ChatAlt2Icon,
 //   DotsVerticalIcon,
@@ -153,12 +155,6 @@ const Lecture = () => {
   const router = useRouter();
   const { pid } = router.query;
 
-  const Maxer = ({ children }) => (
-    <div className="mx-auto max-w-md sm:max-w-xl lg:max-w-5xl xl:max-w-7xl">
-      {children}
-    </div>
-  );
-
   const SectionDiv = ({ children }) => (
     <div className="p-4 pt-8 sm:p-6 lg:p-8 lg:pt-0">{children}</div>
   );
@@ -269,7 +265,7 @@ const Lecture = () => {
       {/* Header */}
       <div
         className={
-          "px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs " +
+          "px-4 sm:px-0 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs " +
           "lg:max-h-44 md:text-sm"
         }
       >
@@ -346,10 +342,6 @@ const Lecture = () => {
                 </div>
               </div>
 
-              <Filters />
-
-              <Lectures lectures={lectures} />
-
               <div className="hidden lg:block order-2 col-span-4">
                 <h3 className="font-bold leading-6 pb-2 md:text-lg">
                   Related categories
@@ -368,48 +360,7 @@ const Lecture = () => {
 
             <Filters />
 
-            <div className="grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-              {lectures.map((lecture, index) => (
-                <div
-                  className={
-                    "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
-                    (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
-                    " " +
-                    "md:shadow md:grid-flow-row md:p-0 md:gap-0 md:items-start"
-                  }
-                >
-                  <div>
-                    <img
-                      className="object-cover shadow-lg rounded md:rounded-b-none md:shadow-none h-14 w-24 md:h-40 md:w-full"
-                      src={lecture.image}
-                      alt=""
-                    />
-                  </div>
-                  <div className="text-xs md:p-4">
-                    <h4 className="leading-4 text-gray-900 font-semibold pb-1">
-                      {lecture.title}
-                    </h4>
-                    <div className="md:py-4">
-                      <p className="text-gray-500 font-normal leading-4">
-                        {lecture.author}
-                      </p>
-                      <div className="flex flex-row text-gray-500 font-normal leading-4 gap-1 ">
-                        <p>{lecture.date}</p>
-                        <p>&middot;</p>
-                        <p>{lecture.views} views</p>
-                      </div>
-                    </div>
-                    <div className="hidden md:block">
-                      <div className="flex">
-                        <div className="bg-red-100 rounded-full px-4 text-red-700">
-                          Workshop
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <Lectures lectures={lectures} />
 
             <div className="flex flex-row justify-center pt-6">
               <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">

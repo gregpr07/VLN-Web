@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import ButtonRed from "./ButtonRed";
 import ButtonlessRed from "./ButtonLesRed";
+import Maxer from "./Maxer";
 
 const user = {
   name: "Chelsea Hagon",
@@ -54,149 +55,154 @@ const Navbar = ({ token, rmToken }) => {
         {({ open }) => (
           <>
             <div className="fixed max-w-none mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow w-full z-50">
-              <div className="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
-                <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
-                  <div className="flex-shrink-0 flex items-center">
-                    <Link href="/">
-                      <a>
-                        <img
-                          className="block lg:hidden h-8 w-auto"
-                          src="/images/logo.png"
-                          alt="Workflow"
-                        />
-                        <img
-                          className="lg:block hidden h-8 w-auto"
-                          src="/images/logo-wide-dark.png"
-                          alt="Workflow"
-                        />
-                      </a>
-                    </Link>
+              <div className="max-w-7xl mx-auto lg:px-6 ">
+                <div className="relative flex justify-between lg:gap-8">
+                  <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
+                    <div className="flex-shrink-0 flex items-center">
+                      <Link href="/">
+                        <a>
+                          <img
+                            className="block lg:hidden h-8 w-auto"
+                            src="/images/logo.png"
+                            alt="Workflow"
+                          />
+                          <img
+                            className="lg:block hidden h-8 w-auto"
+                            src="/images/logo-wide-dark.png"
+                            alt="Workflow"
+                          />
+                        </a>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-                <div className="min-w-0 flex-1 md:px-8 lg:px-0 flex-grow max-w-2xl">
-                  <div className="flex items-center px-6 py-2 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
-                    <div className="w-full">
-                      <label htmlFor="search" className="sr-only">
-                        Search
-                      </label>
-                      <div className="relative">
-                        <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                          <SearchIcon
-                            className="h-5 w-5 text-gray-400 text-sm font-medium"
-                            aria-hidden="true"
+                  <div className="min-w-0 flex-1 md:px-8 lg:px-0 flex-grow max-w-2xl">
+                    <div className="flex items-center px-6 py-2 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
+                      <div className="w-full">
+                        <label htmlFor="search" className="sr-only">
+                          Search
+                        </label>
+                        <div className="relative">
+                          <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                            <SearchIcon
+                              className="h-5 w-5 text-gray-400 text-sm font-medium"
+                              aria-hidden="true"
+                            />
+                          </div>
+                          <input
+                            id="search"
+                            name="search"
+                            className="block h-10 w-full border-none bg-gray-50 rounded-md py-3 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
+                            placeholder="Search"
+                            type="search"
                           />
                         </div>
-                        <input
-                          id="search"
-                          name="search"
-                          className="block h-10 w-full border-none bg-gray-50 rounded-md py-3 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
-                          placeholder="Search"
-                          type="search"
-                        />
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex items-center md:right-0 md:inset-y-0 lg:hidden flex-grow-0">
-                  {/* Mobile menu button */}
-                  <Popover.Button className="-mx-2 bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                    <span className="sr-only">Open menu</span>
-                    {open ? (
-                      <XIcon className="block h-6 w-6" aria-hidden="true" />
-                    ) : (
-                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
-                    )}
-                  </Popover.Button>
-                </div>
+                  <div className="flex items-center md:right-0 md:inset-y-0 lg:hidden flex-grow-0">
+                    {/* Mobile menu button */}
+                    <Popover.Button className="-mx-2 bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                      <span className="sr-only">Open menu</span>
+                      {open ? (
+                        <XIcon className="block h-6 w-6" aria-hidden="true" />
+                      ) : (
+                        <MenuIcon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </Popover.Button>
+                  </div>
 
-                {/* menu */}
-                {token ? (
-                  <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                    <a
-                      href="#"
-                      className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </a>
+                  {/* menu */}
+                  {token ? (
+                    <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
+                      <a
+                        href="#"
+                        className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      >
+                        <span className="sr-only">View notifications</span>
+                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      </a>
 
-                    {/* Profile dropdown */}
-                    <Menu as="div" className="flex-shrink-0 relative ml-5">
-                      {({ open }) => (
-                        <>
-                          <div>
-                            <Menu.Button className="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                              <span className="sr-only">Open user menu</span>
-                              <img
-                                className="h-8 w-8 rounded-full"
-                                src={user.imageUrl}
-                                alt=""
-                              />
-                            </Menu.Button>
-                          </div>
-                          <Transition
-                            show={open}
-                            as={Fragment}
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
-                          >
-                            <Menu.Items
-                              static
-                              className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
+                      {/* Profile dropdown */}
+                      <Menu as="div" className="flex-shrink-0 relative ml-5">
+                        {({ open }) => (
+                          <>
+                            <div>
+                              <Menu.Button className="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <span className="sr-only">Open user menu</span>
+                                <img
+                                  className="h-8 w-8 rounded-full"
+                                  src={user.imageUrl}
+                                  alt=""
+                                />
+                              </Menu.Button>
+                            </div>
+                            <Transition
+                              show={open}
+                              as={Fragment}
+                              enter="transition ease-out duration-100"
+                              enterFrom="transform opacity-0 scale-95"
+                              enterTo="transform opacity-100 scale-100"
+                              leave="transition ease-in duration-75"
+                              leaveFrom="transform opacity-100 scale-100"
+                              leaveTo="transform opacity-0 scale-95"
                             >
-                              {userNavigation.map((item) => (
-                                <Menu.Item key={item.name}>
+                              <Menu.Items
+                                static
+                                className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
+                              >
+                                {userNavigation.map((item) => (
+                                  <Menu.Item key={item.name}>
+                                    {({ active }) => (
+                                      <a
+                                        href={item.href}
+                                        className={classNames(
+                                          active ? "bg-gray-100" : "",
+                                          "block py-2 px-4 text-sm text-gray-700"
+                                        )}
+                                      >
+                                        {item.name}
+                                      </a>
+                                    )}
+                                  </Menu.Item>
+                                ))}
+                                <Menu.Item>
                                   {({ active }) => (
                                     <a
-                                      href={item.href}
+                                      onClick={handleLogout}
                                       className={classNames(
                                         active ? "bg-gray-100" : "",
-                                        "block py-2 px-4 text-sm text-gray-700"
+                                        "block py-2 px-4 text-sm text-gray-700 cursor-pointer"
                                       )}
                                     >
-                                      {item.name}
+                                      Log out
                                     </a>
                                   )}
                                 </Menu.Item>
-                              ))}
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <a
-                                    onClick={handleLogout}
-                                    className={classNames(
-                                      active ? "bg-gray-100" : "",
-                                      "block py-2 px-4 text-sm text-gray-700 cursor-pointer"
-                                    )}
-                                  >
-                                    Log out
-                                  </a>
-                                )}
-                              </Menu.Item>
-                            </Menu.Items>
-                          </Transition>
-                        </>
-                      )}
-                    </Menu>
-                  </div>
-                ) : (
-                  <div className="hidden lg:flex items-center justify-start md:flex-1 lg:w-0">
-                    <Link href="login">
-                      <a className="whitespace-nowrap text-base content-center font-medium text-gray-500 hover:text-gray-900">
-                        <ButtonlessRed>Sign in</ButtonlessRed>
+                              </Menu.Items>
+                            </Transition>
+                          </>
+                        )}
+                      </Menu>
+                    </div>
+                  ) : (
+                    <div className="hidden lg:flex items-center justify-start">
+                      <Link href="login">
+                        <a className="whitespace-nowrap text-base content-center font-medium text-gray-500 hover:text-gray-900">
+                          <ButtonlessRed>Sign in</ButtonlessRed>
+                        </a>
+                      </Link>
+                      <a
+                        href="#"
+                        className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white "
+                      >
+                        <ButtonRed text="Sign up" />
                       </a>
-                    </Link>
-                    <a
-                      href="#"
-                      className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white "
-                    >
-                      <ButtonRed text="Sign up" />
-                    </a>
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 

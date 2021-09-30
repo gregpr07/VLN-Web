@@ -18,10 +18,11 @@ const Lecture = () => {
         <div className="md:grid md:grid-cols-2 gap-0">
           <div className="">
             <ReactPlayer
-              ref={(playerRef: HTMLVideoElement) => {
-                player = playerRef;
-              }}
-              autoPlay={false}
+              // ref={(playerRef: HTMLVideoElement) => {
+              //   player = playerRef;
+              // }}
+              height="100%"
+              width="100%"
               // playsInline
               poster="http://hydro.ijs.si/v000/99/tesk7ee4zpchypmkcljjw6zfjpvdedex.jpg"
               src="http://hydro.ijs.si/v01d/fe/73mjghmj3ue6tcnhtrptzpmk7kdneifq.mp4"

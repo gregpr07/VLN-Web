@@ -8,9 +8,8 @@ type Props = {
 
 //! change this -> outdated
 const Maxer = ({ children }: Props) => (
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
-    <div className="max-w-3xl mx-auto pt-4 md:pt-8 lg:pt-12">{children}</div>
+  <div className="mx-auto max-w-md sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
+    {children}
   </div>
 );
 
