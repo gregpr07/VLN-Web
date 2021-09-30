@@ -110,9 +110,10 @@ function Lecture() {
     if (!screenful.isEnabled || !playerRef.current) return;
 
     //@ts-ignore
-    screenful.toggle(playerContainerRef.current);
-    // playerRef.current.getInternalPlayer()
-    // const videoElem = playerRef.current.getInternalPlayer();
+    // screenful.toggle(playerContainerRef.current);
+    // playerRef.current.getInternalPlayer();
+    const videoElem = playerRef.current.getInternalPlayer();
+    videoElem.requestFullscreen();
     //
     //@ts-ignore
     // screenful.request(videoElem);

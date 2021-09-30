@@ -12,4 +12,13 @@ npx create-next-app --example with-tailwindcss with-tailwindcss-app
 yarn create next-app --example with-tailwindcss with-tailwindcss-app
 ```
 
-DASHBOARD: padding med naslovom in videoti, premakni clock icon v desni rob spodaj, DESKTOP: underlined buttons s kategorijami
+## Active problems
+
+### DASHBOARD
+
+- padding med naslovom in videoti, premakni clock icon v desni rob spodaj, DESKTOP: underlined buttons s kategorijami
+
+### Lecture
+
+- fullscreen ne dela na iOS (iPhone)
+-
