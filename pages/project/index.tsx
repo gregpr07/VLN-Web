@@ -143,7 +143,7 @@ const comments = [
   },
 ];
 
-const Lecture = () => {
+const Project = () => {
   const router = useRouter();
   const { pid } = router.query;
 
@@ -321,4 +321,4 @@ const Lecture = () => {
   );
 };
 
-export default Lecture;
+export default Project;

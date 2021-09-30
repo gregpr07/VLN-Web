@@ -6,12 +6,18 @@ interface btnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   Icon?: (props: React.ComponentProps<"svg">) => JSX.Element;
 }
 
-const ButtonRound = ({ action, text, className, Icon, ...props }: btnProps) => (
+const ButtonSquared = ({
+  action,
+  text,
+  className,
+  Icon,
+  ...props
+}: btnProps) => (
   <button
     onClick={action}
     {...props}
     className={
-      "bg-white leading-4 text-black h-10 px-6 py-3 rounded-full font-normal block text-sm focus:outline-black shadow" +
+      "bg-white leading-4 text-black h-10 px-6 py-3 rounded-md font-normal block text-sm focus:outline-black shadow" +
       " " +
       className
     }
@@ -25,4 +31,4 @@ const ButtonRound = ({ action, text, className, Icon, ...props }: btnProps) => (
   </button>
 );
 
-export default ButtonRound;
+export default ButtonSquared;
