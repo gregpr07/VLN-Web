@@ -16,7 +16,7 @@ const ButtonRed = ({ action, text, className, Icon, ...props }: btnProps) => (
       className
     }
   >
-    <div className="flex flex-row content-center">
+    <div className="flex flex-row content-center justify-center">
       <p className="font-normal">{text}</p>
       {Icon && (
         <Icon className="h-4 w-4 ml-1 text-white block" aria-hidden="true" />

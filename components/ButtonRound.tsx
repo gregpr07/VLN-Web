@@ -11,7 +11,7 @@ const ButtonRound = ({ action, text, className, Icon, ...props }: btnProps) => (
     onClick={action}
     {...props}
     className={
-      "bg-white leading-4 text-black h-10 px-6 py-3 rounded-full font-normal block text-sm focus:outline-black shadow" +
+      "bg-white leading-4 text-black h-9 px-6 py-1 rounded-full font-normal block text-sm focus:outline-black shadow" +
       " " +
       className
     }

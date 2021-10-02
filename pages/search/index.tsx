@@ -235,6 +235,7 @@ const Lecture = () => {
                     <h3 className="text-2xl leading-8 font-extrabold pb-10">
                       {title.name}
                     </h3>
+
                     <ButtonRound
                       Icon={ChevronDownIcon}
                       text="All catagories "

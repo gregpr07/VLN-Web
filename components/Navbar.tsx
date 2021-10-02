@@ -35,7 +35,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Navbar = ({ token, rmToken }) => {
+const Navbar = ({
+  token,
+  rmToken,
+  redBG = false,
+  showSearch = true,
+  sticky = true,
+}) => {
   const handleLogout = (e: any) => {
     e.preventDefault();
     rmToken();
@@ -48,13 +54,18 @@ const Navbar = ({ token, rmToken }) => {
         className={({ open }) =>
           classNames(
             open ? "fixed inset-0 z-40 overflow-y-auto" : "",
-            "bg-white shadow-sm lg:static lg:overflow-y-visible"
+            " shadow-sm lg:static lg:overflow-y-visible"
           )
         }
       >
         {({ open }) => (
           <>
-            <div className="fixed max-w-none mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow w-full z-50">
+            <div
+              className={
+                "fixed max-w-none mx-auto px-4 sm:px-6 lg:px-8 shadow w-full z-40 " +
+                (redBG ? "bg-red-600" : "bg-white")
+              }
+            >
               <div className="max-w-7xl mx-auto lg:px-6 ">
                 <div className="relative flex justify-between lg:gap-8">
                   <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
@@ -75,33 +86,47 @@ const Navbar = ({ token, rmToken }) => {
                       </Link>
                     </div>
                   </div>
-                  <div className="min-w-0 flex-1 md:px-8 lg:px-0 flex-grow max-w-2xl">
-                    <div className="flex items-center px-6 py-2 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
-                      <div className="w-full">
-                        <label htmlFor="search" className="sr-only">
-                          Search
-                        </label>
-                        <div className="relative">
-                          <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                            <SearchIcon
-                              className="h-5 w-5 text-gray-400 text-sm font-medium"
-                              aria-hidden="true"
+                  {showSearch && (
+                    <div className="min-w-0 flex-1 md:px-8 lg:px-0 flex-grow max-w-2xl">
+                      <div className="flex items-center px-6 py-2 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
+                        <div className="w-full">
+                          <label htmlFor="search" className="sr-only">
+                            Search
+                          </label>
+                          <div className="relative">
+                            <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                              <SearchIcon
+                                className="h-5 w-5 text-gray-400 text-sm font-medium"
+                                aria-hidden="true"
+                              />
+                            </div>
+                            <input
+                              id="search"
+                              name="search"
+                              className="block h-10 w-full border-none bg-gray-50 rounded-md py-3 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
+                              placeholder="Search"
+                              type="search"
                             />
                           </div>
-                          <input
-                            id="search"
-                            name="search"
-                            className="block h-10 w-full border-none bg-gray-50 rounded-md py-3 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
-                            placeholder="Search"
-                            type="search"
-                          />
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-center md:right-0 md:inset-y-0 lg:hidden flex-grow-0">
+                  )}
+                  <div
+                    className={
+                      "flex items-center md:right-0 md:inset-y-0 md:hidden flex-grow-0" +
+                      (redBG ? " bg-red-600" : "")
+                    }
+                  >
                     {/* Mobile menu button */}
-                    <Popover.Button className="-mx-2 bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                    <Popover.Button
+                      className={
+                        "-mx-2 my-2 rounded-md p-2 inline-flex items-center border-2 justify-center " +
+                        (redBG
+                          ? " text-white hover:text-gray-100 hover:border-gray-100"
+                          : "bg-gray-50 text-gray-500 hover:text-gray-600 border-none")
+                      }
+                    >
                       <span className="sr-only">Open menu</span>
                       {open ? (
                         <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -116,10 +141,10 @@ const Navbar = ({ token, rmToken }) => {
 
                   {/* menu */}
                   {token ? (
-                    <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
+                    <div className="hidden md:flex md:items-center md:justify-end xl:col-span-4">
                       <a
                         href="#"
-                        className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="ml-5 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       >
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -130,7 +155,7 @@ const Navbar = ({ token, rmToken }) => {
                         {({ open }) => (
                           <>
                             <div>
-                              <Menu.Button className="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                              <Menu.Button className="rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 <span className="sr-only">Open user menu</span>
                                 <img
                                   className="h-8 w-8 rounded-full"
@@ -151,7 +176,7 @@ const Navbar = ({ token, rmToken }) => {
                             >
                               <Menu.Items
                                 static
-                                className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
+                                className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
                               >
                                 {userNavigation.map((item) => (
                                   <Menu.Item key={item.name}>
@@ -188,17 +213,26 @@ const Navbar = ({ token, rmToken }) => {
                       </Menu>
                     </div>
                   ) : (
-                    <div className="hidden lg:flex items-center justify-start">
-                      <Link href="login">
+                    <div className="hidden md:flex items-center justify-start">
+                      {/* <Link href="login">
                         <a className="whitespace-nowrap text-base content-center font-medium text-gray-500 hover:text-gray-900">
-                          <ButtonlessRed>Sign in</ButtonlessRed>
+                          <ButtonlessRed className={redBG ? "text-white" : ""}>
+                            Sign in
+                          </ButtonlessRed>
                         </a>
-                      </Link>
+                      </Link> */}
                       <a
                         href="#"
                         className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white "
                       >
-                        <ButtonRed text="Sign up" />
+                        <ButtonRed
+                          text="Sign up"
+                          className={
+                            redBG
+                              ? "border-2 rounded"
+                              : "border-2 border-transparent"
+                          }
+                        />
                       </a>
                     </div>
                   )}
@@ -206,8 +240,13 @@ const Navbar = ({ token, rmToken }) => {
               </div>
             </div>
 
-            <Popover.Panel as="nav" className="lg:hidden" aria-label="Global">
-              <div className="max-w-3xl mx-auto px-2 pt-2 pb-3 space-y-1 sm:px-4">
+            <Popover.Panel as="nav" className="md:hidden" aria-label="Global">
+              <div
+                className={
+                  "max-w-3xl mx-auto px-2 pt-2 pb-3 space-y-1 sm:px-4 z-50 " +
+                  (redBG ? " bg-red-600" : "bg-white")
+                }
+              >
                 {navigation.map((item) => (
                   <a
                     key={item.name}
@@ -223,66 +262,67 @@ const Navbar = ({ token, rmToken }) => {
                     {item.name}
                   </a>
                 ))}
-              </div>
-              {token ? (
-                <div className="border-t border-gray-200 pt-4 pb-3">
-                  <div className="max-w-3xl mx-auto px-4 flex items-center sm:px-6">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src={user.imageUrl}
-                        alt=""
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <div className="text-base font-medium text-gray-800">
-                        {user.name}
+
+                {token ? (
+                  <div className="border-t border-gray-200 pt-4 pb-3">
+                    <div className="max-w-3xl mx-auto px-4 flex items-center sm:px-6">
+                      <div className="flex-shrink-0">
+                        <img
+                          className="h-10 w-10 rounded-full"
+                          src={user.imageUrl}
+                          alt=""
+                        />
                       </div>
-                      <div className="text-sm font-medium text-gray-500">
-                        {user.email}
+                      <div className="ml-3">
+                        <div className="text-base font-medium text-gray-800">
+                          {user.name}
+                        </div>
+                        <div className="text-sm font-medium text-gray-500">
+                          {user.email}
+                        </div>
                       </div>
-                    </div>
-                    <button
-                      type="button"
-                      className="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div>
-                  <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
-                    {userNavigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                      <button
+                        type="button"
+                        className="ml-auto flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       >
-                        {item.name}
+                        <span className="sr-only">View notifications</span>
+                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
+                    </div>
+                    <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
+                      {userNavigation.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                        >
+                          {item.name}
+                        </a>
+                      ))}
+                      <a
+                        onClick={handleLogout}
+                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900 cursor-pointer"
+                      >
+                        Log out
                       </a>
-                    ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-left pl-7 md:flex-1 lg:w-0">
+                    <Link href="login">
+                      <a className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                        Sign in
+                      </a>
+                    </Link>
                     <a
-                      onClick={handleLogout}
-                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900 cursor-pointer"
+                      href="#"
+                      className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                     >
-                      Log out
+                      Sign up
                     </a>
                   </div>
-                </div>
-              ) : (
-                <div className="flex items-center justify-left pl-7 md:flex-1 lg:w-0">
-                  <Link href="login">
-                    <a className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                      Sign in
-                    </a>
-                  </Link>
-                  <a
-                    href="#"
-                    className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                  >
-                    Sign up
-                  </a>
-                </div>
-              )}
+                )}
+              </div>
             </Popover.Panel>
           </>
         )}

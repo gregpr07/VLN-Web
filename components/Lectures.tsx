@@ -19,18 +19,18 @@ const Lectures = ({ lectures }: ILecture) => (
           "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
           (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
           " " +
-          "md:shadow md:grid-flow-row md:p-0 md:gap-0 md:items-start"
+          "md:shadow md:p-0 md:gap-0 md:items-start md:flex md:flex-col"
         }
       >
-        <div>
+        <div className="w-full">
           <img
             className="object-cover shadow-lg rounded md:rounded-b-none md:shadow-none h-14 w-24 md:h-40 md:w-full"
             src={lecture.image}
             alt=""
           />
         </div>
-        <div className="text-xs md:p-4">
-          <h4 className="leading-4 text-gray-900 font-semibold pb-1">
+        <div className="text-xs md:p-4 w-full">
+          <h4 className="leading-4 text-gray-900 font-semibold pb-1 md:h-8">
             {lecture.title}
           </h4>
           <div className="md:py-4">

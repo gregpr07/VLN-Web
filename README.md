@@ -7,10 +7,21 @@ Run your own with `yarn dev`.
 It was created with
 
 ```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
 yarn create next-app --example with-tailwindcss with-tailwindcss-app
 ```
+
+## Why certain modules are needed
+
+Only not the obvious ones!
+
+### @brainhubeu/react-carousel
+
+Index page horizontal scrolling.
+PLan is yo use it Slides as well.
+
+### react-intersection-observer (REMOVED FOR PERFORMANCE REASONS)
+
+So that navbar automatically changes color when scrolling down from bottom (index page).
 
 ## Active problems
 

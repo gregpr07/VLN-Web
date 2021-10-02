@@ -10,16 +10,20 @@ type Props = {
   children?: ReactNode;
   title?: string;
   useMaxer?: boolean;
-  useNavigation?: boolean;
+  useNavigation?: "sticky" | "default" | false;
   useFooter?: boolean;
+  redBG?: boolean;
+  showSearch?: boolean;
 };
 
 const Layout = ({
   children,
   title = "Videolectures.net",
   useMaxer = false,
-  useNavigation = true,
+  useNavigation = "sticky",
   useFooter = true,
+  redBG = false,
+  showSearch = true,
 }: Props) => (
   <div>
     <Head>
@@ -28,10 +32,16 @@ const Layout = ({
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     {useNavigation && (
-      <>
-        <Navigation />
-        <div className="pt-14" />
-      </>
+      <div className="bg-white">
+        <Navigation
+          redBG={redBG}
+          showSearch={showSearch}
+          sticky={useNavigation === "sticky"}
+        />
+        {useNavigation === "sticky" && (
+          <div className={"pt-14" + (redBG ? " bg-red-600" : "")} />
+        )}
+      </div>
     )}
     {useMaxer ? <Maxer>{children}</Maxer> : children}
     {useFooter && <Footer />}
