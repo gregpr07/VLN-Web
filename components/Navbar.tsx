@@ -54,7 +54,7 @@ const Navbar = ({
         className={({ open }) =>
           classNames(
             open ? "fixed inset-0 z-40 overflow-y-auto" : "",
-            " shadow-sm lg:static lg:overflow-y-visible"
+            " shadow-sm md:static md:overflow-y-visible"
           )
         }
       >
@@ -68,7 +68,7 @@ const Navbar = ({
             >
               <div className="max-w-7xl mx-auto lg:px-6 ">
                 <div className="relative flex justify-between lg:gap-8">
-                  <div className="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
+                  <div className="flex md:left-0 md:inset-y-0 md:static md:col-span-2">
                     <div className="flex-shrink-0 flex items-center">
                       <Link href="/">
                         <a>
@@ -141,7 +141,7 @@ const Navbar = ({
 
                   {/* menu */}
                   {token ? (
-                    <div className="hidden md:flex md:items-center md:justify-end xl:col-span-4">
+                    <div className="hidden md:flex md:items-center md:justify-end lg:col-span-4">
                       <a
                         href="#"
                         className="ml-5 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -214,13 +214,15 @@ const Navbar = ({
                     </div>
                   ) : (
                     <div className="hidden md:flex items-center justify-start">
-                      {/* <Link href="login">
+                      <Link href="login">
                         <a className="whitespace-nowrap text-base content-center font-medium text-gray-500 hover:text-gray-900">
-                          <ButtonlessRed className={redBG ? "text-white" : ""}>
+                          <ButtonlessRed
+                            textColor={redBG ? "text-gray-100" : ""}
+                          >
                             Sign in
                           </ButtonlessRed>
                         </a>
-                      </Link> */}
+                      </Link>
                       <a
                         href="#"
                         className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white "
@@ -308,7 +310,7 @@ const Navbar = ({
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-left pl-7 md:flex-1 lg:w-0">
+                  <div className="flex items-center justify-left pl-7 md:flex-1 md:w-0">
                     <Link href="login">
                       <a className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         Sign in

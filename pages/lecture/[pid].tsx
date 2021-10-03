@@ -166,8 +166,7 @@ function Lecture() {
   return (
     <Layout title="Lecture | XYZ" useMaxer={false}>
       <BigMaxer>
-        <div className="px-4 sm:px-6 lg:px-8">
-          <button onClick={togglePip}>pip</button>
+        <div className="sm:px-6 lg:px-8 md:pt-8">
           <div className="grid grid-cols-1">
             <div
               onMouseMove={handleMouseMove}
@@ -235,6 +234,7 @@ function Lecture() {
                   playbackRate={playbackRate}
                   onPlaybackRateChange={handlePlaybackRate}
                   onToggleFullScreen={toggleFullScreen}
+                  onTogglePIP={togglePip}
                   volume={volume}
                   // onBookmark={addBookmark}
                 />

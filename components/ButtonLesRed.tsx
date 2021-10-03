@@ -3,13 +3,19 @@ import React from "react";
 interface btnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: JSX.Element | string;
   action?: () => void;
+  textColor?: string;
 }
 
-const ButtonlessRed = ({ action, children, className, ...props }: btnProps) => (
+const ButtonlessRed = ({
+  action,
+  children,
+  textColor = "text-red-600",
+  ...props
+}: btnProps) => (
   <button
     onClick={action}
     {...props}
-    className={"text-red-600 underline font-normal text-sm" + " " + className}
+    className={"underline font-normal text-sm " + textColor}
   >
     {children}
   </button>

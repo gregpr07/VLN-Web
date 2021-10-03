@@ -14,6 +14,9 @@ import ButtonRed from "@components/ButtonRed";
 import Carousel, { Dots, slidesToShowPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import Lectures from "@components/Lectures";
+import { tailwindScreens } from "@services/constants";
+
+import { TwitterTimelineEmbed } from "react-twitter-embed";
 
 interface IEvent {
   title: string;
@@ -68,6 +71,26 @@ const categories: ICategory[] = [
   },
   {
     title: "Mathematics",
+    image: "",
+  },
+  {
+    title: "Physics",
+    image: "",
+  },
+  {
+    title: "Social Sciences",
+    image: "",
+  },
+  {
+    title: "Business",
+    image: "",
+  },
+  {
+    title: "Technology",
+    image: "",
+  },
+  {
+    title: "Economics",
     image: "",
   },
   {
@@ -171,24 +194,40 @@ const IndexPage = () => {
     </Maxer>
   );
 
+  const SideSectionDiv = ({ children, title, className = "" }) => (
+    <Maxer>
+      <div className={"py-8 px-4 sm:px-6 lg:px-8" + className}>
+        <div className="grid grid-flow-col col-span-2 items-center space-between w-full pb-6">
+          <div>
+            <h1 className="text-xl leading-7 font-bold">{title}</h1>
+          </div>
+        </div>
+
+        {children}
+      </div>
+    </Maxer>
+  );
+
   const Header = () => (
     <div
-      className={
-        "px-4 sm:px-6 lg:px-8 pt-8 md:pt-8 lg:pt-12 text-xs bg-red-600 " +
-        "md:text-sm"
-      }
+      className={"px-4 sm:px-6 lg:px-8 text-xs bg-red-600 " + "md:text-sm"}
       // ref={headerRef}
     >
       <div>
         <div className="pb-4 sm:pb-8 md:pb-4">
           <Maxer>
             <div className="">
-              <h1 className="text-2xl leading-8 font-extrabold text-white text-center">
-                Exchange ideas.
-                <br />
+              <h1
+                className={
+                  "text-2xl leading-8 font-extrabold text-white text-center py-8 md:py-10 lg:py-12" +
+                  " " +
+                  "lg:text-5xl lg:leading-none lg:font-extrabold"
+                }
+              >
+                Exchange ideas. <br className="md:hidden" />
                 Share your knowledge.
               </h1>
-              <div className="relative mt-6 mb-8">
+              <div className="relative mb-8 max-w-xl mx-auto">
                 <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 hidden md:flex items-center">
                   <SearchIcon
                     className="h-5 w-5 text-gray-400 text-sm font-medium"
@@ -247,19 +286,36 @@ const IndexPage = () => {
         setSlide(newSlide);
       }
     };
+
+    const plugins = (numberOfSlider: number) => {
+      return {
+        plugins: [
+          {
+            resolve: slidesToShowPlugin,
+            options: {
+              numberOfSlides: numberOfSlider,
+            },
+          },
+        ],
+      };
+    };
+
+    const breakpoints = {
+      [0]: plugins(2),
+      [tailwindScreens.sm]: plugins(2),
+      [tailwindScreens.md]: plugins(3),
+      [tailwindScreens.lg]: plugins(4),
+      [tailwindScreens.xl + 200]: plugins(6),
+      [100000]: plugins(5),
+    };
+
+    console.log(breakpoints);
+
     return (
       <div>
         <Carousel
-          plugins={[
-            // "infinite",
-            "clickToChange",
-            {
-              resolve: slidesToShowPlugin,
-              options: {
-                numberOfSlides: 2,
-              },
-            },
-          ]}
+          // plugins={plugins(2).plugins}
+          breakpoints={breakpoints}
           value={slide}
           onChange={handleSlide}
         >
@@ -299,7 +355,7 @@ const IndexPage = () => {
         <Header />
       </div>
       {/* categories */}
-      <SectionDiv title="Top Categories" buttonText="See all">
+      <SectionDiv title="Top Categories" buttonText="View all">
         <Categories categories={categories} />
       </SectionDiv>
 
@@ -313,15 +369,32 @@ const IndexPage = () => {
         <Lectures lectures={trending_lectures} />
       </SectionDiv>
 
-      {/* events */}
-      <SectionDiv title="Upcoming events">
-        <div className="gap-2 grid grid-flow-row mb-6">
-          {events.map((event, index) => (
-            <Event {...event} key={index} />
-          ))}
+      <Maxer>
+        <div className="max-w-xl">
+          {/* Events */}
+          <SideSectionDiv title="Upcoming events">
+            <div className="gap-2 grid grid-flow-row mb-6">
+              {events.map((event, index) => (
+                <Event {...event} key={index} />
+              ))}
+            </div>
+            <ButtonRed
+              text="All events"
+              Icon={ArrowRightIcon}
+              className="w-full"
+            />
+          </SideSectionDiv>
+
+          {/* Twitter embed */}
+          <SideSectionDiv title="Latest Tweets">
+            <TwitterTimelineEmbed
+              sourceType="profile"
+              screenName="videolectures"
+              options={{ height: 500 }}
+            />
+          </SideSectionDiv>
         </div>
-        <ButtonRed text="All events" Icon={ArrowRightIcon} className="w-full" />
-      </SectionDiv>
+      </Maxer>
     </Layout>
   );
 };

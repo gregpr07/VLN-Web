@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import {
+  ChevronDownIcon,
+  FastForwardIcon,
+  RewindIcon,
+} from "@heroicons/react/solid";
 import {
   VolumeUpIcon as VolumeUpIconOutline,
   VolumeOffIcon,
@@ -47,6 +51,7 @@ const Controls = forwardRef(
       playbackRate,
       onPlaybackRateChange,
       onToggleFullScreen,
+      onTogglePIP,
       volume,
       onVolumeChange,
       onBookmark,
@@ -65,8 +70,8 @@ const Controls = forwardRef(
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
 
-    const iconStyles = "w-16 text-white opacity-75";
-    const smallIconStyle = "h-10 text-white";
+    const iconStyles = "h-8 md:w-16 text-white opacity-75";
+    const smallIconStyle = "h-6 md:h-10 text-white";
 
     return (
       <div
@@ -86,7 +91,7 @@ const Controls = forwardRef(
         }}
       >
         <div className="z-20">
-          <div className="grid grid-flow-col space-between w-full p-4">
+          <div className="grid grid-flow-col space-between w-full p-2 md:p-4">
             <div className="flex flex-row justify-end ">
               <div className="bg-black bg-opacity-30">
                 <CameraIcon className={"w-8 text-white"} />
@@ -99,7 +104,7 @@ const Controls = forwardRef(
 
           {/* bottom controls */}
           <div className="bottom-0 absolute w-full bg-black bg-opacity-30 rounded overflow-hidden">
-            <div className="px-4 pb-1">
+            <div className="px-2 md:px-4 pb-1">
               <RCSlider
                 value={played * 100}
                 onChange={onSeek}
@@ -117,9 +122,13 @@ const Controls = forwardRef(
               />
             </div>
 
-            <div className="grid grid-flow-col gap-0 space-between w-full px-4 pb-2">
+            <div className="grid grid-flow-col gap-0 space-between w-full px-2 md:px-4 pb-2">
               <div>
                 <div className="flex flex-row gap-2 items-center">
+                  <button onClick={onRewind} className="hidden md:block">
+                    <RewindIcon fontSize="inherit" className={smallIconStyle} />
+                  </button>
+
                   <button onClick={onPlayPause}>
                     {playing ? (
                       <PauseIcon
@@ -129,6 +138,13 @@ const Controls = forwardRef(
                     ) : (
                       <PlayIcon fontSize="inherit" className={smallIconStyle} />
                     )}
+                  </button>
+
+                  <button onClick={onFastForward} className="hidden md:block">
+                    <FastForwardIcon
+                      fontSize="inherit"
+                      className={smallIconStyle}
+                    />
                   </button>
 
                   <button
@@ -182,67 +198,36 @@ const Controls = forwardRef(
               </div>
 
               {/*  */}
-              <div className="items-center justify-end flex flex-row gap-4">
+              <div className="items-center justify-end flex flex-row gap-3 md:gap-4 z-50">
                 <button onClick={onChangeDispayFormat}>
-                  <p className="text-white font-medium">
+                  <p className="text-white text-sm md:text-base">
                     {elapsedTime}/{totalDuration}
                   </p>
                 </button>
 
-                <Menu as="div" className="relative inline-block text-left">
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
+                <button onClick={onTogglePIP}>
+                  {/* <ArrowsExpandIcon
+                    className={smallIconStyle}
+                    fontSize="inherit"
+                  /> */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 16 16"
+                    className={smallIconStyle}
                   >
-                    <Menu.Items className="origin-bottom-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <div className="py-1">
-                        {[0.5, 1, 1.5, 2].map((rate) => (
-                          <Menu.Item key={rate}>
-                            {({ active }) => (
-                              <button
-                                key={rate}
-                                //   onClick={() => setState({ ...state, playbackRate: rate })}
-                                onClick={() => onPlaybackRateChange(rate)}
-                                className={classNames(
-                                  active
-                                    ? "bg-gray-100 text-gray-900"
-                                    : "text-gray-700",
-                                  "block px-4 py-2 text-sm"
-                                )}
-                                // variant="text"
-                              >
-                                <p
-                                  color={
-                                    rate === playbackRate
-                                      ? "secondary"
-                                      : "inherit"
-                                  }
-                                >
-                                  {rate}X
-                                </p>
-                              </button>
-                            )}
-                          </Menu.Item>
-                        ))}
-                      </div>
-                    </Menu.Items>
-                  </Transition>
-
-                  <div>
-                    <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-1 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                      {playbackRate}X
-                    </Menu.Button>
-                  </div>
-                </Menu>
+                    <g fill="currentColor">
+                      <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h13A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5v-9zM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
+                      <path d="M8 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-3z" />
+                    </g>
+                  </svg>
+                </button>
 
                 <button onClick={onToggleFullScreen}>
                   <ArrowsExpandIcon
-                    className={"h-8 text-white"}
+                    className={smallIconStyle}
                     fontSize="inherit"
                   />
                 </button>
@@ -272,6 +257,7 @@ Controls.propTypes = {
   onChangeDispayFormat: PropTypes.func,
   onPlaybackRateChange: PropTypes.func,
   onToggleFullScreen: PropTypes.func,
+  onTogglePIP: PropTypes.func,
   onMute: PropTypes.func,
   playing: PropTypes.bool,
   played: PropTypes.number,

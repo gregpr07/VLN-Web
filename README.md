@@ -23,6 +23,10 @@ PLan is yo use it Slides as well.
 
 So that navbar automatically changes color when scrolling down from bottom (index page).
 
+### react-twitter-embed
+
+For twitter embed (just easier than script tags).
+
 ## Active problems
 
 ### DASHBOARD
