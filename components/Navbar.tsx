@@ -73,13 +73,21 @@ const Navbar = ({
                       <Link href="/">
                         <a>
                           <img
-                            className="block lg:hidden h-8 w-auto"
-                            src="/images/logo.png"
+                            className="block sm:hidden h-8 w-auto"
+                            src={
+                              redBG
+                                ? "/logos/vln_white_tiny.svg"
+                                : "/logos/vln_tiny.svg"
+                            }
                             alt="Workflow"
                           />
                           <img
-                            className="lg:block hidden h-8 w-auto"
-                            src="/images/logo-wide-dark.png"
+                            className="sm:block hidden h-8 w-auto"
+                            src={
+                              redBG
+                                ? "/logos/vln_white.svg"
+                                : "/logos/vln_default.svg"
+                            }
                             alt="Workflow"
                           />
                         </a>

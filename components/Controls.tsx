@@ -32,6 +32,7 @@ function classNames(...classes: any) {
 const Controls = forwardRef(
   (
     {
+      show,
       videoTitle,
       onSeek,
       onSeekMouseDown,
@@ -72,6 +73,8 @@ const Controls = forwardRef(
 
     const iconStyles = "h-8 md:w-16 text-white opacity-75";
     const smallIconStyle = "h-6 md:h-10 text-white";
+
+    if (!show) return null;
 
     return (
       <div
@@ -245,6 +248,7 @@ const Controls = forwardRef(
 Controls.displayName = "Controls";
 
 Controls.propTypes = {
+  show: PropTypes.bool,
   videoTitle: PropTypes.string,
   onSeek: PropTypes.func,
   onSeekMouseDown: PropTypes.func,

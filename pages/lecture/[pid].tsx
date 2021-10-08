@@ -10,6 +10,8 @@ import ReactPlayer from "react-player";
 import screenful from "screenfull";
 import Controls from "@components/Controls";
 import { formatTime } from "@services/functions";
+import { tailwindScreens } from "@services/constants";
+import { useWindowSize } from "@services/reactFunctions";
 
 const HIDE_CONST = 1; // seconds
 const DEBUG_PLAYER = false;
@@ -19,6 +21,8 @@ let count = 0;
 function Lecture() {
   const router = useRouter();
   const { pid } = router.query;
+
+  const size = useWindowSize();
 
   const [timeDisplayFormat, setTimeDisplayFormat] = React.useState("normal");
   const [state, setState] = useState({
@@ -107,16 +111,30 @@ function Lecture() {
   };
 
   const toggleFullScreen = () => {
-    if (!screenful.isEnabled || !playerRef.current) return;
+    if (
+      !screenful.isEnabled ||
+      !playerRef.current ||
+      !playerContainerRef.current
+    )
+      return;
 
-    //@ts-ignore
-    // screenful.toggle(playerContainerRef.current);
-    // playerRef.current.getInternalPlayer();
-    const videoElem = playerRef.current.getInternalPlayer();
-    videoElem.requestFullscreen();
-    //
-    //@ts-ignore
-    // screenful.request(videoElem);
+    // @ts-ignore
+    screenful
+      .toggle(playerContainerRef.current)
+      .then(() => console.log(screenful.isEnabled));
+
+    //   const videoElem = playerRef.current.getInternalPlayer();
+
+    //   videoElem.webkitEnterFullscreen();
+
+    // let fnEnter =
+    //   videoElem.requestFullscreen ||
+    //   videoElem.webkitRequestFullscreen ||
+    //   videoElem.mozRequestFullScreen ||
+    //   videoElem.oRequestFullscreen ||
+    //   videoElem.msRequestFullscreen;
+
+    // fnEnter.call(videoElem);
   };
 
   const togglePip = () => {
@@ -172,12 +190,14 @@ function Lecture() {
               onMouseMove={handleMouseMove}
               onMouseLeave={hanldeMouseLeave}
               ref={playerContainerRef}
-              className={"relative w-full"}
+              className={"relative w-full bg-black"}
             >
               <div
                 ref={playerHeight}
                 className="absolute w-full z-10 cursor-pointer"
-                onClick={() => handlePlayPause()}
+                onClick={() =>
+                  size.width > tailwindScreens.sm && handlePlayPause()
+                }
               >
                 <ReactPlayer
                   ref={playerRef}
@@ -186,7 +206,7 @@ function Lecture() {
                   url="http://hydro.ijs.si/v018/f1/6hccwsarokqsxi3gdhbjjdec77ead2ob.mp4"
                   pip={pip}
                   playing={playing}
-                  controls={false}
+                  controls={size.width < tailwindScreens.sm}
                   light={light}
                   playsinline
                   // loop={loop}
@@ -214,6 +234,7 @@ function Lecture() {
                 }
               >
                 <Controls
+                  show={size.width > tailwindScreens.sm}
                   ref={controlsRef}
                   onSeek={handleSeekChange}
                   onSeekMouseDown={handleSeekMouseDown}
