@@ -71,8 +71,8 @@ const Controls = forwardRef(
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
 
-    const iconStyles = "h-8 md:w-16 text-white opacity-75";
-    const smallIconStyle = "h-6 md:h-10 text-white";
+    const iconStyles = "h-8 md:w-12 text-white opacity-75";
+    const smallIconStyle = "h-6 lg:h-8 text-white";
 
     if (!show) return null;
 
