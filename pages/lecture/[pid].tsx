@@ -15,6 +15,8 @@ import { useWindowSize } from "@services/reactFunctions";
 import ButtonlessRed from "@components/ButtonLesRed";
 import ButtonRed from "@components/ButtonRed";
 import { DownloadIcon, PlusIcon } from "@heroicons/react/solid";
+import Maxer from "@components/BigMaxer";
+import Notes from "@components/Notes";
 
 const HIDE_CONST = 1; // seconds
 const DEBUG_PLAYER = false;
@@ -36,6 +38,33 @@ const lectureData = {
       "Department of Physiology, Anatomy & Genetics, University of Oxford",
   },
 };
+
+const sampleNotes = [
+  {
+    timestamp: 1235,
+    note: "Cras ac nibh rhoncus, sagittis purus eget, posuere magna. Aenean tempus ornare augue vel blandit. Maecenas dolor nibh, consequat vel lorem a, accumsan pellentesque nulla. Sed ornare justo ut mi sodales sagittis. In finibus consectetur auctor. Aliquam erat volutpat. Aliquam ac sem dictum, tincidunt justo in, condimentum sapien.",
+    id: 112,
+  },
+  {
+    timestamp: 566,
+    note: "Neque aliquam vestibulum morbi blandit cursus risus at. Tristique senectus et netus et. Enim ut tellus elementum sagittis.",
+    id: 551,
+  },
+];
+
+const SectionDiv = ({ children, title, className = "" }) => (
+  <Maxer>
+    <div className={"py-8 px-4 sm:px-6 lg:px-8" + className}>
+      <div className="grid grid-flow-col col-span-2 items-center space-between w-full pb-6">
+        <div>
+          <h1 className="text-2xl leading-8 font-extrabold">{title}</h1>
+        </div>
+      </div>
+
+      {children}
+    </div>
+  </Maxer>
+);
 
 function Lecture() {
   const router = useRouter();
@@ -183,7 +212,7 @@ function Lecture() {
     setState({ ...state, playbackRate: rate });
   };
 
-  const hanldeMute = () => {
+  const handleMute = () => {
     setState({ ...state, muted: !state.muted });
   };
 
@@ -198,14 +227,6 @@ function Lecture() {
       : `-${formatTime(duration - currentTime)}`;
 
   const totalDuration = formatTime(duration);
-
-  //! move this to components
-  // interface Note {
-  //   timestamp: string;
-  //   note: string;
-  //   id: string;
-  // }
-  // const Notes = ({ notes }: { notes: Note[] }) => <div></div>;
 
   return (
     <Layout title="Lecture | XYZ" useMaxer={false}>
@@ -273,7 +294,7 @@ function Lecture() {
                   played={played}
                   elapsedTime={elapsedTime}
                   totalDuration={totalDuration}
-                  onMute={hanldeMute}
+                  onMute={handleMute}
                   muted={muted}
                   onVolumeChange={handleVolumeChange}
                   onVolumeSeekDown={handleVolumeSeekDown}
@@ -356,6 +377,10 @@ function Lecture() {
           </div>
         </div>
       </BigMaxer>
+      {/* Notes */}
+      <SectionDiv title="Notes">
+        <Notes notes={sampleNotes} />
+      </SectionDiv>
     </Layout>
   );
 }
