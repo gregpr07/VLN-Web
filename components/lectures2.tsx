@@ -60,7 +60,7 @@ const Lectures2 = ({ lectures }: ILecture) => (
             </div>
           </div>
           <div className="hidden md:block">
-            <div className="flex">
+            <div className="grid justify-items-end">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-3 w-3 text-gray-400 "

@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import BigMaxer from "@components/BigMaxer";
 import ButtonlessRed from "@components/ButtonLesRed";
 import ButtonRed from "@components/ButtonRed";
+import Maxer from "@components/BigMaxer";
 // import {
 //   ChatAlt2Icon,
 //   DotsVerticalIcon,
@@ -27,6 +28,9 @@ import { ChevronDownIcon, ClockIcon } from "@heroicons/react/solid";
 import Lectures from "@components/Lectures";
 import Filters from "@components/Filters";
 import Lectures2 from "@components/lectures2";
+import Filters2 from "@components/Filters_playlist";
+import cat from "@components/cat";
+import Cat from "@components/cat";
 
 const author = {
   name: "Joe Average",
@@ -70,15 +74,11 @@ const lectures = [
   },
 ];
 
+const cateogories = ["Playlist", "Notes", "Bookmarks", "Comments", "Following"];
+
 const Lecture = () => {
   const router = useRouter();
   const { pid } = router.query;
-
-  const Maxer = ({ children }) => (
-    <div className="mx-auto max-w-md sm:max-w-xl lg:max-w-5xl xl:max-w-7xl">
-      {children}
-    </div>
-  );
 
   const SectionDiv = ({ children }) => (
     <div className="p-4 pt-8 sm:p-6 lg:p-8">{children}</div>
@@ -87,11 +87,19 @@ const Lecture = () => {
   return (
     <Layout title="Playlist" useMaxer={false}>
       {/* Header */}
-      <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-blue-600 to-red-800 text-xs">
-        <div className="pb-4 sm:pb-8">
+      <div
+        className={
+          "px-4 sm:px-0 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs " +
+          "lg:max-h-44 md:text-sm"
+        }
+      >
+        <div className="pb-4 sm:pb-8 md:pb-4">
           <Maxer>
             <div className="md:gap-6 sm:px-6 md:space-y-0 gap-3 grid grid-flow-col justify-start">
-              <div className="h-20 w-20" style={{ aspectRatio: "1" }}>
+              <div
+                className="h-20 w-20 md:h-44 md:w-44"
+                style={{ aspectRatio: "1" }}
+              >
                 <img
                   className="object-cover shadow-lg rounded-lg h-full"
                   src={author.profileImage}
@@ -101,7 +109,7 @@ const Lecture = () => {
               <div className="md:col-span-2">
                 <div className="">
                   <div className="text-white font-medium space-y-1">
-                    <h3 className="font-extrabold text-2xl leading-8">
+                    <h3 className="font-extrabold text-2xl md:text-5xl leading-8 md:leading-none">
                       {author.name}
                     </h3>
                     <p className="text-white font-light leading-4">
@@ -118,11 +126,12 @@ const Lecture = () => {
       <Maxer>
         {/* About */}
         <div className="p-4 pt-6 pb-2 sm:p-6 lg:p-8">
-          <h3 className="font-extrabold leading-6 pb-2 text-gray-800 text-2xl">
+          <h3 className="font-extrabold leading-6 pb-2 text-gray-800 text-2xl lg:pt-8">
             Joe's dashboard
           </h3>
-          <Filters />
+          <Cat />
         </div>
+        <Filters2 />
 
         {/* Uploaded videos */}
         <SectionDiv>

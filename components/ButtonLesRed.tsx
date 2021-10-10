@@ -9,7 +9,7 @@ const ButtonlessRed = ({ action, children, className, ...props }: btnProps) => (
   <button
     onClick={action}
     {...props}
-    className={"text-red-600 underline font-normal text-sm" + " " + className}
+    className={"text-red-600 underline font-medium text-sm" + " " + className}
   >
     {children}
   </button>
