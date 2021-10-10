@@ -9,16 +9,68 @@ import ReactPlayer from "react-player";
 
 import screenful from "screenfull";
 import Controls from "@components/Controls";
-import { formatTime } from "@services/functions";
+import { formatTime, shorterText } from "@services/functions";
+import { tailwindScreens } from "@services/constants";
+import { useWindowSize } from "@services/reactFunctions";
+import ButtonlessRed from "@components/ButtonLesRed";
+import ButtonRed from "@components/ButtonRed";
+import { DownloadIcon, PlusIcon } from "@heroicons/react/solid";
+import Maxer from "@components/BigMaxer";
+import Notes from "@components/Notes";
 
 const HIDE_CONST = 1; // seconds
 const DEBUG_PLAYER = false;
 
 let count = 0;
 
+const lectureData = {
+  title: "Principle of Systems Biology illustrated using Virtual Heart",
+  description:
+    "Praesent pharetra orci in quam congue, vitae maximus sapien vestibulum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque ultrices convallis fermentum. Aliquam facilisis felis eget lorem facilisis egestas. Nunc congue sodales libero, quis rhoncus tellus eleifend vel. Nulla pretium vehicula mattis.",
+  dateRecorded: "Jun 30, 2021",
+  datePublished: "Aug 08, 2021",
+  views: "12049",
+  licenses: ["cc", "cc1", "cc2"],
+  author: {
+    image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
+    name: "Denis Noble",
+    institution:
+      "Department of Physiology, Anatomy & Genetics, University of Oxford",
+  },
+};
+
+const sampleNotes = [
+  {
+    timestamp: 1235,
+    note: "Cras ac nibh rhoncus, sagittis purus eget, posuere magna. Aenean tempus ornare augue vel blandit. Maecenas dolor nibh, consequat vel lorem a, accumsan pellentesque nulla. Sed ornare justo ut mi sodales sagittis. In finibus consectetur auctor. Aliquam erat volutpat. Aliquam ac sem dictum, tincidunt justo in, condimentum sapien.",
+    id: 112,
+  },
+  {
+    timestamp: 566,
+    note: "Neque aliquam vestibulum morbi blandit cursus risus at. Tristique senectus et netus et. Enim ut tellus elementum sagittis.",
+    id: 551,
+  },
+];
+
+const SectionDiv = ({ children, title, className = "" }) => (
+  <Maxer>
+    <div className={"py-8 px-4 sm:px-6 lg:px-8" + className}>
+      <div className="grid grid-flow-col col-span-2 items-center space-between w-full pb-6">
+        <div>
+          <h1 className="text-2xl leading-8 font-extrabold">{title}</h1>
+        </div>
+      </div>
+
+      {children}
+    </div>
+  </Maxer>
+);
+
 function Lecture() {
   const router = useRouter();
   const { pid } = router.query;
+
+  const size = useWindowSize();
 
   const [timeDisplayFormat, setTimeDisplayFormat] = React.useState("normal");
   const [state, setState] = useState({
@@ -39,7 +91,6 @@ function Lecture() {
   const playerContainerRef = useRef<HTMLDivElement>(null);
   const playerHeight = useRef<HTMLDivElement>(null);
   const controlsRef = useRef(null);
-  const canvasRef = useRef(null);
 
   const { playing, light, muted, playbackRate, pip, played, volume } = state;
 
@@ -107,16 +158,30 @@ function Lecture() {
   };
 
   const toggleFullScreen = () => {
-    if (!screenful.isEnabled || !playerRef.current) return;
+    if (
+      !screenful.isEnabled ||
+      !playerRef.current ||
+      !playerContainerRef.current
+    )
+      return;
 
-    //@ts-ignore
-    // screenful.toggle(playerContainerRef.current);
-    // playerRef.current.getInternalPlayer();
-    const videoElem = playerRef.current.getInternalPlayer();
-    videoElem.requestFullscreen();
-    //
-    //@ts-ignore
-    // screenful.request(videoElem);
+    // @ts-ignore
+    screenful
+      .toggle(playerContainerRef.current)
+      .then(() => console.log(screenful.isEnabled));
+
+    //   const videoElem = playerRef.current.getInternalPlayer();
+
+    //   videoElem.webkitEnterFullscreen();
+
+    // let fnEnter =
+    //   videoElem.requestFullscreen ||
+    //   videoElem.webkitRequestFullscreen ||
+    //   videoElem.mozRequestFullScreen ||
+    //   videoElem.oRequestFullscreen ||
+    //   videoElem.msRequestFullscreen;
+
+    // fnEnter.call(videoElem);
   };
 
   const togglePip = () => {
@@ -147,7 +212,7 @@ function Lecture() {
     setState({ ...state, playbackRate: rate });
   };
 
-  const hanldeMute = () => {
+  const handleMute = () => {
     setState({ ...state, muted: !state.muted });
   };
 
@@ -166,19 +231,20 @@ function Lecture() {
   return (
     <Layout title="Lecture | XYZ" useMaxer={false}>
       <BigMaxer>
-        <div className="px-4 sm:px-6 lg:px-8">
-          <button onClick={togglePip}>pip</button>
-          <div className="grid grid-cols-1">
+        <div className="sm:px-6 lg:px-8 md:pt-8">
+          <div className="">
             <div
               onMouseMove={handleMouseMove}
               onMouseLeave={hanldeMouseLeave}
               ref={playerContainerRef}
-              className={"relative w-full"}
+              className={"relative w-full bg-black"}
             >
               <div
                 ref={playerHeight}
                 className="absolute w-full z-10 cursor-pointer"
-                onClick={() => handlePlayPause()}
+                onClick={() =>
+                  size.width > tailwindScreens.sm && handlePlayPause()
+                }
               >
                 <ReactPlayer
                   ref={playerRef}
@@ -187,7 +253,7 @@ function Lecture() {
                   url="http://hydro.ijs.si/v018/f1/6hccwsarokqsxi3gdhbjjdec77ead2ob.mp4"
                   pip={pip}
                   playing={playing}
-                  controls={false}
+                  controls={size.width < tailwindScreens.sm}
                   light={light}
                   playsinline
                   // loop={loop}
@@ -215,6 +281,7 @@ function Lecture() {
                 }
               >
                 <Controls
+                  show={size.width > tailwindScreens.sm}
                   ref={controlsRef}
                   onSeek={handleSeekChange}
                   onSeekMouseDown={handleSeekMouseDown}
@@ -227,7 +294,7 @@ function Lecture() {
                   played={played}
                   elapsedTime={elapsedTime}
                   totalDuration={totalDuration}
-                  onMute={hanldeMute}
+                  onMute={handleMute}
                   muted={muted}
                   onVolumeChange={handleVolumeChange}
                   onVolumeSeekDown={handleVolumeSeekDown}
@@ -235,15 +302,85 @@ function Lecture() {
                   playbackRate={playbackRate}
                   onPlaybackRateChange={handlePlaybackRate}
                   onToggleFullScreen={toggleFullScreen}
+                  onTogglePIP={togglePip}
                   volume={volume}
                   // onBookmark={addBookmark}
                 />
               </div>
             </div>
-            <canvas ref={canvasRef} />
+          </div>
+        </div>
+        {/* below video */}
+        <div className="p-4 sm:p-6 lg:p-8">
+          <h3 className="text-lg leading-6 font-bold text-gray-900">
+            {lectureData.title}
+          </h3>
+          <div className="flex flex-wrap text-gray-500 font-normal leading-4 gap-1 ">
+            <p className="text-xs leading-4 font-normal text-gray-500">
+              Recorded on {lectureData.datePublished}
+            </p>
+            <p className="text-xs leading-4 font-normal text-gray-500">
+              &middot;
+            </p>
+            <p className="text-xs leading-4 font-normal text-gray-500">
+              Published on {lectureData.dateRecorded}
+            </p>
+            <p className="text-xs leading-4 font-normal text-gray-500">
+              &middot;
+            </p>
+            <p className="text-xs leading-4 font-normal text-gray-500">
+              {lectureData.views} views
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-gray-200 lg:hidden" />
+
+        {/* Author */}
+        <div className="p-4 sm:p-6 lg:p-8">
+          <div className="rounded-md grid grid-flow-col gap-5 justify-start">
+            <div className="flex-grow">
+              <img
+                className="object-cover shadow-lg rounded-full h-10 w-10"
+                src={lectureData.author.image}
+                alt=""
+              />
+            </div>
+            <div className="text-xs">
+              <h4 className="leading-4 text-gray-900 font-semibold pb-1">
+                {lectureData.author.name}
+              </h4>
+
+              <p className="text-gray-500 text-xs leading-4 font-normal max-w-xl">
+                {lectureData.author.institution}
+              </p>
+            </div>
+          </div>
+          <div className="pt-4">
+            <p className="text-sm leading-5 font-normal text-gray-500 max-w-xl">
+              {shorterText(lectureData.description, 100)}
+            </p>
+            <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
+
+            <div className="py-10 flex flex-row gap-6 lg:gap-4 items-center lg:items-start lg:flex-col lg:w-44">
+              <div className="sm:flex-grow">
+                <ButtonRed
+                  className="lg:w-44 lg:flex lg:justify-center items-center"
+                  Icon={DownloadIcon}
+                  text="Download"
+                />
+              </div>
+              <div>
+                <div className="flex flex-row gap-4 pt-2"></div>
+              </div>
+            </div>
           </div>
         </div>
       </BigMaxer>
+      {/* Notes */}
+      <SectionDiv title="Notes">
+        <Notes notes={sampleNotes} />
+      </SectionDiv>
     </Layout>
   );
 }
