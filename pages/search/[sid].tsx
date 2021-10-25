@@ -305,7 +305,8 @@ const Lecture = () => {
 
           <div className="grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 pt-4">
             {authors.map((author, index) => (
-              <Link href={`/author/${author.id}`}>
+              // put author.id here
+              <Link href={`/author/${author.author}`}>
                 <div
                   className={
                     "py-2.5 px-2 rounded-md grid grid-flow-col gap-3  justify-start" +
