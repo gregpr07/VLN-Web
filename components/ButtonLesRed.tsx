@@ -16,7 +16,7 @@ const ButtonlessRed = ({
   <button
     onClick={action}
     {...props}
-    className={"underline font-normal text-sm " + textColor + " " + className}
+    className={"underline font-medium text-sm " + textColor + " " + className}
   >
     {children}
   </button>

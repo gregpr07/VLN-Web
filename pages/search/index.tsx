@@ -252,14 +252,6 @@ const Lecture = () => {
       <Maxer>
         {/* Selection */}
         <div className="p-4 sm:p-6 lg:p-8">
-          {/*             <div className="h-20 flex flex-row font-bold leading-6 pb-2 content-start space-x-20">
-                <button>All results</button>
-                <button>Lectures</button>
-                <button>Authors</button>
-                <button>Events</button>
-                <button>Project</button>
-                <button>Other</button>
-            </div> */}
           <div className="h-10 flex flex-row justify-between ">
             <h3 className="text-gray-800 font-extrabold leading-7 text-xl">
               Events

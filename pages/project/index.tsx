@@ -23,16 +23,19 @@ import ButtonBlack from "@components/ButtonBlack";
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/solid";
 import Lectures from "@components/Lectures";
 import Filters from "@components/Filters";
+import ButtonRound from "@components/ButtonRound";
+import { arrowsPlugin } from "@brainhubeu/react-carousel";
 
 const author = {
-  name: "Cameron Williamson",
-  profileImage:
-    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Forig00.deviantart.net%2F5470%2Ff%2F2010%2F105%2F4%2F5%2Frandom_person_by_vurtov.jpg&f=1&nofb=1",
-  title: "Researcher, Research Group for Language Technology, Ljubljana",
-  website: "cameronwilliamsonresearcher.org",
+  name: "19 Events · 64 Lectures · Last updated 12 dec 2021",
+  title: "CLARIN - Common Language Resources and Technology Infrastructure",
   description:
     "As Gregor Samsa awoke one morning out of restless dreyarnams, he found himself in bed, transformed into a gargantuan pest. He lay on his hard, armored back and saw, as he raised his head a little, his domed, brown belly...",
   socials: [
@@ -158,31 +161,21 @@ const Project = () => {
   );
 
   return (
-    <Layout title="Lecture | XYZ" useMaxer={false}>
+    <Layout title="Project" useMaxer={false}>
       {/* Header */}
       <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs">
         <div className="pb-4 sm:pb-8">
           <Maxer>
             <div className="md:gap-6 sm:px-6 md:space-y-0 gap-3 grid grid-flow-col justify-start">
-              <div className="h-20 w-20" style={{ aspectRatio: "1" }}>
-                <img
-                  className="object-cover shadow-lg rounded-lg h-full"
-                  src={author.profileImage}
-                  alt=""
-                />
-              </div>
               <div className="md:col-span-2">
                 <div className="">
                   <div className="text-white font-medium space-y-1">
-                    <h3 className="font-extrabold text-2xl leading-8">
+                    <h3 className="font-normal  leading-8 md:text-xs md:leading-5 md:font-medium">
                       {author.name}
                     </h3>
-                    <p className="text-white font-light leading-4">
+                    <p className="text-white font-extrabold text-2xl leading-8 md:text-5xl md:leading-none md:font-extrabold">
                       {author.title}
                     </p>
-                  </div>
-                  <div className="text">
-                    <p className="text-gray-300 font-light">{author.website}</p>
                   </div>
                 </div>
               </div>
@@ -193,38 +186,107 @@ const Project = () => {
 
       <Maxer>
         {/* About */}
-        <div className="p-4 sm:p-6 lg:p-8">
-          <h3 className="font-bold leading-6 pb-2">About</h3>
-          <p className="text-gray-600 font-normal text-sm leading-5">
+        <div className="p-4 sm:p-6 lg:p-8 ">
+          <h3 className="font-bold leading-6 pb-2 text-lg">About</h3>
+
+          <p className="text-gray-600 font-normal text-sm leading-5 md:text-body md:leading-7 md:font-normal md:text-left max-w-2xl">
             {author.description}
           </p>
           <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
-
-          <div className="py-10 flex flex-row gap-6 items-center">
-            <div className="sm:flex-grow">
-              <ButtonRed Icon={PlusIcon} text="Follow" />
-            </div>
-            <div>
-              <p className="text-gray-900 font-extrabold text-sm">
-                Get in touch
-              </p>
-              <div className="flex flex-row gap-4 pt-2">
-                {author.socials.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-gray-400 hover:text-gray-500"
-                  >
-                    <span className="sr-only">{item.name}</span>
-                    <item.icon className="h-6 w-6" aria-hidden="true" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
 
-        <div className="bg-gray-100 pt-2 sm:hidden" />
+        <div className="p-4 sm:p-6 lg:p-8 md:hidden">
+          <h3 className="font-bold leading-6 text-gray-900 text-lg">
+            Related catagories
+          </h3>
+          <div className="pt-4  space-x-1 flex justify-items-start">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-red-100 text-red-800">
+              Technology
+            </span>
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-red-100 text-red-800">
+              Computers
+            </span>
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-red-100 text-red-800">
+              Computer Science
+            </span>
+          </div>
+        </div>
+        <div className="bg-gray-50 overflow-hidden rounded-lg">
+          <div className=" flex flex-row justify-between p-4 sm:p-6 lg:p-8">
+            <h3 className="text-gray-800 text-2xl leading-8 font-extrabold">
+              Project's events
+            </h3>
+            <ButtonRound Icon={ArrowRightIcon} text="All events" />
+          </div>
+
+          <div className="px-4 py-5 sm:p-6"></div>
+        </div>
+
+        <div className=" p-4 sm:p-6 lg:p-8 ">
+          <nav className="md:hidden px-4 flex items-center justify-between sm:px-0">
+            <div className="-mt-px w-0 flex-1 flex">
+              <a
+                href="#"
+                className="border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 "
+              >
+                <svg
+                  className="mr-3 h-5 w-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </a>
+            </div>
+            <div className=" md:-mt-px md:flex">
+              <a
+                href="#"
+                className="border-transparent text-gray-500 hover:text-gray-700  border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium"
+              >
+                •
+              </a>
+              <a
+                href="#"
+                className="border-transparent text-gray-700 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium"
+                aria-current="page"
+              >
+                •
+              </a>
+              <a
+                href="#"
+                className="border-transparent text-gray-500 hover:text-gray-700  border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium"
+              >
+                •
+              </a>
+            </div>
+            <div className="-mt-px w-0 flex-1 flex justify-end">
+              <a
+                href="#"
+                className="border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 "
+              >
+                <svg
+                  className="ml-3 h-5 w-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </a>
+            </div>
+          </nav>
+        </div>
 
         {/* Uploaded videos */}
         <SectionDiv>
@@ -256,13 +318,6 @@ const Project = () => {
 
             {/* Comment Box */}
             <div className="bg-gray-50 flex flex-row py-2 px-2 rounded-md gap-1.5">
-              <div>
-                <img
-                  className="object-cover shadow-lg rounded-full h-10 w-10"
-                  src={author.profileImage}
-                  alt=""
-                />
-              </div>
               <div className="flex-grow">
                 <input
                   className="h-10 bg-transparent px-2 font-normal leading-5 text w-full text-sm"

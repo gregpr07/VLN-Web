@@ -20,20 +20,10 @@ function classNames(...classes) {
 const cateogories = ["Lectures", "Events", "Hands On"];
 const sorts = ["Alphabet", "Date", "Views"];
 
-const Filters = () => (
+const Filters2 = () => (
   <div className="grid grid-flow-col py-4 items-stretch">
     <div className="flex-grow">
       <Menu as="div" className="relative inline-block text-left">
-        <div>
-          <Menu.Button className="inline-flex h-10 justify-center w-full rounded-md px-4 py-2 bg-gray-50 text-sm font-medium text-gray-800 hover:bg-gray-50 ring-none">
-            All categories
-            <ChevronDownIcon
-              className="-mr-1 ml-2 h-6 w-4"
-              aria-hidden="true"
-            />
-          </Menu.Button>
-        </div>
-
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"
@@ -119,4 +109,4 @@ const Filters = () => (
   </div>
 );
 
-export default Filters;
+export default Filters2;
