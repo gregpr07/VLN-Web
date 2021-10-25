@@ -21,13 +21,13 @@ const user = {
     "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Calendar", href: "#", current: false },
-  { name: "Teams", href: "#", current: false },
-  { name: "Directory", href: "#", current: false },
+  // { name: "Dashboard", href: "#", current: true },
+  // { name: "Calendar", href: "#", current: false },
+  // { name: "Teams", href: "#", current: false },
+  // { name: "Directory", href: "#", current: false },
 ];
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
+  { name: "Your Profile", href: "/profile" },
   { name: "Settings", href: "#" },
 ];
 
@@ -42,10 +42,25 @@ const Navbar = ({
   showSearch = true,
   sticky = true,
 }) => {
+  const router = useRouter();
+
   const handleLogout = (e: any) => {
     e.preventDefault();
     rmToken();
   };
+
+  const [search, setSearch] = useState("");
+  const handleChange = (e: any) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+  };
+  const submitSearch = (e: any) => {
+    e.preventDefault();
+    if (search) {
+      router.push(`/search/${search}`);
+    }
+  };
+
   return (
     <>
       {/* When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars */}
@@ -73,7 +88,7 @@ const Navbar = ({
                       <Link href="/">
                         <a>
                           <img
-                            className="block sm:hidden h-8 w-auto"
+                            className="block lg:hidden h-8 w-auto"
                             src={
                               redBG
                                 ? "/logos/vln_white_tiny.svg"
@@ -82,7 +97,7 @@ const Navbar = ({
                             alt="Workflow"
                           />
                           <img
-                            className="sm:block hidden h-8 w-auto"
+                            className="lg:block hidden h-8 w-auto"
                             src={
                               redBG
                                 ? "/logos/vln_white.svg"
@@ -101,21 +116,28 @@ const Navbar = ({
                           <label htmlFor="search" className="sr-only">
                             Search
                           </label>
-                          <div className="relative">
-                            <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                              <SearchIcon
-                                className="h-5 w-5 text-gray-400 text-sm font-medium"
-                                aria-hidden="true"
+                          <form onSubmit={submitSearch}>
+                            <div className="relative">
+                              <div
+                                onClick={submitSearch}
+                                className="cursor-pointer absolute inset-y-0 left-0 pl-3 flex items-center"
+                              >
+                                <SearchIcon
+                                  className="h-5 w-5 text-gray-400 text-sm font-medium"
+                                  aria-hidden="true"
+                                />
+                              </div>
+                              <input
+                                id="search"
+                                name="search"
+                                className="block h-10 w-full border-none bg-gray-50 rounded-md py-3 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
+                                placeholder="Search"
+                                type="search"
+                                value={search}
+                                onChange={handleChange}
                               />
                             </div>
-                            <input
-                              id="search"
-                              name="search"
-                              className="block h-10 w-full border-none bg-gray-50 rounded-md py-3 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
-                              placeholder="Search"
-                              type="search"
-                            />
-                          </div>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -129,7 +151,7 @@ const Navbar = ({
                     {/* Mobile menu button */}
                     <Popover.Button
                       className={
-                        "-mx-2 my-2 rounded-md p-2 inline-flex items-center border-2 justify-center " +
+                        "-mx-2 my-2 rounded-md p-2 inline-flex items-center justify-center " +
                         (redBG
                           ? " text-white hover:text-gray-100 hover:border-gray-100"
                           : "bg-gray-50 text-gray-500 hover:text-gray-600 border-none")
@@ -152,7 +174,7 @@ const Navbar = ({
                     <div className="hidden md:flex md:items-center md:justify-end lg:col-span-4">
                       <a
                         href="#"
-                        className="ml-5 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="ml-5 my-3 flex-shrink-0 rounded-full p-1 text-current hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       >
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -166,7 +188,7 @@ const Navbar = ({
                               <Menu.Button className="rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 <span className="sr-only">Open user menu</span>
                                 <img
-                                  className="h-8 w-8 rounded-full"
+                                  className="h-10 w-10 rounded-full"
                                   src={user.imageUrl}
                                   alt=""
                                 />
@@ -184,20 +206,21 @@ const Navbar = ({
                             >
                               <Menu.Items
                                 static
-                                className="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
+                                className="bg-white origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
                               >
                                 {userNavigation.map((item) => (
                                   <Menu.Item key={item.name}>
                                     {({ active }) => (
-                                      <a
-                                        href={item.href}
-                                        className={classNames(
-                                          active ? "bg-gray-100" : "",
-                                          "block py-2 px-4 text-sm text-gray-700"
-                                        )}
-                                      >
-                                        {item.name}
-                                      </a>
+                                      <Link href={item.href}>
+                                        <a
+                                          className={classNames(
+                                            active ? "bg-gray-100" : "",
+                                            "block py-2 px-4 text-sm text-gray-700"
+                                          )}
+                                        >
+                                          {item.name}
+                                        </a>
+                                      </Link>
                                     )}
                                   </Menu.Item>
                                 ))}
@@ -231,19 +254,18 @@ const Navbar = ({
                           </ButtonlessRed>
                         </a>
                       </Link>
-                      <a
-                        href="#"
-                        className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white "
-                      >
-                        <ButtonRed
-                          text="Sign up"
-                          className={
-                            redBG
-                              ? "border-2 rounded"
-                              : "border-2 border-transparent"
-                          }
-                        />
-                      </a>
+                      <Link href="register">
+                        <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md text-base font-medium text-white ">
+                          <ButtonRed
+                            text="Sign up"
+                            className={
+                              redBG
+                                ? "border-2 rounded"
+                                : "border-2 border-transparent"
+                            }
+                          />
+                        </a>
+                      </Link>
                     </div>
                   )}
                 </div>
@@ -253,8 +275,8 @@ const Navbar = ({
             <Popover.Panel as="nav" className="md:hidden" aria-label="Global">
               <div
                 className={
-                  "max-w-3xl mx-auto px-2 pt-2 pb-3 space-y-1 sm:px-4 z-50 " +
-                  (redBG ? " bg-red-600" : "bg-white")
+                  "max-w-3xl mx-auto px-2 pb-3 space-y-1 sm:px-4 z-50 pt-14 " +
+                  (redBG ? " bg-red-600" : "bg-white shadow")
                 }
               >
                 {navigation.map((item) => (
@@ -274,29 +296,39 @@ const Navbar = ({
                 ))}
 
                 {token ? (
-                  <div className="border-t border-gray-200 pt-4 pb-3">
+                  <div
+                    className={
+                      "pt-4 pb-3 " +
+                      (redBG
+                        ? "text-gray-100 hover:text-gray-200"
+                        : "text-gray-900 hover:text-gray-800")
+                    }
+                  >
                     <div className="max-w-3xl mx-auto px-4 flex items-center sm:px-6">
                       <div className="flex-shrink-0">
                         <img
-                          className="h-10 w-10 rounded-full"
+                          className="h-16 w-16 rounded-full"
                           src={user.imageUrl}
                           alt=""
                         />
                       </div>
                       <div className="ml-3">
-                        <div className="text-base font-medium text-gray-800">
+                        <div className="text-base font-medium text-current">
                           {user.name}
                         </div>
-                        <div className="text-sm font-medium text-gray-500">
+                        <div className="text-sm font-medium text-current">
                           {user.email}
                         </div>
                       </div>
                       <button
                         type="button"
-                        className="ml-auto flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="ml-auto flex-shrink-0 rounded-full p-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                       >
                         <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                        <BellIcon
+                          className="h-6 w-6 text-current"
+                          aria-hidden="true"
+                        />
                       </button>
                     </div>
                     <div className="mt-3 max-w-3xl mx-auto px-2 space-y-1 sm:px-4">
@@ -304,32 +336,40 @@ const Navbar = ({
                         <a
                           key={item.name}
                           href={item.href}
-                          className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                          className="block rounded-md py-2 px-3 text-base font-medium text-current hover:bg-gray-50 hover:text-gray-900"
                         >
                           {item.name}
                         </a>
                       ))}
                       <a
                         onClick={handleLogout}
-                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900 cursor-pointer"
+                        className="block rounded-md py-2 px-3 text-base font-medium text-current hover:bg-gray-50 hover:text-gray-900 cursor-pointer"
                       >
                         Log out
                       </a>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-left pl-7 md:flex-1 md:w-0">
+                  <div className="flex pl-4 items-left justify-left flex-col pt-4 md:flex-1">
                     <Link href="login">
-                      <a className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                        Sign in
+                      <a className="text-base content-center font-medium text-gray-500 hover:text-gray-900 pl-1">
+                        <ButtonlessRed textColor={redBG ? "text-gray-100" : ""}>
+                          Sign in
+                        </ButtonlessRed>
                       </a>
                     </Link>
-                    <a
-                      href="#"
-                      className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                    >
-                      Sign up
-                    </a>
+                    <Link href="register">
+                      <a className="whitespace-nowrap inline-flex justify-left py-2 border border-transparent rounded-md text-base font-medium text-white ">
+                        <ButtonRed
+                          text="Sign up"
+                          className={
+                            redBG
+                              ? "border-2 rounded"
+                              : "border-2 border-transparent"
+                          }
+                        />
+                      </a>
+                    </Link>
                   </div>
                 )}
               </div>

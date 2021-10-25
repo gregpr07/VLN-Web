@@ -34,8 +34,8 @@ import Lectures from "@components/Lectures";
 import Filters from "@components/Filters";
 import Lectures2 from "@components/lectures2";
 import Filters2 from "@components/Filters_playlist";
-import cat from "@components/cat";
-import Cat from "@components/cat";
+import cat from "@components/Categories";
+import Cat from "@components/Categories";
 import ButtonRound from "@components/ButtonRound";
 import LoadMore from "@components/loadmore";
 

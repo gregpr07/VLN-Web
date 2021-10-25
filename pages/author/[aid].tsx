@@ -28,6 +28,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import Lectures from "@components/Lectures";
 import Filters from "@components/Filters";
+import ReadMore from "@components/ReadMore";
 
 const author = {
   name: "Cameron Williamson",
@@ -36,7 +37,7 @@ const author = {
   title: "Researcher, Research Group for Language Technology, Ljubljana",
   website: "cameronwilliamsonresearcher.org",
   description:
-    "As Gregor Samsa awoke one morning out of restless dreyarnams, he found himself in bed, transformed into a gargantuan pest. He lay on his hard, armored back and saw, as he raised his head a little, his domed, brown belly...",
+    "As Gregor Samsa awoke one morning out of restless dreyarnams, he found himself in bed, transformed into a gargantuan pest. He lay on his hard, armored back and saw, as he raised his head a little, his domed, brown belly. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, animi nobis, ipsum eum ratione maxime eveniet corporis quis sed omnis praesentium ipsa ad vel veniam pariatur assumenda id sit quam.",
   socials: [
     {
       name: "Facebook",
@@ -203,9 +204,8 @@ const Lecture = () => {
               <div className="order-1">
                 <h3 className="font-bold leading-6 pb-2 md:text-lg">About</h3>
                 <p className="text-gray-600 font-normal text-sm leading-5">
-                  {author.description}
+                  <ReadMore text={author.description} shorterLength={200} />
                 </p>
-                <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
               </div>
 
               <div className="py-10 flex flex-row gap-6 lg:gap-4 items-center lg:items-start lg:flex-col lg:w-44">

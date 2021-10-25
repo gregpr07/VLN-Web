@@ -13,15 +13,16 @@ import ButtonRed from "@components/ButtonRed";
 // import { connect } from "react-redux";
 // import { saveUserToken } from "@services/storage/actions";
 
-const Login = ({ saveToken, token }) => {
+const Register = ({ saveToken, token }) => {
   const router = useRouter();
 
   const [isError, setIsError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
 
-  const handleLoginSubmit = (e) => {
+  const handleRegisterSubmit = (e) => {
     e.preventDefault();
 
     saveToken(userName);
@@ -39,7 +40,7 @@ const Login = ({ saveToken, token }) => {
       <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
+            Register a new account
           </h2>
         </div>
 
@@ -86,6 +87,26 @@ const Login = ({ saveToken, token }) => {
                 </div>
               </div>
 
+              <div>
+                <label
+                  htmlFor="password2"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Repeat password
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="password2"
+                    name="password2"
+                    type="password"
+                    autoComplete="current-password"
+                    onChange={(event) => setPassword2(event.target.value)}
+                    required
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
@@ -101,29 +122,17 @@ const Login = ({ saveToken, token }) => {
                     Remember me
                   </label>
                 </div>
-
-                <div className="text-sm">
-                  <button
-                    type="submit"
-                    onClick={handleLoginSubmit}
-                    className="font-medium text-red-600 hover:text-red-500"
-                  >
-                    Forgot your password?
-                  </button>
-                </div>
               </div>
 
               <div>
-                <ButtonRed text="Sign in" className="mx-auto px-12">
-                  Sign in
-                </ButtonRed>
+                <ButtonRed text="Register in" className="mx-auto px-12" />
               </div>
             </form>
           </div>
           <div className="mt-2 text-left text-sm">
-            No account yet?{" "}
-            <Link href="register">
-              <ButtonlessRed>Register new account</ButtonlessRed>
+            Already have an account?{" "}
+            <Link href="login">
+              <ButtonlessRed>Login</ButtonlessRed>
             </Link>
           </div>
         </div>
@@ -140,4 +149,4 @@ const mapDispatchToProps = (dispatch) => ({
   saveToken: (str: string) => dispatch(saveUserToken(str)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

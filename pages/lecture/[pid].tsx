@@ -17,6 +17,7 @@ import ButtonRed from "@components/ButtonRed";
 import { DownloadIcon, PlusIcon } from "@heroicons/react/solid";
 import Maxer from "@components/BigMaxer";
 import Notes from "@components/Notes";
+import ReadMore from "@components/ReadMore";
 
 const HIDE_CONST = 1; // seconds
 const DEBUG_PLAYER = false;
@@ -358,9 +359,8 @@ function Lecture() {
           </div>
           <div className="pt-4">
             <p className="text-sm leading-5 font-normal text-gray-500 max-w-xl">
-              {shorterText(lectureData.description, 100)}
+              <ReadMore text={lectureData.description} shorterLength={100} />
             </p>
-            <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
 
             <div className="py-10 flex flex-row gap-6 lg:gap-4 items-center lg:items-start lg:flex-col lg:w-44">
               <div className="sm:flex-grow">

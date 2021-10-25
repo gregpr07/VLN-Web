@@ -17,6 +17,7 @@ import Lectures from "@components/Lectures";
 import { tailwindScreens } from "@services/constants";
 
 import { TwitterTimelineEmbed } from "react-twitter-embed";
+import router from "next/router";
 
 interface IEvent {
   title: string;
@@ -175,6 +176,8 @@ const trending_lectures = [
 ];
 
 const IndexPage = () => {
+  // Components
+
   const SectionDiv = ({ children, title, buttonText = "", className = "" }) => (
     <Maxer>
       <div className={"py-8 px-4 sm:px-6 lg:px-8" + className}>
@@ -208,46 +211,67 @@ const IndexPage = () => {
     </Maxer>
   );
 
-  const Header = () => (
-    <div
-      className={"px-4 sm:px-6 lg:px-8 text-xs bg-red-600 " + "md:text-sm"}
-      // ref={headerRef}
-    >
-      <div>
-        <div className="pb-4 sm:pb-8 md:pb-4">
-          <Maxer>
-            <div className="">
-              <h1
-                className={
-                  "text-2xl leading-8 font-extrabold text-white text-center py-8 md:py-10 lg:py-12" +
-                  " " +
-                  "lg:text-5xl lg:leading-none lg:font-extrabold"
-                }
-              >
-                Exchange ideas. <br className="md:hidden" />
-                Share your knowledge.
-              </h1>
-              <div className="relative mb-8 max-w-xl mx-auto">
-                <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 hidden md:flex items-center">
-                  <SearchIcon
-                    className="h-5 w-5 text-gray-400 text-sm font-medium"
-                    aria-hidden="true"
-                  />
+  const Header = () => {
+    // Services
+    const [search, setSearch] = useState("");
+    const handleChange = (e: any) => {
+      e.preventDefault();
+      setSearch(e.target.value);
+    };
+    const submitSearch = (e: any) => {
+      e.preventDefault();
+      if (search) {
+        router.push(`/search/${search}/`);
+      }
+    };
+    return (
+      <div
+        className={"px-4 sm:px-6 lg:px-8 text-xs bg-red-600 " + "md:text-sm"}
+        // ref={headerRef}
+      >
+        <div>
+          <div className="pb-4 sm:pb-8 md:pb-4">
+            <Maxer>
+              <div className="">
+                <h1
+                  className={
+                    "text-2xl leading-8 font-extrabold text-white text-center py-8 md:py-10 lg:py-12" +
+                    " " +
+                    "lg:text-5xl lg:leading-none lg:font-extrabold"
+                  }
+                >
+                  Exchange ideas. <br className="md:hidden" />
+                  Share your knowledge.
+                </h1>
+                <div className="relative mb-8 max-w-xl mx-auto">
+                  <form onSubmit={submitSearch}>
+                    <div
+                      onClick={submitSearch}
+                      className="cursor-pointer absolute inset-y-0 left-0 pl-3 hidden md:flex items-center"
+                    >
+                      <SearchIcon
+                        className="h-5 w-5 text-gray-400 text-sm font-medium "
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <input
+                      id="search"
+                      name="search"
+                      className="block h-10 w-full font-normal border-none bg-gray-50 rounded-md py-3 md:pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
+                      placeholder="Search for lectures"
+                      type="search"
+                      value={search}
+                      onChange={handleChange}
+                    />
+                  </form>
                 </div>
-                <input
-                  id="search"
-                  name="search"
-                  className="block h-10 w-full font-normal border-none bg-gray-50 rounded-md py-3 md:pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-600 sm:text-sm"
-                  placeholder="Search for lectures"
-                  type="search"
-                />
               </div>
-            </div>
-          </Maxer>
+            </Maxer>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const Event = ({ ...props }: IEvent) => (
     <div className="bg-gray rounded p-3 bg-gray-50">

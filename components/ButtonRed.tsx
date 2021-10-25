@@ -11,7 +11,7 @@ const ButtonRed = ({ action, text, className, Icon, ...props }: btnProps) => (
     onClick={action}
     {...props}
     className={
-      "bg-red-600 leading-4 text-white h-10 px-7 rounded-md font-normal block text-sm" +
+      "bg-red-600 hover:bg-red-500 leading-4 text-white h-10 px-7 rounded-md font-normal block text-sm" +
       " " +
       className
     }

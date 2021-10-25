@@ -2,31 +2,16 @@ import Layout from "@components/Layout";
 
 import { useRouter } from "next/router";
 import BigMaxer from "@components/BigMaxer";
-import ButtonlessRed from "@components/ButtonLesRed";
-import ButtonRed from "@components/ButtonRed";
-// import {
-//   ChatAlt2Icon,
-//   DotsVerticalIcon,
-//   PlusIcon,
-//   SwitchVerticalIcon,
-// } from "@heroicons/react/solid";
 
-import {
-  ChatAlt2Icon,
-  DotsVerticalIcon,
-  PlusIcon,
-  SwitchVerticalIcon,
-} from "@heroicons/react/outline";
-
-import ButtonBlack from "@components/ButtonBlack";
+import Link from "next/link";
 
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
+
 import { ArrowRightIcon, ChevronDownIcon } from "@heroicons/react/solid";
 import ButtonRound from "@components/ButtonRound";
 import { eventNames } from "process";
 import Lectures from "@components/Lectures";
+import Cat from "@components/Categories";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -205,18 +190,15 @@ const events = [
   },
 ];
 
-const cateogies = ["Lectures", "Events", "Hands On"];
-const sorts = ["Alphabet", "Date", "Views"];
-
 const Lecture = () => {
   const router = useRouter();
-  const { pid } = router.query;
+  const { sid } = router.query;
 
-  const Maxer = ({ children }) => (
-    <div className="mx-auto max-w-md sm:max-w-xl lg:max-w-5xl xl:max-w-7xl">
-      {children}
-    </div>
-  );
+  // const Maxer = ({ children }) => (
+  //   <div className="mx-auto max-w-md sm:max-w-xl lg:max-w-5xl xl:max-w-7xl">
+  //     {children}
+  //   </div>
+  // );
 
   const SectionDiv = ({ children }) => (
     <div className="p-4 pt-8 sm:p-6 lg:p-8">{children}</div>
@@ -225,31 +207,28 @@ const Lecture = () => {
   return (
     <Layout title="Search" useMaxer={false}>
       {/* Header */}
-      <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-white to-white ">
+      <div className="px-4 lg:px-8 pt-24 md:pt-8 lg:pt-12 ">
         <div className="pb-4 sm:pb-8">
-          <Maxer>
+          <BigMaxer>
             <div className="md:gap-0 sm:px-0 md:space-y-0 gap-3 grid grid-flow-col justify-start">
               <div className="md:col-span-2 px-3">
                 <div className="">
                   <div className="text-gray-900 font-bold space-y-1 ">
                     <h3 className="text-2xl leading-8 font-extrabold pb-10">
-                      {title.name}
+                      X results for <i>{sid}</i>
                     </h3>
 
-                    <ButtonRound
-                      Icon={ChevronDownIcon}
-                      text="All catagories "
-                    />
+                    <Cat />
                   </div>
                   <div className="text"></div>
                 </div>
               </div>
             </div>
-          </Maxer>
+          </BigMaxer>
         </div>
       </div>
 
-      <Maxer>
+      <BigMaxer>
         {/* Selection */}
         <div className="p-4 sm:p-6 lg:p-8">
           <div className="h-10 flex flex-row justify-between ">
@@ -263,14 +242,14 @@ const Lecture = () => {
               <div
                 className={
                   "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
-                  (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
+                  (!(index % 2) ? " bg-gray-50" : "") +
                   " " +
-                  "md:shadow md:p-0 md:gap-0 md:items-center"
+                  "md:p-2 md:gap-0 md:items-center"
                 }
               >
                 <div>
                   <img
-                    className="md:pl-2 object-cover shadow-lg rounded md:rounded-b-none md:shadow-none h-14 w-24 md:h-14 md:w-24"
+                    className="object-cover shadow-lg rounded md:shadow-none h-14 w-24 md:h-14 md:w-24"
                     src={event.image}
                     alt=""
                   />
@@ -291,8 +270,12 @@ const Lecture = () => {
                   <h4 className="leading-4 text-gray-900 font-semibold pb-1 md:grid md:items-center md:pl-10 md:col-span-3 md:pt-1">
                     {event.title}
                   </h4>
-                  <p>{event.videos} videos</p>
-                  <p>{event.views} views</p>
+                  <p className="md:text-gray-500 justify-self-end">
+                    {event.videos} videos
+                  </p>
+                  <p className="md:text-gray-500 justify-self-end">
+                    {event.views} views
+                  </p>
                 </div>
               </div>
             ))}
@@ -321,42 +304,44 @@ const Lecture = () => {
           </div>
 
           <div className="grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 pt-4">
-            {authors.map((authors, index) => (
-              <div
-                className={
-                  "py-2.5 px-2 rounded-md grid grid-flow-col gap-3  justify-start" +
-                  (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
-                  " " +
-                  "md:shadow md:grid-flow-row md:p-0 md:gap-0 md:items-start"
-                }
-              >
-                <div className="flex-grow">
-                  <img
-                    className="object-cover shadow-lg rounded-full h-10 w-10"
-                    src={authors.image}
-                    alt=""
-                  />
-                </div>
-                <div className="text-xs md:p-4">
-                  <h4 className="leading-4 text-gray-900 font-semibold pb-1">
-                    {authors.title}
-                  </h4>
-                  <div className="md:py-4">
-                    <p className="text-gray-500 font-normal leading-4">
-                      {authors.author}
-                    </p>
-                    <div className="flex flex-row text-gray-500 font-normal leading-4 gap-1 ">
-                      <p>{authors.date}</p>
-                      <p>&middot;</p>
-                      <p>{authors.views} views</p>
+            {authors.map((author, index) => (
+              <Link href={`/author/${author.id}`}>
+                <div
+                  className={
+                    "py-2.5 px-2 rounded-md grid grid-flow-col gap-3  justify-start" +
+                    (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
+                    " " +
+                    "md:shadow md:grid-flow-row md:p-0 md:gap-0 md:items-start cursor-pointer hover:bg-gray-50"
+                  }
+                >
+                  <div className="flex-grow">
+                    <img
+                      className="object-cover shadow-lg rounded-full h-10 w-10"
+                      src={author.image}
+                      alt=""
+                    />
+                  </div>
+                  <div className="text-xs md:p-4">
+                    <h4 className="leading-4 text-gray-900 font-semibold pb-1">
+                      {author.title}
+                    </h4>
+                    <div className="md:py-4">
+                      <p className="text-gray-500 font-normal leading-4">
+                        {author.author}
+                      </p>
+                      <div className="flex flex-row text-gray-500 font-normal leading-4 gap-1 ">
+                        <p>{author.date}</p>
+                        <p>&middot;</p>
+                        <p>{author.views} views</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </SectionDiv>
-      </Maxer>
+      </BigMaxer>
     </Layout>
   );
 };
