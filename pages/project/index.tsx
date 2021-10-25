@@ -189,7 +189,7 @@ const Project = () => {
         <div className="p-4 sm:p-6 lg:p-8 ">
           <h3 className="font-bold leading-6 pb-2 text-lg">About</h3>
 
-          <p className="text-gray-600 font-normal text-sm leading-5 md:text-body md:leading-7 md:font-normal md:text-left ">
+          <p className="text-gray-600 font-normal text-sm leading-5 md:text-body md:leading-7 md:font-normal md:text-left max-w-2xl">
             {author.description}
           </p>
           <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
@@ -219,7 +219,7 @@ const Project = () => {
             <ButtonRound Icon={ArrowRightIcon} text="All events" />
           </div>
 
-          <div className="px-4 py-5 sm:p-6">hello</div>
+          <div className="px-4 py-5 sm:p-6"></div>
         </div>
 
         <div className=" p-4 sm:p-6 lg:p-8 ">

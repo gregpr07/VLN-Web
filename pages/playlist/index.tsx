@@ -130,8 +130,8 @@ const Lecture = () => {
             Joe's dashboard
           </h3>
           <Cat />
+          <Filters2 />
         </div>
-        <Filters2 />
 
         {/* Uploaded videos */}
         <SectionDiv>

@@ -25,7 +25,7 @@ const Filters = () => (
     <div className="flex-grow">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex h-10 justify-center w-full rounded-md px-4 py-2 bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-50 ring-none">
+          <Menu.Button className="inline-flex h-10 justify-center w-full rounded-md px-4 py-2 bg-gray-50 text-sm font-medium text-gray-800 hover:bg-gray-50 ring-none">
             All categories
             <ChevronDownIcon
               className="-mr-1 ml-2 h-6 w-4"
