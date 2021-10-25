@@ -245,7 +245,7 @@ const Navbar = ({
                     </div>
                   ) : (
                     <div className="hidden md:flex items-center justify-start">
-                      <Link href="login">
+                      <Link href="/login">
                         <a className="whitespace-nowrap text-base content-center font-medium text-gray-500 hover:text-gray-900">
                           <ButtonlessRed
                             textColor={redBG ? "text-gray-100" : ""}
@@ -254,7 +254,7 @@ const Navbar = ({
                           </ButtonlessRed>
                         </a>
                       </Link>
-                      <Link href="register">
+                      <Link href="/register">
                         <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md text-base font-medium text-white ">
                           <ButtonRed
                             text="Sign up"
@@ -351,14 +351,14 @@ const Navbar = ({
                   </div>
                 ) : (
                   <div className="flex pl-4 items-left justify-left flex-col pt-4 md:flex-1">
-                    <Link href="login">
+                    <Link href="/login">
                       <a className="text-base content-center font-medium text-gray-500 hover:text-gray-900 pl-1">
                         <ButtonlessRed textColor={redBG ? "text-gray-100" : ""}>
                           Sign in
                         </ButtonlessRed>
                       </a>
                     </Link>
-                    <Link href="register">
+                    <Link href="/register">
                       <a className="whitespace-nowrap inline-flex justify-left py-2 border border-transparent rounded-md text-base font-medium text-white ">
                         <ButtonRed
                           text="Sign up"

@@ -122,7 +122,7 @@ const Login = ({ saveToken, token }) => {
           </div>
           <div className="mt-2 text-left text-sm">
             No account yet?{" "}
-            <Link href="register">
+            <Link href="/register">
               <ButtonlessRed>Register new account</ButtonlessRed>
             </Link>
           </div>
