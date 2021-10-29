@@ -14,6 +14,7 @@ import ButtonRed from "@components/ButtonRed";
 import Carousel, { Dots, slidesToShowPlugin } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import Lectures from "@components/Lectures";
+import SectionDiv from "@components/SectionDiv";
 import { tailwindScreens } from "@services/constants";
 
 import { TwitterTimelineEmbed } from "react-twitter-embed";
@@ -178,28 +179,9 @@ const trending_lectures = [
 const IndexPage = () => {
   // Components
 
-  const SectionDiv = ({ children, title, buttonText = "", className = "" }) => (
-    <Maxer>
-      <div className={"py-8 px-4 sm:px-6 lg:px-8" + className}>
-        <div className="grid grid-flow-col col-span-2 items-center space-between w-full pb-6">
-          <div>
-            <h1 className="text-2xl leading-8 font-extrabold">{title}</h1>
-          </div>
-          {buttonText && (
-            <div className="flex justify-end">
-              <ButtonRound Icon={ArrowRightIcon} text={buttonText} />
-            </div>
-          )}
-        </div>
-
-        {children}
-      </div>
-    </Maxer>
-  );
-
   const SideSectionDiv = ({ children, title, className = "" }) => (
     <Maxer>
-      <div className={"py-8 px-4 sm:px-6 lg:px-8" + className}>
+      <div className={"py-8 px-4 sm:px-6 lg:px-8 " + className}>
         <div className="grid grid-flow-col col-span-2 items-center space-between w-full pb-6">
           <div>
             <h1 className="text-xl leading-7 font-bold">{title}</h1>
@@ -224,13 +206,22 @@ const IndexPage = () => {
         router.push(`/search/${search}/`);
       }
     };
+
+    // const headerRef = useRef();
+    // const isVisible = useOnScreen(headerRef);
+
+    // useEffect(() => {
+    //   setRedBG(isVisible);
+    // }, [isVisible]);
+
     return (
       <div
         className={"px-4 sm:px-6 lg:px-8 text-xs bg-red-600 " + "md:text-sm"}
+        id="header"
         // ref={headerRef}
       >
         <div>
-          <div className="pb-4 sm:pb-8 md:pb-4">
+          <div className="pb-4 sm:pb-8 md:pb-8 pt-4">
             <Maxer>
               <div className="">
                 <h1
@@ -239,6 +230,7 @@ const IndexPage = () => {
                     " " +
                     "lg:text-5xl lg:leading-none lg:font-extrabold"
                   }
+                  style={{ fontWeight: 800 }}
                 >
                   Exchange ideas. <br className="md:hidden" />
                   Share your knowledge.
@@ -274,21 +266,21 @@ const IndexPage = () => {
   };
 
   const Event = ({ ...props }: IEvent) => (
-    <div className="bg-gray rounded p-3 bg-gray-50">
+    <div className="bg-gray rounded p-3 pl-4 bg-gray-50">
       <div className="grid grid-flow-col justify-start gap-6 items-center">
-        <div className="rounded bg-white h-12 w-12 text-center py-1">
-          <h3 className="text-lg leading-6 font-bold text-gray-800">
+        <div className="rounded bg-white h-12 w-12 md:h-16 md:w-16 text-center py-1 md:p-3">
+          <h3 className="text-lg md:text-2xl leading-6 font-bold text-gray-800">
             {props.date.day}
           </h3>
-          <p className="text-xs leading-4 font-normal text-gray-500">
+          <p className="text-xs md:text-sm leading-4 md:leading-5 font-normal text-gray-500">
             {props.date.month}
           </p>
         </div>
         <div>
-          <h4 className="text-xs leading-4 font-semibold text-gray-900">
+          <h4 className="text-xs md:text-sm leading-4 md:leading-5 font-semibold text-gray-900">
             {props.title}
           </h4>
-          <p className="text-xs leading-4 font-normal text-gray-500 pt-1">
+          <p className="text-xs md:text-sm leading-4 md:leading-5 font-normal text-gray-500 pt-1 md:pt-2">
             {props.datePosted}, {props.location}
           </p>
         </div>
@@ -298,8 +290,10 @@ const IndexPage = () => {
 
   const Category = ({ ...props }: ICategory) => (
     <div>
-      <div className="rounded-lg bg-gray-50 h-40 w-40"></div>
-      <div className="text-sm leading-5 font-medium">{props.title}</div>
+      <div className="rounded-lg bg-gray-50 xl:h-44 xl:w-44 md:h-44 md:w-44 w-40 h-40"></div>
+      <div className="text-sm leading-5 font-medium text-center pt-3 text-gray-700">
+        {props.title}
+      </div>
     </div>
   );
 
@@ -314,6 +308,8 @@ const IndexPage = () => {
     const plugins = (numberOfSlider: number) => {
       return {
         plugins: [
+          // "arrows",
+          // "infinite",
           {
             resolve: slidesToShowPlugin,
             options: {
@@ -326,17 +322,19 @@ const IndexPage = () => {
 
     const breakpoints = {
       [0]: plugins(2),
-      [tailwindScreens.sm]: plugins(2),
+      [tailwindScreens.sm - 100]: plugins(2),
+      [tailwindScreens.sm]: plugins(3),
       [tailwindScreens.md]: plugins(3),
       [tailwindScreens.lg]: plugins(4),
+      [tailwindScreens.lg + 150]: plugins(5),
       [tailwindScreens.xl + 200]: plugins(6),
-      [100000]: plugins(5),
+      [100000]: plugins(6),
     };
 
     console.log(breakpoints);
 
     return (
-      <div>
+      <div className="pb-12">
         <Carousel
           // plugins={plugins(2).plugins}
           breakpoints={breakpoints}
@@ -347,20 +345,22 @@ const IndexPage = () => {
             <Category {...category} key={index} />
           ))}
         </Carousel>
-        <div className="grid grid-flow-col mt-6 content-center align-middle px-1">
-          <div onClick={() => handleSlide(slide - 1)}>
-            <ArrowLeftIcon className="h-4 mt-1 text-gray-400 hover:text-gray-600" />
-          </div>
-          <Dots
-            value={slide}
-            onChange={handleSlide}
-            number={categories.length}
-          />
-          <div
-            className="justify-end justify-self-end"
-            onClick={() => handleSlide(slide + 1)}
-          >
-            <ArrowRightIcon className="h-4 mt-1 text-gray-400 hover:text-gray-600" />
+        <div className="hidden">
+          <div className="grid grid-flow-col mt-6 content-center align-middle px-1">
+            <div onClick={() => handleSlide(slide - 1)}>
+              <ArrowLeftIcon className="h-4 mt-1 text-gray-400 hover:text-gray-600" />
+            </div>
+            <Dots
+              value={slide}
+              onChange={handleSlide}
+              number={categories.length}
+            />
+            <div
+              className="justify-end justify-self-end"
+              onClick={() => handleSlide(slide + 1)}
+            >
+              <ArrowRightIcon className="h-4 mt-1 text-gray-400 hover:text-gray-600" />
+            </div>
           </div>
         </div>
       </div>
@@ -375,7 +375,7 @@ const IndexPage = () => {
       useNavigation="sticky"
     >
       {/* Header */}
-      <div>
+      <div className="mb-8">
         <Header />
       </div>
       {/* categories */}
@@ -394,29 +394,34 @@ const IndexPage = () => {
       </SectionDiv>
 
       <Maxer>
-        <div className="max-w-xl">
-          {/* Events */}
-          <SideSectionDiv title="Upcoming events">
-            <div className="gap-2 grid grid-flow-row mb-6">
-              {events.map((event, index) => (
-                <Event {...event} key={index} />
-              ))}
-            </div>
-            <ButtonRed
-              text="All events"
-              Icon={ArrowRightIcon}
-              className="w-full"
-            />
-          </SideSectionDiv>
+        <div className="grid md:grid-flow-col mt-6">
+          <SectionDiv title="Latest News" buttonText="All News">
+            {/* <Lectures lectures={trending_lectures} /> */}
+          </SectionDiv>
+          <div className="max-w-lg">
+            {/* Events */}
+            <SideSectionDiv title="Upcoming events" className="md:mb-4">
+              <div className="gap-2 grid grid-flow-row mb-6">
+                {events.map((event, index) => (
+                  <Event {...event} key={index} />
+                ))}
+              </div>
+              <ButtonRed
+                text="All events"
+                Icon={ArrowRightIcon}
+                className="w-full"
+              />
+            </SideSectionDiv>
 
-          {/* Twitter embed */}
-          <SideSectionDiv title="Latest Tweets">
-            <TwitterTimelineEmbed
-              sourceType="profile"
-              screenName="videolectures"
-              options={{ height: 500 }}
-            />
-          </SideSectionDiv>
+            {/* Twitter embed */}
+            <SideSectionDiv title="Latest Tweets">
+              <TwitterTimelineEmbed
+                sourceType="profile"
+                screenName="videolectures"
+                options={{ height: 500 }}
+              />
+            </SideSectionDiv>
+          </div>
         </div>
       </Maxer>
     </Layout>

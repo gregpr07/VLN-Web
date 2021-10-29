@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { shorterText } from "@services/functions";
 
 interface ILecture {
   lectures: {
@@ -9,13 +10,14 @@ interface ILecture {
     date: string;
     views: string;
     type: string;
+    // length: string;
   }[];
 }
 
 const Lectures = ({ lectures }: ILecture) => (
   <div className="grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 pt-4">
     {lectures.map((lecture, index) => (
-      <Link href={`/lecture/${index}`}>
+      <Link href={`/lecture/${index}`} key={index}>
         <div
           className={
             "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
@@ -34,14 +36,14 @@ const Lectures = ({ lectures }: ILecture) => (
             />
           </div>
           <div className="text-xs md:p-4 w-full">
-            <h4 className="leading-4 text-gray-900 font-semibold pb-1 md:h-8">
-              {lecture.title}
+            <h4 className="leading-4 text-gray-900 font-semibold pb-1 md:h-8 md:text-base md:font-bold md:leading-5">
+              {shorterText(lecture.title, 55)}
             </h4>
-            <div className="md:py-4">
+            <div className="md:py-5 md:leading-5 md:font-semibold md:text-sm">
               <p className="text-gray-500 font-normal leading-4">
                 {lecture.author}
               </p>
-              <div className="flex flex-row text-gray-500 font-normal leading-4 gap-1 ">
+              <div className="flex flex-row text-gray-500 font-normal leading-4 gap-1 pt-1">
                 <p>{lecture.date}</p>
                 <p>&middot;</p>
                 <p>{lecture.views} views</p>
@@ -49,7 +51,7 @@ const Lectures = ({ lectures }: ILecture) => (
             </div>
             <div className="hidden md:block">
               <div className="flex">
-                <div className="bg-red-100 rounded-full px-4 text-red-700 font-bold">
+                <div className="bg-red-100 rounded-full px-3 py-0.5 text-red-700 font-normal text-xs">
                   {lecture.type}
                 </div>
               </div>

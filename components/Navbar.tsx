@@ -255,7 +255,7 @@ const Navbar = ({
                         </a>
                       </Link>
                       <Link href="/register">
-                        <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md text-base font-medium text-white ">
+                        <a className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 pr-0 py-2 border border-transparent rounded-md text-base font-medium text-white ">
                           <ButtonRed
                             text="Sign up"
                             className={

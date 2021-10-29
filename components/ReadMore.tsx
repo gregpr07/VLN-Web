@@ -14,7 +14,7 @@ const ReadMore = ({
   return (
     <>
       {shorten ? shorterText(text, shorterLength) : text}
-      <ButtonlessRed className="pt-4 block" action={() => setShorten(!shorten)}>
+      <ButtonlessRed className="pt-6 block" action={() => setShorten(!shorten)}>
         {shorten ? "Read More" : "Read Less"}
       </ButtonlessRed>
     </>

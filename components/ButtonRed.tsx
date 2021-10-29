@@ -17,9 +17,12 @@ const ButtonRed = ({ action, text, className, Icon, ...props }: btnProps) => (
     }
   >
     <div className="flex flex-row content-center justify-center">
-      <p className="font-normal">{text}</p>
+      <p className="font-semibold">{text}</p>
       {Icon && (
-        <Icon className="h-4 w-4 ml-1 text-white block" aria-hidden="true" />
+        <Icon
+          className="h-5 w-5 ml-1 pb-0.5 text-white block"
+          aria-hidden="true"
+        />
       )}
     </div>
   </button>
