@@ -37,7 +37,7 @@ import Filters2 from "@components/Filters_playlist";
 import cat from "@components/Categories";
 import Cat from "@components/Categories";
 import ButtonRound from "@components/ButtonRound";
-import LoadMore from "@components/LoadMore";
+import LoadMore from "@components/ButtonLoadMore";
 
 const author = {
   name: "Joe Average",

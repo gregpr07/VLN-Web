@@ -25,7 +25,7 @@ import ButtonBlack from "@components/ButtonBlack";
 import Lectures from "@components/Lectures";
 import Filters from "@components/Filters";
 import ReadMore from "@components/ReadMore";
-import LoadMore from "../../components/LoadMore";
+import LoadMore from "@components/ButtonLoadMore";
 
 const author = {
   name: "Walter Lewin",
