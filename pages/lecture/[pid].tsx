@@ -9,7 +9,7 @@ import ReactPlayer from "react-player";
 
 import screenful from "screenfull";
 import Controls from "@components/Controls";
-import { formatTime, shorterText } from "@services/functions";
+import { compare, formatTime, shorterText } from "@services/functions";
 import { tailwindScreens } from "@services/constants";
 import { useWindowSize } from "@services/reactFunctions";
 import ButtonlessRed from "@components/ButtonLesRed";
@@ -19,10 +19,13 @@ import Maxer from "@components/BigMaxer";
 import Notes from "@components/Notes";
 import ReadMore from "@components/ReadMore";
 
+import Image from "next/image";
+
 const HIDE_CONST = 1; // seconds
 const DEBUG_PLAYER = false;
 
 let count = 0;
+let alreadyForced = false;
 
 const lectureData = {
   title: "Principle of Systems Biology illustrated using Virtual Heart",
@@ -38,6 +41,106 @@ const lectureData = {
     institution:
       "Department of Physiology, Anatomy & Genetics, University of Oxford",
   },
+  videoUrl:
+    "http://hydro.videolectures.net/v017/3d/huyzwd3aarzg53dy3hofyvf7ea6wjfyt.mp4",
+  slides: [
+    {
+      id: 462043,
+      timestamp: 0,
+      image:
+        "http://hydro.videolectures.net/v017/d1/2ew76uvyk3tm4t7dd47lqikekekcai4h.jpg",
+      title: "Preparing Multi-Modal Data for Natural Language Processing",
+      lecture: 27799,
+    },
+    {
+      id: 462044,
+      timestamp: 21327,
+      image:
+        "http://hydro.videolectures.net/v017/e9/5eyfsz4kres7vl447yh3a3ykd7bmdhc4.jpg",
+      title: "Introduction",
+      lecture: 27799,
+    },
+    {
+      id: 462045,
+      timestamp: 126413,
+      image:
+        "http://hydro.videolectures.net/v017/8b/rnsej75ym7ciw7752i7bftym4wkbn36g.jpg",
+      title: "Outline",
+      lecture: 27799,
+    },
+    {
+      id: 462046,
+      timestamp: 165153,
+      image:
+        "http://hydro.videolectures.net/v017/26/e3ocwttfl6qggggnonhpbvgfy5gpeykt.jpg",
+      title: "Pre-processing Pipeline - 1",
+      lecture: 27799,
+    },
+    {
+      id: 462047,
+      timestamp: 198836,
+      image:
+        "http://hydro.videolectures.net/v017/51/khy2sioiymujllfxj4qbfjicsmoowtjl.jpg",
+      title: "Pre-processing Pipeline - 2",
+      lecture: 27799,
+    },
+    {
+      id: 462048,
+      timestamp: 253759,
+      image:
+        "http://hydro.videolectures.net/v017/54/krb5jlsjue3gtb572el5idwohosxejfx.jpg",
+      title: "Pre-processing Pipeline - 3",
+      lecture: 27799,
+    },
+    {
+      id: 462049,
+      timestamp: 305348,
+      image:
+        "http://hydro.videolectures.net/v017/f0/6aruoneo7h2bf3bxknhj62vekfupovqo.jpg",
+      title: "Pre-processing Pipeline - 4",
+      lecture: 27799,
+    },
+    {
+      id: 462050,
+      timestamp: 421394,
+      image:
+        "http://hydro.videolectures.net/v017/11/cenatbstt23xiaaslf3nhe6agqjxtjos.jpg",
+      title: "Pre-processing Pipeline - 5",
+      lecture: 27799,
+    },
+    {
+      id: 462051,
+      timestamp: 521716,
+      image:
+        "http://hydro.videolectures.net/v017/94/stol244yx5mxc2mznwjq6smba4vin7yv.jpg",
+      title: "Data Statistic - 1",
+      lecture: 27799,
+    },
+    {
+      id: 462052,
+      timestamp: 571210,
+      image:
+        "http://hydro.videolectures.net/v017/3a/hk43c24riomjsaycxsm2xkuvcpk5zhv4.jpg",
+      title: "Data Statistic - 2",
+      lecture: 27799,
+    },
+    {
+      id: 462053,
+      timestamp: 621359,
+      image:
+        "http://hydro.videolectures.net/v017/51/khnmdpmwuvtizbrxpocq6oq2p73a4e66.jpg",
+      title: "Application: Recommender Engine",
+      lecture: 27799,
+    },
+    {
+      id: 462054,
+      timestamp: 711479,
+      image:
+        "http://hydro.videolectures.net/v017/aa/vj24dxluv62b6ag2jii7a2teyrrfqbru.jpg",
+      title: "Conclusion",
+      lecture: 27799,
+    },
+  ],
 };
 
 const sampleNotes = [
@@ -66,10 +169,15 @@ const SectionDiv = ({ children, title, className = "" }) => (
     </div>
   </Maxer>
 );
+export type viewAvailable = "video" | "video-slides" | "slides";
 
 function Lecture() {
   const router = useRouter();
   const { pid } = router.query;
+
+  // slides
+  // const [showSlides, setShowSlides] = useState(true);
+  const [currentView, setCurrentView] = useState<viewAvailable>("video-slides");
 
   const size = useWindowSize();
 
@@ -189,6 +297,12 @@ function Lecture() {
     setState({ ...state, pip: !state.pip });
   };
 
+  /* View toggle */
+  const toggleView = (view: viewAvailable) => {
+    console.log("toggled view", view);
+    setCurrentView(view);
+  };
+
   const handleMouseMove = () => {
     if (!controlsRef.current) return;
     console.log("mousemove");
@@ -229,50 +343,103 @@ function Lecture() {
 
   const totalDuration = formatTime(duration);
 
+  const getCurrentSlideImage = (
+    slides: typeof lectureData.slides,
+    currentTime: number
+  ) => {
+    if (slides) {
+      const newslides = slides
+        ? slides.sort(compare).filter((slide) => slide.timestamp < currentTime)
+        : [];
+      if (!newslides.length) {
+        return "";
+      }
+      if (slides.length >= newslides.length)
+        return slides[newslides.length - 1].image;
+    }
+  };
+
+  //! CHROME BLOCKS THIS!!
+  // const autoPlay = () => {
+  //   if (!alreadyForced) {
+  //     handleMute();
+  //     alreadyForced = true;
+  //   }
+  // };
+
   return (
-    <Layout title="Lecture | XYZ" useMaxer={false}>
+    <Layout title="Lecture | XYZ" useMaxer={false} /* onMouseMove={autoPlay} */>
       <BigMaxer>
-        <div className="sm:px-6 lg:px-8 md:pt-8">
+        <div className="sm:px-6 lg:px-8 md:pt-8 sm:pt-4">
           <div className="">
             <div
               onMouseMove={handleMouseMove}
               onMouseLeave={hanldeMouseLeave}
               ref={playerContainerRef}
-              className={"relative w-full bg-black"}
+              className={"relative w-full rounded-lg flex items-center"}
             >
               <div
-                ref={playerHeight}
                 className="absolute w-full z-10 cursor-pointer"
                 onClick={() =>
                   size.width > tailwindScreens.sm && handlePlayPause()
                 }
               >
-                <ReactPlayer
-                  ref={playerRef}
-                  width="100%"
-                  height="100%"
-                  url="http://hydro.ijs.si/v018/f1/6hccwsarokqsxi3gdhbjjdec77ead2ob.mp4"
-                  pip={pip}
-                  playing={playing}
-                  controls={size.width < tailwindScreens.sm}
-                  light={light}
-                  playsinline
-                  // loop={loop}
-                  playbackRate={playbackRate}
-                  volume={volume}
-                  muted={muted}
-                  style={{ borderRadius: "0.25rem", overflow: "hidden" }}
-                  onProgress={handleProgress}
-                  config={
-                    {
-                      // file: {
-                      //   attributes: {
-                      //     crossorigin: "anonymous",
-                      //   },
-                      // },
-                    }
-                  }
-                />
+                <div className="grid grid-flow-col">
+                  <div className="flex-grow" ref={playerHeight}>
+                    <ReactPlayer
+                      ref={playerRef}
+                      width="100%"
+                      height="100%"
+                      url={lectureData.videoUrl}
+                      pip={pip}
+                      playing={playing}
+                      controls={size.width < tailwindScreens.sm}
+                      light={light}
+                      playsinline
+                      // loop={loop}
+                      playbackRate={playbackRate}
+                      volume={volume}
+                      muted={muted}
+                      style={{
+                        borderRadius: "0.5rem",
+                        overflow: "hidden",
+                        borderTopRightRadius:
+                          currentView === "video-slides" ? "0" : "0.5rem",
+                        borderBottomRightRadius:
+                          currentView === "video-slides" ? "0" : "0.5rem",
+                      }}
+                      onProgress={handleProgress}
+                      config={
+                        {
+                          // file: {
+                          //   attributes: {
+                          //     crossorigin: "anonymous",
+                          //   },
+                          // },
+                        }
+                      }
+                    />
+                  </div>
+
+                  {(currentView == "video-slides" ||
+                    currentView == "slides") && (
+                    <div className="flex-shrink">
+                      <img
+                        // loader={myLoader}
+                        src={getCurrentSlideImage(
+                          lectureData.slides,
+                          currentTime * 1000
+                        )}
+                        className="h-full bg-white"
+                        alt="Slides"
+                        // width={playerHeight.current.}
+                        // width={playerHeight.current.clientWidth / 2}
+                        // height={playerHeight.current.clientHeight}
+                        // // layout="intrinsic"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <div
                 style={
@@ -284,6 +451,8 @@ function Lecture() {
                 <Controls
                   show={size.width > tailwindScreens.sm}
                   ref={controlsRef}
+                  toggleView={toggleView}
+                  currentView={currentView}
                   onSeek={handleSeekChange}
                   onSeekMouseDown={handleSeekMouseDown}
                   onSeekMouseUp={handleSeekMouseUp}

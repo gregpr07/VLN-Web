@@ -35,6 +35,8 @@ const Controls = forwardRef(
       show,
       videoTitle,
       onSeek,
+      toggleView,
+      currentView,
       onSeekMouseDown,
       onSeekMouseUp,
       onDuration,
@@ -72,9 +74,12 @@ const Controls = forwardRef(
     const id = open ? "simple-popover" : undefined;
 
     const iconStyles = "h-8 md:w-12 text-white opacity-75";
-    const smallIconStyle = "h-6 lg:h-8 text-white";
+    const smallIconStyle = "h-5 lg:h-7 text-white";
 
     if (!show) return null;
+
+    const activeViewClass = "w-8 text-white bg-red-600 bg-opacity-75 rounded";
+    const inactiveViewClass = "w-8 text-white bg-black bg-opacity-50 rounded";
 
     return (
       <div
@@ -96,18 +101,34 @@ const Controls = forwardRef(
         <div className="z-20">
           <div className="grid grid-flow-col space-between w-full p-2 md:p-4">
             <div className="flex flex-row justify-end ">
-              <div className="bg-black bg-opacity-30">
-                <CameraIcon className={"w-8 text-white"} />
-              </div>
-              <div className="bg-black bg-opacity-30">
-                <PresentationChartBarIcon className={"w-8 text-white"} />
+              <div className=" flex flex-row gap-1">
+                <div className="">
+                  <PresentationChartBarIcon
+                    className={
+                      currentView == "video-slides"
+                        ? activeViewClass
+                        : inactiveViewClass
+                    }
+                    onClick={() => toggleView("video-slides")}
+                  />
+                </div>
+                <div className="">
+                  <CameraIcon
+                    className={
+                      currentView == "video"
+                        ? activeViewClass
+                        : inactiveViewClass
+                    }
+                    onClick={() => toggleView("video")}
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* bottom controls */}
-          <div className="bottom-0 absolute w-full bg-black bg-opacity-30 rounded overflow-hidden">
-            <div className="px-2 md:px-4 pb-1">
+          <div className="bottom-0 absolute w-full bg-black bg-opacity-30 rounded-lg overflow-hidden">
+            <div className="px-2 md:px-2 pb-1">
               <RCSlider
                 value={played * 100}
                 onChange={onSeek}
@@ -125,7 +146,7 @@ const Controls = forwardRef(
               />
             </div>
 
-            <div className="grid grid-flow-col gap-0 space-between w-full px-2 md:px-4 pb-2">
+            <div className="grid grid-flow-col gap-0 space-between w-full px-2 md:px-2 pb-2">
               <div>
                 <div className="flex flex-row gap-2 items-center">
                   <button onClick={onRewind} className="hidden md:block">
@@ -203,7 +224,7 @@ const Controls = forwardRef(
               {/*  */}
               <div className="items-center justify-end flex flex-row gap-3 md:gap-4 z-50">
                 <button onClick={onChangeDispayFormat}>
-                  <p className="text-white text-sm md:text-base">
+                  <p className="text-white text-xs md:text-sm">
                     {elapsedTime}/{totalDuration}
                   </p>
                 </button>
@@ -250,6 +271,8 @@ Controls.displayName = "Controls";
 Controls.propTypes = {
   show: PropTypes.bool,
   videoTitle: PropTypes.string,
+  toggleView: PropTypes.func,
+  currentView: PropTypes.string,
   onSeek: PropTypes.func,
   onSeekMouseDown: PropTypes.func,
   onSeekMouseUp: PropTypes.func,
