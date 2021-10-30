@@ -174,10 +174,16 @@ const Navbar = ({
                     <div className="hidden md:flex md:items-center md:justify-end lg:col-span-4">
                       <a
                         href="#"
-                        className="ml-5 my-3 flex-shrink-0 rounded-full p-1 text-current hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="ml-5 my-3 flex-shrink-0 rounded-full p-1 text-current hover:text-gray-500"
                       >
                         <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                        <BellIcon
+                          className={
+                            "h-6 w-6 " +
+                            (redBG ? "text-white" : "text-gray-500")
+                          }
+                          aria-hidden="true"
+                        />
                       </a>
 
                       {/* Profile dropdown */}
@@ -185,7 +191,7 @@ const Navbar = ({
                         {({ open }) => (
                           <>
                             <div>
-                              <Menu.Button className="rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                              <Menu.Button className="rounded-full flex">
                                 <span className="sr-only">Open user menu</span>
                                 <img
                                   className="h-10 w-10 rounded-full"

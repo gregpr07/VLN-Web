@@ -8,7 +8,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const categories = ["Playlists", "Notes", "Bookmarks", "Comments", "Following"];
+const categories = [
+  "All",
+  "Lectures",
+  "Events",
+  "Playlists",
+  "Bookmarks",
+  // "Comments",
+  "Following",
+];
 
 const Cat = () => {
   const [activeCat, setActiveCat] = useState(categories[0]);
@@ -19,7 +27,7 @@ const Cat = () => {
         <Menu as="div" className=" inline-block text-left sm:hidden z-50">
           <div>
             <Menu.Button className="inline-flex justify-center w-full rounded-md  shadow-sm px-4 py-2 bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-50500">
-              Categories
+              {activeCat}
               <ChevronDownIcon
                 className="-mr-1 ml-2 h-5 w-5 mt-0.5"
                 aria-hidden="true"
@@ -36,7 +44,7 @@ const Cat = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+            <Menu.Items className="origin-top-left mx-4 absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
               <div className="py-1">
                 {categories.map((cat, index) => (
                   <Menu.Item key={index}>

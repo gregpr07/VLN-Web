@@ -204,16 +204,16 @@ const Lecture = () => {
   return (
     <Layout title="Search" useMaxer={false}>
       {/* Header */}
-      <div className="pt-24 md:pt-16 lg:pt-16 ">
+      <div className="md:pt-16 lg:pt-16 ">
         <BigMaxer>
-          <SectionDiv>
+          <SectionDiv className="pb-0 md:pb-8">
             <div className="pb-4 sm:pb-8">
               <BigMaxer>
                 <div className="md:gap-0 sm:px-0 md:space-y-0 gap-3 grid grid-flow-col justify-start">
                   <div className="md:col-span-2">
                     <div className="">
                       <div className="text-gray-900 font-bold space-y-1">
-                        <h3 className="text-2xl md:text-4xl font-extrabold pb-10">
+                        <h3 className="text-2xl md:text-4xl font-extrabold pb-4 md:pb-10">
                           X results for "{sid}"
                         </h3>
 
@@ -293,7 +293,7 @@ const Lecture = () => {
                     "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
                     (!(index % 2) ? " bg-gray-50" : "") +
                     " " +
-                    "md:p-2 md:py-0.5 md:gap-0 md:items-center cursor-pointer"
+                    "md:p-2 md:py-0.5 md:gap-0 md:items-center cursor-pointer hover:bg-gray-100"
                   }
                 >
                   <div>
@@ -329,10 +329,10 @@ const Lecture = () => {
                     </div>
 
                     <p className="md:text-gray-500 justify-self-end font-normal">
-                      {author.date} videos
+                      {author.date}
                     </p>
                     <p className="md:text-gray-500 justify-self-end font-normal">
-                      {author.views} views
+                      {author.views}
                     </p>
                   </div>
                 </div>

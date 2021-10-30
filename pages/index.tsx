@@ -19,15 +19,18 @@ import { tailwindScreens } from "@services/constants";
 
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import router from "next/router";
+import { shorterText } from "@services/functions";
 
 interface IEvent {
   title: string;
+  image: string;
   datePosted: string;
   location: string;
   date: {
     day: string;
     month: string;
   };
+  videos: string;
 }
 
 const events: IEvent[] = [
@@ -35,29 +38,76 @@ const events: IEvent[] = [
     title:
       "Dan odprtih podatkov s svečano ustanovitvijo Stičišča odprtih podatkov Slovenije, Ljubljana 2020",
     datePosted: "mar 6, 2021",
+    image: "",
     location: "Ljubljana, SI",
     date: {
       day: "6",
       month: "mar",
     },
+    videos: "15",
   },
   {
     title: "Raziščimo Obzorje Evropa, Ljubljana 2020",
     datePosted: "Dec 7, 2022",
     location: "Ljubljana, SI",
+    image: "",
     date: {
       day: "7",
       month: "dec",
     },
+    videos: "15",
   },
   {
     title: "MIT World Series: MIT Energy Forum: Taking on the Challenge",
     datePosted: "May 23, 2006",
     location: "Boston, US",
+    image: "",
     date: {
       day: "23",
       month: "mar",
     },
+    videos: "15",
+  },
+];
+
+const latestEvents: IEvent[] = [
+  {
+    title:
+      "DH Course Registry Metadatathon: a joint effort of DARIAH-EU and CLARIN ERIC, Paris 2018 ",
+    datePosted: "oct 21, 2021",
+    location: "Boston, US",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/06/Free-Desktop-Awesome-Wallpaper-HD-620x349.jpg",
+    date: {
+      day: "23",
+      month: "mar",
+    },
+    videos: "15",
+  },
+  {
+    title: "6th CLARIN Annual Conference, Budapest 2017",
+    datePosted: "may 6, 2021",
+    location: "Ljubljana, SI",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/06/Free-Desktop-Awesome-Wallpaper-HD-Download-620x349.jpg",
+    date: {
+      day: "7",
+      month: "dec",
+    },
+    videos: "15",
+  },
+  {
+    title:
+      "Doing text analytics for Digital Humanities and Social Sciences with CLARIN, Galway 2017",
+    datePosted: "mar 6, 2021",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/06/Awesome-flower-wallpaper-hd-620x349.jpg",
+    location: "Ljubljana, SI",
+    date: {
+      day: "6",
+      month: "mar",
+    },
+    videos: "15",
   },
 ];
 
@@ -98,6 +148,34 @@ const categories: ICategory[] = [
   {
     title: "Physics",
     image: "",
+  },
+];
+
+interface INews {
+  title: string;
+  description: string;
+  image: string;
+  author: string;
+  datePosted: string;
+}
+
+const news = [
+  {
+    title: "8TH EUROPEAN CONGRESS OF MATHEMATICS",
+    description:
+      "It is held under the auspices of the European Mathematical Society. This is the second largest assembly of mathematicians in the world.",
+    image:
+      "https://www.rstreet.org/wp-content/uploads/2019/04/capitol-congress-government-governance-By-turtix.jpg",
+    author: "Erik Novak",
+    datePosted: "25 Sep, 2021",
+  },
+  {
+    title: "Conference for turtles 101",
+    description: "Turtuless!!!",
+    image:
+      "https://www.pixelstalk.net/wp-content/uploads/2016/06/Awesome-Great-Barrier-Reef-Wallpaper-HD-1-620x414.jpg",
+    author: "Pinki Binki",
+    datePosted: "25 Sep, 2031",
   },
 ];
 
@@ -187,7 +265,6 @@ const IndexPage = () => {
             <h1 className="text-xl leading-7 font-bold">{title}</h1>
           </div>
         </div>
-
         {children}
       </div>
     </Maxer>
@@ -265,7 +342,7 @@ const IndexPage = () => {
     );
   };
 
-  const Event = ({ ...props }: IEvent) => (
+  const EpcomingEvent = ({ ...props }: IEvent) => (
     <div className="bg-gray rounded p-3 pl-4 bg-gray-50">
       <div className="grid grid-flow-col justify-start gap-6 items-center">
         <div className="rounded bg-white h-12 w-12 md:h-16 md:w-16 text-center py-1 md:p-3">
@@ -367,6 +444,79 @@ const IndexPage = () => {
     );
   };
 
+  const News = ({ news }: { news: INews[] }) => {
+    return (
+      <div className="grid grid-flow-row gap-4">
+        {news.map((newsO, index) => (
+          <div
+            className={
+              "py-2.5 px-2 rounded-md grid grid-flow-col gap-5 items-start justify-start"
+            }
+          >
+            <div className="w-full">
+              <img
+                className="object-cover shadow-lg rounded md:shadow-none h-14 w-24 md:h-28 md:w-48"
+                src={newsO.image}
+                alt=""
+              />
+            </div>
+            <div className="text-xs w-full">
+              <h4 className="leading-4 text-gray-900 font-semibold md:text-base md:font-bold md:leading-5">
+                {newsO.title}
+              </h4>
+              <div className="md:leading-5 md:font-semibold md:text-sm">
+                <p className="text-gray-500 font-normal leading-4 pt-2 pb-3">
+                  {newsO.description}
+                </p>
+                <div className="flex flex-row text-gray-500 font-medium leading-4 gap-1">
+                  <p>{newsO.datePosted},</p>
+                  <p>{newsO.author}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const Events = ({ events }: { events: IEvent[] }) => {
+    return (
+      <div className="grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-3 pt-4">
+        {events.map((event, index) => (
+          // <Link href={`/lecture/${index}`} key={index}>
+          <div
+            className={
+              "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
+              " md:p-0 md:gap-0 md:items-start md:flex md:flex-col cursor-pointer bg-white hover:bg-gray-50 hover:shadow-sm"
+            }
+          >
+            <div className="w-full">
+              <img
+                className="object-cover shadow-lg rounded md:rounded-b-none md:shadow-none h-14 w-24 md:h-40 md:w-full"
+                src={event.image}
+                alt=""
+              />
+            </div>
+            <div className="text-xs md:p-4 w-full">
+              <h4 className="leading-4 text-gray-900 font-semibold pb-1 md:h-12 md:text-base md:font-bold md:leading-5">
+                {shorterText(event.title, 75)}
+              </h4>
+              <div className="md:pt-5 md:leading-5 md:font-semibold md:text-sm">
+                <div className="flex flex-row text-gray-500 font-normal leading-4 gap-2 pt-1">
+                  <p>{event.datePosted}</p>
+                  <p>&middot;</p>
+                  <p>{event.videos} videos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          // </Link>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <Layout
       title="Home | VideoLectures"
@@ -393,17 +543,28 @@ const IndexPage = () => {
         <Lectures lectures={trending_lectures} />
       </SectionDiv>
 
+      {/* Events */}
+      <SectionDiv
+        title="Events"
+        buttonText="All events"
+        bg="bg-gray-50"
+        className=" md:py-16"
+      >
+        <Events events={latestEvents} />
+      </SectionDiv>
+
       <Maxer>
-        <div className="grid md:grid-flow-col mt-6">
+        <div className="grid lg:grid-flow-col mt-6">
           <SectionDiv title="Latest News" buttonText="All News">
             {/* <Lectures lectures={trending_lectures} /> */}
+            <News news={news} />
           </SectionDiv>
           <div className="max-w-lg">
             {/* Events */}
             <SideSectionDiv title="Upcoming events" className="md:mb-4">
               <div className="gap-2 grid grid-flow-row mb-6">
                 {events.map((event, index) => (
-                  <Event {...event} key={index} />
+                  <EpcomingEvent {...event} key={index} />
                 ))}
               </div>
               <ButtonRed

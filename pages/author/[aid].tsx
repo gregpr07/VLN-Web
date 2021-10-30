@@ -29,7 +29,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import Lectures from "@components/Lectures";
 import Filters from "@components/Filters";
 import ReadMore from "@components/ReadMore";
-import LoadMore from "@components/loadmore";
+import LoadMore from "@components/LoadMore";
 
 const author = {
   name: "Walter Lewin",
