@@ -2,31 +2,17 @@ import Layout from "@components/Layout";
 
 import { useRouter } from "next/router";
 import BigMaxer from "@components/BigMaxer";
-import ButtonlessRed from "@components/ButtonLesRed";
-import ButtonRed from "@components/ButtonRed";
-// import {
-//   ChatAlt2Icon,
-//   DotsVerticalIcon,
-//   PlusIcon,
-//   SwitchVerticalIcon,
-// } from "@heroicons/react/solid";
 
-import {
-  ChatAlt2Icon,
-  DotsVerticalIcon,
-  PlusIcon,
-  SwitchVerticalIcon,
-} from "@heroicons/react/outline";
-
-import ButtonBlack from "@components/ButtonBlack";
+import Link from "next/link";
 
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
+
 import { ArrowRightIcon, ChevronDownIcon } from "@heroicons/react/solid";
 import ButtonRound from "@components/ButtonRound";
 import { eventNames } from "process";
 import Lectures from "@components/Lectures";
+import Categories from "@components/Categories";
+import SectionDiv from "@components/SectionDiv";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -205,72 +191,60 @@ const events = [
   },
 ];
 
-const cateogies = ["Lectures", "Events", "Hands On"];
-const sorts = ["Alphabet", "Date", "Views"];
-
 const Lecture = () => {
   const router = useRouter();
-  const { pid } = router.query;
+  const { sid } = router.query;
 
-  const Maxer = ({ children }) => (
-    <div className="mx-auto max-w-md sm:max-w-xl lg:max-w-5xl xl:max-w-7xl">
-      {children}
-    </div>
-  );
-
-  const SectionDiv = ({ children }) => (
-    <div className="p-4 pt-8 sm:p-6 lg:p-8">{children}</div>
-  );
+  // const Maxer = ({ children }) => (
+  //   <div className="mx-auto max-w-md sm:max-w-xl lg:max-w-5xl xl:max-w-7xl">
+  //     {children}
+  //   </div>
+  // );
 
   return (
     <Layout title="Search" useMaxer={false}>
       {/* Header */}
-      <div className="px-4 sm:px-6 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-white to-white ">
-        <div className="pb-4 sm:pb-8">
-          <Maxer>
-            <div className="md:gap-0 sm:px-0 md:space-y-0 gap-3 grid grid-flow-col justify-start">
-              <div className="md:col-span-2 px-3">
-                <div className="">
-                  <div className="text-gray-900 font-bold space-y-1 ">
-                    <h3 className="text-2xl leading-8 font-extrabold pb-10">
-                      {title.name}
-                    </h3>
+      <div className="md:pt-16 lg:pt-16 ">
+        <BigMaxer>
+          <SectionDiv className="pb-0 md:pb-8">
+            <div className="pb-4 sm:pb-8">
+              <BigMaxer>
+                <div className="md:gap-0 sm:px-0 md:space-y-0 gap-3 grid grid-flow-col justify-start">
+                  <div className="md:col-span-2">
+                    <div className="">
+                      <div className="text-gray-900 font-bold space-y-1">
+                        <h3 className="text-2xl md:text-4xl font-extrabold pb-4 md:pb-10">
+                          X results for "{sid}"
+                        </h3>
 
-                    <ButtonRound
-                      Icon={ChevronDownIcon}
-                      text="All catagories "
-                    />
+                        <Categories />
+                      </div>
+                      <div className="text"></div>
+                    </div>
                   </div>
-                  <div className="text"></div>
                 </div>
-              </div>
+              </BigMaxer>
             </div>
-          </Maxer>
-        </div>
+          </SectionDiv>
+        </BigMaxer>
       </div>
 
-      <Maxer>
+      <BigMaxer>
         {/* Selection */}
-        <div className="p-4 sm:p-6 lg:p-8">
-          <div className="h-10 flex flex-row justify-between ">
-            <h3 className="text-gray-800 font-extrabold leading-7 text-xl">
-              Events
-            </h3>
-            <ButtonRound Icon={ArrowRightIcon} text="All events" />
-          </div>
-          <div className="pt-4">
+        <SectionDiv title="Events" buttonText="All events">
+          <div className="grid grid-flow-row gap-2 mt-4">
             {events.map((event, index) => (
               <div
                 className={
                   "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
-                  (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
+                  (!(index % 2) ? " bg-gray-50" : "") +
                   " " +
-                  "md:shadow md:p-0 md:gap-0 md:items-center"
+                  "md:p-2 md:py-0.5 md:gap-0 md:items-center"
                 }
               >
                 <div>
                   <img
-                    className="md:pl-2 object-cover shadow-lg rounded md:rounded-b-none md:shadow-none h-14 w-24 md:h-14 md:w-24"
+                    className="object-cover shadow-lg rounded md:shadow-none h-14 w-24 md:h-16 md:w-28"
                     src={event.image}
                     alt=""
                   />
@@ -287,76 +261,86 @@ const Lecture = () => {
                     </div>
                   </div>
                 </div>
-                <div className="text-xs md:p-4 hidden md:grid grid-cols-5 content-center justify-center">
-                  <h4 className="leading-4 text-gray-900 font-semibold pb-1 md:grid md:items-center md:pl-10 md:col-span-3 md:pt-1">
+                <div className="text-sm md:p-4 hidden md:grid grid-cols-5 content-center items-center justify-center leading-5">
+                  <h4 className="leading-5 text-gray-900 font-semibold pb-1 md:grid md:items-center md:pl-2 md:col-span-3 md:pt-1">
                     {event.title}
                   </h4>
-                  <p>{event.videos} videos</p>
-                  <p>{event.views} views</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Lectures */}
-        <div className="p-4 sm:p-6 lg:p-8">
-          <div className="h-10 flex flex-row justify-between pb-2 ">
-            <h3 className="text-gray-800 font-extrabold leading-7 text-xl">
-              Lectures
-            </h3>
-            <ButtonRound Icon={ArrowRightIcon} text="All lectures" />
-          </div>
-
-          <Lectures lectures={lectures} />
-        </div>
-
-        {/* Authors */}
-        <SectionDiv>
-          <div className="h-10 flex flex-row justify-between pb-2 ">
-            <h3 className="font-black text-gray-900 leading-6 pb-2 text-3xl">
-              Authors
-            </h3>
-            <ButtonRound Icon={ArrowRightIcon} text="All authors" />
-          </div>
-
-          <div className="grid md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 pt-4">
-            {authors.map((authors, index) => (
-              <div
-                className={
-                  "py-2.5 px-2 rounded-md grid grid-flow-col gap-3  justify-start" +
-                  (!(index % 2) ? " bg-gray-50 md:bg-transparent" : "") +
-                  " " +
-                  "md:shadow md:grid-flow-row md:p-0 md:gap-0 md:items-start"
-                }
-              >
-                <div className="flex-grow">
-                  <img
-                    className="object-cover shadow-lg rounded-full h-10 w-10"
-                    src={authors.image}
-                    alt=""
-                  />
-                </div>
-                <div className="text-xs md:p-4">
-                  <h4 className="leading-4 text-gray-900 font-semibold pb-1">
-                    {authors.title}
-                  </h4>
-                  <div className="md:py-4">
-                    <p className="text-gray-500 font-normal leading-4">
-                      {authors.author}
-                    </p>
-                    <div className="flex flex-row text-gray-500 font-normal leading-4 gap-1 ">
-                      <p>{authors.date}</p>
-                      <p>&middot;</p>
-                      <p>{authors.views} views</p>
-                    </div>
-                  </div>
+                  <p className="md:text-gray-500 justify-self-center font-normal">
+                    {event.videos} videos
+                  </p>
+                  <p className="md:text-gray-500 justify-self-center font-normal">
+                    {event.views} views
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </SectionDiv>
-      </Maxer>
+
+        {/* Lectures */}
+        <SectionDiv title="Lectures" buttonText="All Lectures">
+          <Lectures lectures={lectures} />
+        </SectionDiv>
+
+        {/* Authors */}
+        <SectionDiv title="Authors" buttonText="All authors">
+          <div className="grid grid-flow-row pt-4 gap-1.5">
+            {authors.map((author, index) => (
+              // put author.id here
+              <Link href={`/author/${author.author}`}>
+                <div
+                  className={
+                    "py-2.5 px-2 rounded-md grid grid-flow-col gap-3 items-center justify-start" +
+                    (!(index % 2) ? " bg-gray-50" : "") +
+                    " " +
+                    "md:p-2 md:py-0.5 md:gap-0 md:items-center cursor-pointer hover:bg-gray-100"
+                  }
+                >
+                  <div>
+                    <img
+                      className="object-cover shadow-lg rounded-full md:shadow-none h-10 w-10"
+                      src={author.image}
+                      alt=""
+                    />
+                  </div>
+                  <div className="text-xs md:p-4 md:hidden">
+                    <h4 className="leading-4 text-gray-900 font-semibold pb-1 md:grid md:items-center md:col-span-2 md:pt-1">
+                      {author.title}
+                    </h4>
+                    <h4 className="leading-4 text-gray-500 font-normal pb-1 md:grid md:items-center md:col-span-2 md:pt-1">
+                      {author.title}
+                    </h4>
+                    <div className="md:py-4">
+                      <div className="flex flex-row md:grid md:grid-cols-2 md:gap-8 text-gray-500 font-normal leading-4 gap-1">
+                        <p>{author.date} videos</p>
+                        <p className="md:hidden">&middot;</p>
+                        <p>{author.views} views</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-sm md:p-2 hidden md:grid grid-cols-5 content-center items-center justify-center leading-5">
+                    <div className="col-span-3 md:grid md:items-center md:pt-1">
+                      <h4 className="leading-5 text-gray-900 font-semibold">
+                        {author.title}
+                      </h4>
+                      <h4 className="leading-5 text-gray-500 font-normal">
+                        {author.title}
+                      </h4>
+                    </div>
+
+                    <p className="md:text-gray-500 justify-self-end font-normal">
+                      {author.date}
+                    </p>
+                    <p className="md:text-gray-500 justify-self-end font-normal">
+                      {author.views}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </SectionDiv>
+      </BigMaxer>
     </Layout>
   );
 };

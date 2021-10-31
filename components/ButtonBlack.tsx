@@ -17,7 +17,7 @@ const ButtonBlack = ({ action, text, className, Icon, ...props }: btnProps) => (
     }
   >
     <div className="flex flex-row content-center">
-      <p className="font-normal">{text}</p>
+      <p className="font-semibold">{text}</p>
       {Icon && (
         <Icon
           className="h-4 w-4 ml-1 text-white block animate-pulse"

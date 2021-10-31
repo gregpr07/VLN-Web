@@ -38,12 +38,24 @@ module.exports = {
         // ...defaultTheme.fontSize,
       },
     },
+
+    fontWeight: {
+      hairline: 100,
+      thin: 200,
+      light: 300,
+      normal: 350,
+      medium: 450,
+      semibold: 550,
+      bold: 580,
+      extrabold: 750,
+      black: 900,
+    },
   },
   variants: {
     extend: {},
   },
   plugins: [require("@tailwindcss/forms")],
   corePlugins: {
-    fontSmoothing: false,
+    fontSmoothing: true,
   },
 };

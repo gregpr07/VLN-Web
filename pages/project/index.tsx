@@ -1,43 +1,26 @@
 import Layout from "@components/Layout";
 
 import { useRouter } from "next/router";
-import BigMaxer from "@components/BigMaxer";
-import ButtonlessRed from "@components/ButtonLesRed";
-import ButtonRed from "@components/ButtonRed";
-// import {
-//   ChatAlt2Icon,
-//   DotsVerticalIcon,
-//   PlusIcon,
-//   SwitchVerticalIcon,
-// } from "@heroicons/react/solid";
 
-import {
-  ChatAlt2Icon,
-  DotsVerticalIcon,
-  PlusIcon,
-  SwitchVerticalIcon,
-} from "@heroicons/react/outline";
+import { ChatAlt2Icon } from "@heroicons/react/outline";
 
 import ButtonBlack from "@components/ButtonBlack";
 
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/solid";
+import { ArrowRightIcon, ChevronDownIcon } from "@heroicons/react/solid";
 import Lectures from "@components/Lectures";
 import Filters from "@components/Filters";
 import ButtonRound from "@components/ButtonRound";
-import { arrowsPlugin } from "@brainhubeu/react-carousel";
+
+import ReadMore from "@components/ReadMore";
 
 const author = {
   name: "19 Events · 64 Lectures · Last updated 12 dec 2021",
   title: "CLARIN - Common Language Resources and Technology Infrastructure",
   description:
-    "As Gregor Samsa awoke one morning out of restless dreyarnams, he found himself in bed, transformed into a gargantuan pest. He lay on his hard, armored back and saw, as he raised his head a little, his domed, brown belly...",
+    "As Gregor Samsa awoke one morning out of restless dreyarnams, he found himself in bed, transformed into a gargantuan pest. He lay on his hard, armored back and saw, as he raised his head a little, his domed, brown belly. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora optio placeat, harum corrupti recusandae eum a reprehenderit explicabo ipsa, labore aperiam aliquam eos amet officiis voluptates dignissimos praesentium dolores id.",
   socials: [
     {
       name: "Facebook",
@@ -190,9 +173,8 @@ const Project = () => {
           <h3 className="font-bold leading-6 pb-2 text-lg">About</h3>
 
           <p className="text-gray-600 font-normal text-sm leading-5 md:text-body md:leading-7 md:font-normal md:text-left max-w-2xl">
-            {author.description}
+            <ReadMore text={author.description} shorterLength={200} />
           </p>
-          <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
         </div>
 
         <div className="p-4 sm:p-6 lg:p-8 md:hidden">

@@ -6,37 +6,35 @@ import ButtonlessRed from "@components/ButtonLesRed";
 import ButtonRed from "@components/ButtonRed";
 import Maxer from "@components/BigMaxer";
 
-// import {
-//   ChatAlt2Icon,
-//   DotsVerticalIcon,
-//   PlusIcon,
-//   SwitchVerticalIcon,
-// } from "@heroicons/react/solid";
+import {
+  //   ChatAlt2Icon,
+  //   DotsVerticalIcon,
+  PlusIcon,
+  // SwitchVerticalIcon,
+} from "@heroicons/react/solid";
 
 import {
   ChatAlt2Icon,
   DotsVerticalIcon,
-  PlusIcon,
+  // PlusIcon,
   SwitchVerticalIcon,
 } from "@heroicons/react/outline";
 
 import ButtonBlack from "@components/ButtonBlack";
 
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
 import Lectures from "@components/Lectures";
 import Filters from "@components/Filters";
+import ReadMore from "@components/ReadMore";
+import LoadMore from "@components/ButtonLoadMore";
 
 const author = {
-  name: "Cameron Williamson",
+  name: "Walter Lewin",
   profileImage:
-    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Forig00.deviantart.net%2F5470%2Ff%2F2010%2F105%2F4%2F5%2Frandom_person_by_vurtov.jpg&f=1&nofb=1",
+    "https://wp.technologyreview.com/wp-content/uploads/2012/02/0312-lewin-a_x616-5.jpg?fit=556,746",
   title: "Researcher, Research Group for Language Technology, Ljubljana",
   website: "cameronwilliamsonresearcher.org",
   description:
-    "As Gregor Samsa awoke one morning out of restless dreyarnams, he found himself in bed, transformed into a gargantuan pest. He lay on his hard, armored back and saw, as he raised his head a little, his domed, brown belly...",
+    "As Gregor Samsa awoke one morning out of restless dreyarnams, he found himself in bed, transformed into a gargantuan pest. He lay on his hard, armored back and saw, as he raised his head a little, his domed, brown belly. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, animi nobis, ipsum eum ratione maxime eveniet corporis quis sed omnis praesentium ipsa ad vel veniam pariatur assumenda id sit quam.",
   socials: [
     {
       name: "Facebook",
@@ -150,7 +148,7 @@ const Lecture = () => {
   const { pid } = router.query;
 
   const SectionDiv = ({ children }) => (
-    <div className="p-4 pt-8 sm:p-6 lg:p-8 lg:pt-0">{children}</div>
+    <div className="p-4 pt-8 sm:p-6 lg:p-6 lg:pt-12">{children}</div>
   );
 
   return (
@@ -158,8 +156,8 @@ const Lecture = () => {
       {/* Header */}
       <div
         className={
-          "px-4 sm:px-0 lg:px-8 pt-24 md:pt-8 lg:pt-12 bg-gradient-to-b from-red-600 to-red-800 text-xs " +
-          "lg:max-h-44 md:text-sm"
+          "px-4 sm:px-0 lg:px-8 pt-24 md:pt-12 lg:pt-24 bg-gradient-to-b from-red-600 to-red-800 text-xs " +
+          "lg:max-h-56 md:text-sm"
         }
       >
         <div className="pb-4 sm:pb-8 md:pb-4">
@@ -170,15 +168,16 @@ const Lecture = () => {
                 style={{ aspectRatio: "1" }}
               >
                 <img
-                  className="object-cover shadow-lg rounded-lg h-full"
+                  className="object-cover shadow-lg rounded-lg h-full w-full"
+                  style={{ aspectRatio: "1:1" }}
                   src={author.profileImage}
                   alt=""
                 />
               </div>
               <div className="md:col-span-2">
-                <div className="">
+                <div className="lg:px-6">
                   <div className="text-white font-medium space-y-1">
-                    <h3 className="font-extrabold text-2xl md:text-5xl leading-8 md:leading-none">
+                    <h3 className="font-extrabold text-2xl md:text-5xl leading-8 md:leading-none pb-2">
                       {author.name}
                     </h3>
                     <p className="text-white font-light leading-4">
@@ -201,11 +200,12 @@ const Lecture = () => {
           <div className="p-4 sm:p-6 lg:p-8 lg:px-6">
             <div className="lg:grid lg:grid-flow-col gap-12">
               <div className="order-1">
-                <h3 className="font-bold leading-6 pb-2 md:text-lg">About</h3>
-                <p className="text-gray-600 font-normal text-sm leading-5">
-                  {author.description}
+                <h3 className="font-bold leading-6 pb-2 md:text-lg tracking-tight">
+                  About
+                </h3>
+                <p className="text-gray-600 font-normal text-base leading-5 lg:leading-7">
+                  <ReadMore text={author.description} shorterLength={200} />
                 </p>
-                <ButtonlessRed className="pt-4">Read More</ButtonlessRed>
               </div>
 
               <div className="py-10 flex flex-row gap-6 lg:gap-4 items-center lg:items-start lg:flex-col lg:w-44">
@@ -216,8 +216,8 @@ const Lecture = () => {
                     text="Follow"
                   />
                 </div>
-                <div>
-                  <p className="text-gray-900 font-extrabold text-sm">
+                <div className="pt-2">
+                  <p className="text-gray-900 font-bold text-sm tracking-tight">
                     Get in touch
                   </p>
                   <div className="flex flex-row gap-4 pt-2">
@@ -225,7 +225,7 @@ const Lecture = () => {
                       <a
                         key={item.name}
                         href={item.href}
-                        className="text-gray-400 hover:text-gray-500"
+                        className="text-gray-600 hover:text-gray-500"
                       >
                         <span className="sr-only">{item.name}</span>
                         <item.icon className="h-6 w-6" aria-hidden="true" />
@@ -235,10 +235,23 @@ const Lecture = () => {
                 </div>
               </div>
 
-              <div className="hidden lg:block order-2 col-span-4">
-                <h3 className="font-bold leading-6 pb-2 md:text-lg">
+              <div className="hidden lg:block order-2 col-span-7">
+                <h3 className="font-bold leading-6 pb-4 md:text-lg tracking-tight">
                   Related categories
                 </h3>
+
+                <div className="grid grid-flow-col gap-4 max-w-xs">
+                  {["techb", "technology"].map((tech, index) => (
+                    <div
+                      className="bg-red-100 rounded p-1.5 px-3 flex-shrink"
+                      key={index}
+                    >
+                      <h3 className="text-sm text-red-800 font-medium">
+                        {tech}
+                      </h3>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -247,7 +260,7 @@ const Lecture = () => {
 
           {/* Uploaded videos */}
           <SectionDiv>
-            <h3 className="font-extrabold text-gray-800 leading-6 pb-2 text-xl">
+            <h3 className="font-extrabold text-gray-800 leading-6 text-xl md:text-3xl pb-8 tracking-tight">
               Uploaded videos
             </h3>
 
@@ -255,26 +268,24 @@ const Lecture = () => {
 
             <Lectures lectures={lectures} />
 
-            <div className="flex flex-row justify-center pt-6">
-              <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
-                Load more lectures
-              </button>
+            <div className="pt-12">
+              <LoadMore text="Load More Lectures" />
             </div>
           </SectionDiv>
 
           {/* Responses */}
           <SectionDiv>
             <div className="md:max-w-2xl">
-              <h3 className="font-extrabold text-gray-800 leading-6 pb-6 text-xl">
+              <h3 className="font-extrabold text-gray-800 leading-6 text-xl md:text-3xl pb-12 tracking-tight">
                 Responses
               </h3>
 
-              <h3 className="font-semibold text-gray-400 leading-5 pb-2 text-sm">
+              <h3 className="font-semibold text-gray-500 leading-5 pb-2 text-sm">
                 Write your response
               </h3>
 
               {/* Comment Box */}
-              <div className="bg-gray-50 flex flex-row py-2 px-2 rounded-md gap-1.5">
+              <div className="bg-gray-50 flex flex-row py-2 px-2 pl-4 rounded-md gap-1.5">
                 <div>
                   <img
                     className="object-cover shadow-lg rounded-full h-10 w-10"
@@ -284,7 +295,7 @@ const Lecture = () => {
                 </div>
                 <div className="flex-grow">
                   <input
-                    className="h-10 bg-transparent px-2 font-normal leading-5 text w-full text-sm"
+                    className="h-10 bg-transparent pl-3 font-normal leading-5 text w-full text-sm"
                     placeholder="Write comment ..."
                   />
                 </div>
@@ -294,8 +305,8 @@ const Lecture = () => {
               </div>
 
               {/* Comments */}
-              <div>
-                <div className="flex flex-row py-2 px-4 rounded-md gap-1 items-center h-5 text-gray-500 pt-10 text-lg font-bold mb-4">
+              <div className="pt-4">
+                <div className="flex flex-row py-2 rounded-md gap-1 items-center h-5 text-gray-500 pt-10 text-lg font-bold mb-4">
                   <ChatAlt2Icon className="h-5" />
                   <p className="text-sm">{comments.length} comments</p>
                 </div>
@@ -309,16 +320,16 @@ const Lecture = () => {
                         alt=""
                       />
                     </div>
-                    <div className="flex-grow-0 text-xs">
-                      <div className="">
+                    <div className="flex-grow-0 text-xs md:text-sm">
+                      <div className="md:flex flex-row justify-items-stretch">
                         <h4 className="text-gray-900 leading-5 font-semibold">
                           {comment.person.name}
                         </h4>
-                        <p className="text-gray-500 leading-5 font-normal">
+                        <p className="text-gray-500 leading-5 font-normal flex-grow md:text-right">
                           {comment.posted}
                         </p>
                       </div>
-                      <div className="pt-1">
+                      <div className="pt-2">
                         <p className="text-gray-600 leading-5 font-normal">
                           {comment.content}
                         </p>
@@ -327,10 +338,8 @@ const Lecture = () => {
                   </div>
                 ))}
 
-                <div className="flex flex-row justify-center pt-6">
-                  <button className="py-3 px-6 bg-gray-50 rounded text-sm text-gray-700 font-medium">
-                    Load more comments
-                  </button>
+                <div className="pt-12">
+                  <LoadMore text="Load More Comments" />
                 </div>
               </div>
             </div>

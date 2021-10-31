@@ -14,6 +14,7 @@ import styles from "../styles/signature.module.css";
 import { Path, useForm, UseFormRegister, SubmitHandler } from "react-hook-form";
 
 import { API } from "@services/fetcher";
+import Maxer from "@components/BigMaxer";
 
 // Questions component -> because its only text
 const Questions = () => {
@@ -127,6 +128,7 @@ interface IFormValues {
   institution: string;
   email_address: string;
   room_number: string;
+  event: string;
   date: string;
   data_process: boolean;
 }
@@ -193,6 +195,7 @@ const Signature = () => {
     formdata.append("institution", data.institution);
     formdata.append("email", data.email_address);
     formdata.append("room_number", data.room_number);
+    formdata.append("event", data.event);
     formdata.append("date", data.date);
     formdata.append("cc_license", data.data_process.toString());
 
@@ -221,7 +224,11 @@ const Signature = () => {
           <div className="flex-shrink-0 flex justify-center">
             <a href="/" className="inline-flex">
               <span className="sr-only">Logo</span>
-              <img className="h-12 w-auto" src="/images/logo.png" alt="logo" />
+              <img
+                className="h-12 w-auto"
+                src="/logos/vln_default.svg"
+                alt="logo"
+              />
             </a>
           </div>
           <div className="py-16">
@@ -242,149 +249,161 @@ const Signature = () => {
 
   return (
     <Layout title="Home | Sign" useNavigation={false} useFooter={false}>
-      <form
-        className="space-y-8 divide-y divide-gray-200 mb-24"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-          <div className="space-y-6 sm:space-y-5">
-            <div>
-              <h3 className="text-lg leading-6 font-medium text-gray-900">
-                Lecture agreement
-              </h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                Before we can upload you lecture to Videolectures.net repository
-                you have to fill out the form.
-              </p>
-            </div>
-            <div className="space-y-6 sm:space-y-5">
-              <Input
-                label="first_name"
-                type="text"
-                register={register}
-                required
-              />
+      <Maxer>
+        <div className="px-6 lg:px-8 md:pt-8">
+          <form
+            className="space-y-8 divide-y divide-gray-200 mb-24"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+              <div className="space-y-6 sm:space-y-5">
+                <div>
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">
+                    Lecture agreement
+                  </h3>
+                  <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                    Before we can upload you lecture to Videolectures.net
+                    repository you have to fill out the form.
+                  </p>
+                </div>
+                <div className="space-y-6 sm:space-y-5">
+                  <Input
+                    label="first_name"
+                    type="text"
+                    register={register}
+                    required
+                  />
 
-              <Input
-                label="last_name"
-                type="text"
-                register={register}
-                required
-              />
+                  <Input
+                    label="last_name"
+                    type="text"
+                    register={register}
+                    required
+                  />
 
-              <Input
-                label="lecture_title"
-                type="text"
-                register={register}
-                required
-                wide
-              />
+                  <Input
+                    label="lecture_title"
+                    type="text"
+                    register={register}
+                    required
+                    wide
+                  />
 
-              <Input
-                label="institution"
-                type="text"
-                register={register}
-                required
-                wide
-              />
+                  <Input
+                    label="institution"
+                    type="text"
+                    register={register}
+                    required
+                    wide
+                  />
 
-              <Input
-                label="email_address"
-                type="email"
-                register={register}
-                required
-                wide
-              />
+                  <Input
+                    label="email_address"
+                    type="email"
+                    register={register}
+                    required
+                    wide
+                  />
 
-              <Input
+                  {/* <Input
                 label="room_number"
                 type="number"
                 register={register}
                 required={false}
                 wide
-              />
+              /> */}
 
-              <Input
-                label="date"
-                type="date"
-                register={register}
-                required
-                wide
-              />
+                  <Input
+                    label="event"
+                    type="text"
+                    register={register}
+                    required={false}
+                    wide
+                  />
+
+                  <Input
+                    label="date"
+                    type="date"
+                    register={register}
+                    required
+                    wide
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Questions */}
-        <Questions />
+            {/* Questions */}
+            <Questions />
 
-        {/* Checkbox */}
-        <div className="pt-6">
-          <div className="relative flex items-start">
-            <div className="flex items-center h-5">
-              <input
-                type="checkbox"
-                className={
-                  "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                }
-                {...register("data_process", { required: true })}
-              />
+            {/* Checkbox */}
+            <div className="pt-6">
+              <div className="relative flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    type="checkbox"
+                    className={
+                      "focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                    }
+                    {...register("data_process", { required: true })}
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label htmlFor="offers" className="font-medium text-gray-800">
+                    I allow JSI to process my data
+                  </label>
+                  <p id="offers-description" className="text-gray-500">
+                    I allow »Jozef Stefan« Institute (JSI) to process my
+                    personal data provided above in accordance with the General
+                    Data Protection Regulation (GDPR) in its database with the
+                    purpose to keep a database of all lecturers, published on
+                    the Videolectures.Net repository.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="ml-3 text-sm">
-              <label htmlFor="offers" className="font-medium text-gray-800">
-                I allow JSI to process my data
-              </label>
-              <p id="offers-description" className="text-gray-500">
-                I allow »Jozef Stefan« Institute (JSI) to process my personal
-                data provided above in accordance with the General Data
-                Protection Regulation (GDPR) in its database with the purpose to
-                keep a database of all lecturers, published on the
-                Videolectures.Net repository.
-              </p>
-            </div>
-          </div>
-        </div>
 
-        {/* Signature */}
-        <div className="pt-6">
-          {signError ? (
-            <p className="text-red-400 font-light">{signError}</p>
-          ) : (
-            <h3>Signature</h3>
-          )}
-          <div className="relative flex mx-auto py-2">
-            <div className={styles.sigContainer}>
-              <SignaturePad
-                canvasProps={{ className: styles.sigPad }}
-                ref={(ref: any) => {
-                  sigPadRef = ref;
-                }}
-                onEnd={() => !sigPadRef.isEmpty() && setSignError(null)}
-              />
+            {/* Signature */}
+            <div className="pt-6">
+              {signError ? (
+                <p className="text-red-400 font-light">{signError}</p>
+              ) : (
+                <h3>Signature</h3>
+              )}
+              <div className="relative flex mx-auto py-2">
+                <div className={styles.sigContainer}>
+                  <SignaturePad
+                    canvasProps={{ className: styles.sigPad }}
+                    ref={(ref: any) => {
+                      sigPadRef = ref;
+                    }}
+                    onEnd={() => !sigPadRef.isEmpty() && setSignError(null)}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-row-reverse">
+                <button
+                  onClick={() => clearPad()}
+                  type="button"
+                  className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Clear
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-row-reverse">
-            <button
-              onClick={() => clearPad()}
-              type="button"
-              className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Clear
-            </button>
-          </div>
-        </div>
 
-        <div className="pt-5">
-          <div className="flex justify-center">
-            <button
-              type="submit"
-              className="inline-flex justify-center py-2 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Send
-            </button>
-          </div>
+            <div className="pt-5">
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="inline-flex justify-center py-2 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
+      </Maxer>
     </Layout>
   );
 };

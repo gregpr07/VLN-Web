@@ -14,7 +14,7 @@ type Props = {
   useFooter?: boolean;
   redBG?: boolean;
   showSearch?: boolean;
-};
+} & React.ButtonHTMLAttributes<HTMLDivElement>;
 
 const Layout = ({
   children,
@@ -24,8 +24,9 @@ const Layout = ({
   useFooter = true,
   redBG = false,
   showSearch = true,
+  ...divProps
 }: Props) => (
-  <div>
+  <div {...divProps}>
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
