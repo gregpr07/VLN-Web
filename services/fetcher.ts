@@ -1,4 +1,5 @@
-export const BASEURL = "https://backend.videolectures.net/";
+export const BASEURL = "http://127.0.0.1:8000/";
+// export const BASEURL = "https://backend.videolectures.net/";
 export const API = BASEURL + "api/";
 
 const getRequestOptions = (token: string) => {

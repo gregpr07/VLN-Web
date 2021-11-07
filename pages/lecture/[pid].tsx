@@ -41,6 +41,8 @@ const lectureData = {
     institution:
       "Department of Physiology, Anatomy & Genetics, University of Oxford",
   },
+  height: 720,
+  width: 1280,
   videoUrl:
     "http://hydro.videolectures.net/v017/3d/huyzwd3aarzg53dy3hofyvf7ea6wjfyt.mp4",
   slides: [
@@ -385,7 +387,13 @@ function Lecture() {
                 }
               >
                 <div className="grid grid-flow-col">
-                  <div className="flex-grow" ref={playerHeight}>
+                  <div
+                    className="flex-grow"
+                    ref={playerHeight}
+                    style={{
+                      aspectRatio: `${lectureData.height} / ${lectureData.width}`,
+                    }}
+                  >
                     <ReactPlayer
                       ref={playerRef}
                       width="100%"
@@ -409,15 +417,13 @@ function Lecture() {
                           currentView === "video-slides" ? "0" : "0.5rem",
                       }}
                       onProgress={handleProgress}
-                      config={
-                        {
-                          // file: {
-                          //   attributes: {
-                          //     crossorigin: "anonymous",
-                          //   },
-                          // },
-                        }
-                      }
+                      config={{
+                        file: {
+                          attributes: {
+                            crossorigin: "anonymous",
+                          },
+                        },
+                      }}
                     />
                   </div>
 

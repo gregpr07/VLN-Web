@@ -10,9 +10,6 @@ import Link from "next/link";
 import ButtonlessRed from "@components/ButtonLesRed";
 import ButtonRed from "@components/ButtonRed";
 
-// import { connect } from "react-redux";
-// import { saveUserToken } from "@services/storage/actions";
-
 const Login = ({ saveToken, token }) => {
   const router = useRouter();
 
@@ -21,7 +18,7 @@ const Login = ({ saveToken, token }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
     saveToken(userName);
