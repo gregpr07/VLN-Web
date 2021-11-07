@@ -18,6 +18,9 @@ import SectionDiv from "@components/SectionDiv";
 import { tailwindScreens } from "@services/constants";
 
 import { TwitterTimelineEmbed } from "react-twitter-embed";
+
+import Lectures3 from "@components/lectures_progress";
+
 import router from "next/router";
 import { shorterText } from "@services/functions";
 
@@ -213,6 +216,51 @@ const latest_lectures = [
     date: "Nov 20, 2007",
     views: "100345",
     type: "Lecture",
+  },
+];
+
+const history_lectures = [
+  {
+    image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
+    title: "As Gregor Samsa awoke one morning out of restless dreyarnams",
+    author: "Darko Darkic",
+    date: "Nov 20, 2007",
+    views: "100345",
+    type: "Workshop",
+    time: "2m left",
+    watch: "12:35",
+  },
+  {
+    image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
+    title: "Lecture 2: C/C++ Data Types - Interpretations",
+    author: "Darko Darkic",
+    date: "Nov 20, 2007",
+    views: "100345",
+    type: "Lecture",
+    time: "42m left",
+    watch: "12:35",
+  },
+  {
+    image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
+    title:
+      "MedPath: Augmenting Health Risk Prediction via Medical Knowledge Paths",
+    author: "Darko Darkic",
+    date: "Nov 20, 2007",
+    views: "100345",
+    type: "Tutorial",
+    time: "105m left",
+    watch: "12:35",
+  },
+  {
+    image: "https://i.ytimg.com/vi/cnBtH7Ph4jk/maxresdefault.jpg",
+    title:
+      "MedPath: Augmenting Health Risk Prediction via Medical Knowledge Paths",
+    author: "Darko Darkic",
+    date: "Nov 20, 2007",
+    views: "100345",
+    type: "Lecture",
+    time: "69m left",
+    watch: "12:35",
   },
 ];
 
@@ -531,6 +579,11 @@ const IndexPage = () => {
       {/* categories */}
       <SectionDiv title="Top Categories" buttonText="View all">
         <Categories categories={categories} />
+      </SectionDiv>
+
+      {/*History */}
+      <SectionDiv title="Welcome back Joe, do you want to continue where you left?">
+        <Lectures3 lectures={history_lectures} />
       </SectionDiv>
 
       {/* Latest lectures */}

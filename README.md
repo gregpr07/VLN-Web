@@ -36,4 +36,3 @@ For twitter embed (just easier than script tags).
 ### Lecture
 
 - fullscreen ne dela na iOS (iPhone)
-  -img scaling je gej
