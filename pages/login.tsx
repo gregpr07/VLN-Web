@@ -9,6 +9,7 @@ import { saveUserToken } from "../services/storage/actions";
 import Link from "next/link";
 import ButtonlessRed from "@components/ButtonLesRed";
 import ButtonRed from "@components/ButtonRed";
+import { API } from "@services/fetcher";
 
 const Login = ({ saveToken, token }) => {
   const router = useRouter();
@@ -18,13 +19,37 @@ const Login = ({ saveToken, token }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+  const postLogin = () => {
+    if (userName && password) {
+      setLoading(true);
+      fetch(`${API}auth/login/`, {
+        method: "POST",
+        body: JSON.stringify({
+          username: userName,
+          password: password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          json.token
+            ? saveToken(json.token)
+            : setIsError(json.non_field_errors[0]);
+          setLoading(false);
+        });
+    }
+  };
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
-    saveToken(userName);
+    postLogin();
+    // saveToken(userName);
 
     console.log("logged in");
-    setIsError(false);
+    // setIsError(false);
   };
 
   if (token.token) {
@@ -111,7 +136,11 @@ const Login = ({ saveToken, token }) => {
               </div>
 
               <div>
-                <ButtonRed text="Sign in" className="mx-auto px-12">
+                <ButtonRed
+                  type="submit"
+                  text="Sign in"
+                  className="mx-auto px-12"
+                >
                   Sign in
                 </ButtonRed>
               </div>

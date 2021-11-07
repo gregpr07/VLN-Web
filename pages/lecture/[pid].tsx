@@ -391,7 +391,7 @@ function Lecture() {
                     className="flex-grow"
                     ref={playerHeight}
                     style={{
-                      aspectRatio: `${lectureData.height} / ${lectureData.width}`,
+                      aspectRatio: `${lectureData.width} / ${lectureData.height}`,
                     }}
                   >
                     <ReactPlayer
@@ -417,13 +417,13 @@ function Lecture() {
                           currentView === "video-slides" ? "0" : "0.5rem",
                       }}
                       onProgress={handleProgress}
-                      config={{
-                        file: {
-                          attributes: {
-                            crossorigin: "anonymous",
-                          },
-                        },
-                      }}
+                      // config={{
+                      //   file: {
+                      //     attributes: {
+                      //       crossorigin: "anonymous",
+                      //     },
+                      //   },
+                      // }}
                     />
                   </div>
 
